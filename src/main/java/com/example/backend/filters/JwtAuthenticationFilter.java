@@ -3,9 +3,11 @@ package com.example.backend.filters;
 
 import java.io.IOException;
 
+import com.example.backend.exception.CustomMessageException;
 import com.example.backend.services.JwtService;
 import com.example.backend.services.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,6 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         log.debug("JWT - {}", jwt.toString());
         userEmail = jwtService.extractUserName(jwt);
+        log.debug("useEmail - {}" , userEmail);
         if (StringUtils.isNotEmpty(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userService.userDetailsService().loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt, userDetails)) {
@@ -56,6 +59,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 context.setAuthentication(authToken);
                 SecurityContextHolder.setContext(context);
+            } else {
+                throw new CustomMessageException("Unauthorized" , String.valueOf(HttpStatus.UNAUTHORIZED.value()));
             }
         }
         filterChain.doFilter(request, response);

@@ -1,6 +1,7 @@
-package com.example.backend.models;
+package com.example.backend.models.entity;
 
 
+import com.example.backend.models.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

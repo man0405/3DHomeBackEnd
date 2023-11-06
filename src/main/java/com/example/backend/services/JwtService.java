@@ -6,14 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import lombok.RequiredArgsConstructor;
+import com.example.backend.exception.CustomMessageException;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
@@ -64,12 +64,22 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSigningKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        }catch (ExpiredJwtException ex) {
+            throw new CustomMessageException("Token expiration", String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+        }catch (UnsupportedJwtException ex){
+            throw new CustomMessageException("Token is not support.", String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+        }catch (MalformedJwtException | SignatureException ex) {
+            throw new CustomMessageException("Token is invalid format.", String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+        } catch (Exception ex) {
+            throw new CustomMessageException(ex.getLocalizedMessage(), String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+        }
+
     }
 
     private Key getSigningKey() {

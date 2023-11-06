@@ -4,9 +4,11 @@ package com.example.backend.services;
 import com.example.backend.dto.JwtAuthenticationResponse;
 import com.example.backend.dto.SignInRequest;
 import com.example.backend.dto.SignUpRequest;
+import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.Role;
-import com.example.backend.models.User;
+import com.example.backend.models.entity.User;
 import com.example.backend.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,9 +29,6 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public JwtAuthenticationResponse signup(SignUpRequest request) {
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("Email already exists");
-        }
         var user = User
                 .builder()
                 .firstName(request.getFirstName())
@@ -46,10 +45,16 @@ public class AuthenticationService {
 
 
     public JwtAuthenticationResponse signin(SignInRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+
+        } catch (Exception ex){
+            throw  new CustomMessageException("Your email or your password is invalid" , String.valueOf(HttpStatus.UNAUTHORIZED));
+        }
+
         var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+                .orElseThrow(() -> new CustomMessageException("Invalid email or password." , String.valueOf(HttpStatus.BAD_REQUEST.value())));
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }

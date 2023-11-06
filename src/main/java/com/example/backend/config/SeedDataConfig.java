@@ -2,7 +2,7 @@ package com.example.backend.config;
 
 
 import com.example.backend.models.Role;
-import com.example.backend.models.User;
+import com.example.backend.models.entity.User;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.services.UserService;
 import org.springframework.boot.CommandLineRunner;
