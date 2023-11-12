@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @ToString
-@Table(name = "user")
+@Table(name = "_user")
 public class User implements UserDetails {
 
     @Id
