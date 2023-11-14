@@ -63,7 +63,6 @@ public class House {
                 "Id=" + Id +
                 ", address='" + address + '\'' +
                 ", information='" + information + '\'' +
-//                ", owner=" + owner +
                 '}';
     }
 
