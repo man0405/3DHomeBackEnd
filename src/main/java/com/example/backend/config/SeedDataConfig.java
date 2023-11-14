@@ -33,7 +33,7 @@ public class SeedDataConfig implements CommandLineRunner {
                     .firstName("admin")
                     .lastName("admin")
                     .email("admin@admin.com")
-                    .password(passwordEncoder.encode("password"))
+                    .password(passwordEncoder.encode("Man@12345"))
                     .role(Role.ROLE_ADMIN)
                     .build();
 
