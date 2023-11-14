@@ -65,5 +65,6 @@ public class House {
                 ", information='" + information + '\'' +
                 '}';
     }
-
+    //add test comment
+    //add test comment
 }
