@@ -10,10 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpRequest {
-    String firstName;
-    String lastName;
-    String phone;
-    String email;
-    String password;
+public class SignUpCheck {
+    private String email;
+    private String password;
 }
