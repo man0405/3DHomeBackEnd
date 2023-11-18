@@ -7,8 +7,10 @@ import java.util.Map;
 import java.util.function.Function;
 
 import com.example.backend.exception.CustomMessageException;
+import com.example.backend.models.entity.Customer;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service
+@Slf4j
 public class JwtService {
 
     @Value("${token.secret.key}")
@@ -29,9 +32,14 @@ public class JwtService {
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
+    public String extractId(String token) {return extractClaim(token, (Claims::getId));}
 
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
+    }
+
+    public String generateToken(UserDetails userDetails, Customer customer) {
+        return generateToken(new HashMap<>(), userDetails, customer);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -48,6 +56,19 @@ public class JwtService {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    private  String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, Customer customer) {
+//        extraClaims.put("id", customer.getId());
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setId(customer.getId().toString())
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))

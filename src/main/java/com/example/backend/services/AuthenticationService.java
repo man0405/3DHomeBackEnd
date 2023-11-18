@@ -8,6 +8,7 @@ import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.Role;
 import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.User;
+import com.example.backend.repository.CustomerRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.services.Impl.CustomerServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final UserService userService;
-    private final CustomerServiceImpl customerService;
+    private final CustomerService customerService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -46,11 +47,11 @@ public class AuthenticationService {
                 .user(user)
                 .build();
 
-
         user = userService.save(user);
         customerService.saveCustomer(customer);
+        System.out.println("customer id :" + customer.getId());
 
-        var jwt = jwtService.generateToken(user);
+        var jwt = jwtService.generateToken(user, customer);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
@@ -66,7 +67,9 @@ public class AuthenticationService {
 
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new CustomMessageException("Invalid email or password." , String.valueOf(HttpStatus.BAD_REQUEST.value())));
-        var jwt = jwtService.generateToken(user);
+
+        var customter = customerService.findByUser_Id(user.getId());
+        var jwt = jwtService.generateToken(user,customter);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
 
