@@ -1,14 +1,14 @@
-package com.example.backend.controllers;
+package com.example.backend.controllers.information;
 
 
 import com.example.backend.dto.JwtAuthenticationResponse;
+import com.example.backend.dto.ResponseErrorTemplate;
 import com.example.backend.dto.SignInRequest;
 import com.example.backend.dto.SignUpRequest;
 import com.example.backend.exception.CustomMessageException;
-import com.example.backend.services.AuthenticationService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
+import com.example.backend.services.information.AuthenticationService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -52,6 +52,15 @@ public class AuthenticationController {
 //            cookieSet(response,token);
 
 //        return "cookie is added!";
+    }
+
+    @ExceptionHandler(CustomMessageException.class)
+    public ResponseEntity<ResponseErrorTemplate> handleErrorException(CustomMessageException ex ) {
+        return ResponseEntity.ok(
+                new ResponseErrorTemplate(
+                        ex.getMessage(), ex.getCode(), null
+                )
+        );
     }
 
 //    private void cookieSet(HttpServletResponse response , String  token){

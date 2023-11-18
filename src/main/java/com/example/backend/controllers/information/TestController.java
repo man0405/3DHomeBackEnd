@@ -1,4 +1,4 @@
-package com.example.backend.controllers;
+package com.example.backend.controllers.information;
 
 
 import org.springframework.security.access.prepost.PreAuthorize;

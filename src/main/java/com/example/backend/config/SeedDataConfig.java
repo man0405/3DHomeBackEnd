@@ -4,7 +4,7 @@ package com.example.backend.config;
 import com.example.backend.models.Role;
 import com.example.backend.models.entity.User;
 import com.example.backend.repository.UserRepository;
-import com.example.backend.services.UserService;
+import com.example.backend.services.information.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
