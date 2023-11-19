@@ -10,6 +10,7 @@ import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.entity.Customer;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
