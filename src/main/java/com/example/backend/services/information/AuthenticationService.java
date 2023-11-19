@@ -6,8 +6,10 @@ import com.example.backend.dto.SignInRequest;
 import com.example.backend.dto.SignUpRequest;
 import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.Role;
+import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.User;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.services.Impl.CustomerServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,6 +26,7 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final CustomerServiceImpl customerService;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -31,14 +34,22 @@ public class AuthenticationService {
     public JwtAuthenticationResponse signup(SignUpRequest request) {
         var user = User
                 .builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.ROLE_USER)
                 .build();
+        var customer = Customer
+                .builder()
+                .phone(request.getPhone())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .user(user)
+                .build();
+
 
         user = userService.save(user);
+        customerService.saveCustomer(customer);
+
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
