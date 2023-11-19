@@ -23,6 +23,7 @@ public class Owner {
     @JoinColumn(name = "owner_id")
     private List<House> houses;
 
+
     public Owner() {
     }
 

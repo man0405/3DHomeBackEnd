@@ -4,8 +4,8 @@ package com.example.backend.filters;
 import java.io.IOException;
 
 import com.example.backend.exception.CustomMessageException;
-import com.example.backend.services.JwtService;
-import com.example.backend.services.UserService;
+import com.example.backend.services.information.JwtService;
+import com.example.backend.services.information.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

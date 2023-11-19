@@ -1,6 +1,10 @@
 package com.example.backend.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "House")
@@ -16,7 +20,13 @@ public class House {
 //    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Owner owner;
-
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @JoinTable(
+            name = "Visit",
+            joinColumns = @JoinColumn(name = "house_id"),
+            inverseJoinColumns=@JoinColumn(name = "customer_id")
+    )
+    private List<Customer> customers;
     public House() {
     }
 
@@ -57,6 +67,12 @@ public class House {
         this.owner = owner;
     }
 
+    public void addCustomer(Customer theCustomer){
+        if(customers == null)
+            customers = new ArrayList<>();
+        customers.add(theCustomer);
+    }
+
     @Override
     public String toString() {
         return "House{" +
@@ -65,6 +81,4 @@ public class House {
                 ", information='" + information + '\'' +
                 '}';
     }
-    //add test comment
-    //add test comment
 }

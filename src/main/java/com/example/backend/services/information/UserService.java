@@ -1,4 +1,4 @@
-package com.example.backend.services;
+package com.example.backend.services.information;
 
 import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.entity.User;

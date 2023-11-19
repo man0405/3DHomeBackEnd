@@ -1,4 +1,4 @@
-package com.example.backend.services;
+package com.example.backend.services.information;
 
 import java.security.Key;
 import java.util.Date;
