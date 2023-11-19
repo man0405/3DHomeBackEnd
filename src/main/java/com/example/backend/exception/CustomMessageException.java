@@ -17,5 +17,4 @@ public class CustomMessageException  extends RuntimeException{
     @JsonProperty("code")
     private String code;
 
-
 }

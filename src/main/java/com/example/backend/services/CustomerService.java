@@ -6,5 +6,6 @@ public interface CustomerService
 {
 
     Customer saveCustomer(Customer customer);
+    Customer findByUser_Id(Long id);
 
 }
