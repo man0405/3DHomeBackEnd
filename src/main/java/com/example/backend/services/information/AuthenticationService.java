@@ -57,6 +57,7 @@ public class AuthenticationService {
 
 
     public JwtAuthenticationResponse signin(SignInRequest request) {
+        System.out.println( "Password: "+ request.getPassword());
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));

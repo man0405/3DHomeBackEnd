@@ -23,20 +23,26 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
 
     @Column(unique = true)
-    String email;
+    private String email;
 
-    String password;
+    private String password;
 
-    LocalDateTime createAt;
 
-    LocalDateTime updateAt;
+    private LocalDateTime createAt;
+
+    private LocalDateTime updateAt;
 
     @Enumerated(EnumType.STRING)
-    Role role;
+    private Role role;
+
+    private Boolean enabled;
+    private Boolean locked;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,7 +66,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @Override
@@ -70,6 +76,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }

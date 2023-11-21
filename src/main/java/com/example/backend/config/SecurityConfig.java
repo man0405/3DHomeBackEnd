@@ -62,8 +62,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/v1/signup", "/api/v1/signin","/api/v1/signup/check").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/test/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/signup", "/api/v1/signin","/api/v1/signup/check" , "/api/test/v1").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/test/v1/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "auto-api/**").permitAll()
                         .anyRequest().authenticated()
                 )
