@@ -13,7 +13,16 @@ spring:
   datasource:
     username: postgres
     password: 160504
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/dacs
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+#        jdbc:
+#          time_zone: UTC
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -21,8 +30,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-        jdbc:
-          time_zone: UTC
+    show-sql: true
+
   data:
     rest:
       base-path: /auto-api

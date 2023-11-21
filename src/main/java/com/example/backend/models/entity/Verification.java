@@ -17,7 +17,7 @@ import java.util.Date;
 @ToString
 public class Verification {
 
-    private  static final int EXPIRATION = 24*60;
+    private static final int EXPIRATION =24*60 ;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
