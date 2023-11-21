@@ -1,4 +1,4 @@
-package com.example.backend.dao;
+package com.example.backend.repository;
 
 import com.example.backend.models.entity.Owner;
 

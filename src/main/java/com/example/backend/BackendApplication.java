@@ -1,17 +1,13 @@
 package com.example.backend;
 
-import com.example.backend.dao.OwnerRepo;
+import com.example.backend.repository.OwnerRepo;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Owner;
 import com.example.backend.services.OwnerService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 public class BackendApplication {

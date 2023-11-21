@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Purchase {
     @EmbeddedId
     private PurchaseKey id;
-    @ManyToOne
+    @OneToOne
     @MapsId("customerId")
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -14,4 +14,5 @@ public class Purchase {
     @MapsId("houseId")
     @JoinColumn(name = "house_id")
     private House house;
+
 }

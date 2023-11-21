@@ -1,6 +1,6 @@
 package com.example.backend.services;
 
-import com.example.backend.dao.OwnerRepo;
+import com.example.backend.repository.OwnerRepo;
 import com.example.backend.models.entity.Owner;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

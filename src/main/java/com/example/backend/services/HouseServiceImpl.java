@@ -1,6 +1,6 @@
 package com.example.backend.services;
 
-import com.example.backend.dao.HouseRepo;
+import com.example.backend.repository.HouseRepo;
 import com.example.backend.models.entity.House;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
