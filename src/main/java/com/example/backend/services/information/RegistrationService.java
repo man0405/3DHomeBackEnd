@@ -1,6 +1,7 @@
 package com.example.backend.services.information;
 
 import com.example.backend.dto.SignUpRequest;
+import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.EmailSender;
 import com.example.backend.models.Role;
 import com.example.backend.models.entity.Customer;
@@ -8,11 +9,14 @@ import com.example.backend.models.entity.User;
 import com.example.backend.models.entity.Verification;
 import com.example.backend.services.CustomerService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
+import static com.example.backend.util.Regex.CheckMail;
 
 
 @Service
@@ -20,16 +24,15 @@ import java.time.LocalDateTime;
 public class RegistrationService {
 
     private final UserService userService;
-    private final EmailValidator emailValidator;
     private final PasswordEncoder passwordEncoder;
     private final CustomerService customerService;
     private final VerificationService verificationService;
     private final EmailSender emailSender;
 
     public String register(SignUpRequest request){
-        boolean isVlidEmail = emailValidator.test(request.getEmail());
-        if(!isVlidEmail){
-            throw  new IllegalStateException("email not valid");
+        boolean isValidEmail = CheckMail(request.getEmail());
+        if(!isValidEmail){
+            throw  new CustomMessageException("email not valid" , HttpStatus.BAD_REQUEST.value()+"");
         }
         var user = User
                 .builder()
@@ -49,7 +52,7 @@ public class RegistrationService {
         customerService.saveCustomer(customer);
 
         String token = userService.createToken(user);
-        String link = "http://localhost:8080/api/test/v1/confirm?token=" + token;
+        String link = "http://localhost:8080/api/v1/auth/confirm?token=" + token;
         emailSender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         return token;
     }
@@ -70,6 +73,7 @@ public class RegistrationService {
         userService.enableUser(verification.getUser().getEmail());
         return "confirmed";
     }
+
 
     private String buildEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +

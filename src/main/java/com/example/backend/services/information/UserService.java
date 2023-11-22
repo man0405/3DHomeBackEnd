@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public User save(User newUser){
-        this.userValidation(newUser);
+        this.userValidation(newUser.getEmail());
         if(newUser.getId() == null){
             newUser.setCreateAt(LocalDateTime.now());
         }
@@ -54,8 +54,8 @@ public class UserService {
         return userRepository.enableUser(email);
     }
 
-    private void userValidation(User newUser) {
-        if (userRepository.findByEmail(newUser.getEmail()).isPresent()) {
+    public void userValidation(String email) {
+        if (userRepository.findByEmail(email).isPresent()) {
             throw new CustomMessageException("Email already exists", String.valueOf(HttpStatus.BAD_REQUEST.value()));
         }
     }
