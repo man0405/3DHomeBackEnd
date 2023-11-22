@@ -1,4 +1,4 @@
-package com.example.backend.services;
+package com.example.backend.services.information;
 
 
 import com.example.backend.dto.JwtAuthenticationResponse;
@@ -9,6 +9,7 @@ import com.example.backend.models.Role;
 import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.User;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.services.CustomerService;
 import com.example.backend.services.information.JwtService;
 import com.example.backend.services.information.UserService;
 import org.springframework.http.HttpStatus;

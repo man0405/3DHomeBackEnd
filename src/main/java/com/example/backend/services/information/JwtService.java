@@ -28,7 +28,6 @@ public class JwtService {
 
     @Value("${token.expirationms}")
     Long jwtExpirationMs;
-    //add push alskdjflk;alksdfjklajsd fkla;dkjf
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -63,7 +62,7 @@ public class JwtService {
                 .compact();
     }
 
-    private  String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, Customer customer) {
+    private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, Customer customer) {
 //        extraClaims.put("id", customer.getId());
         return Jwts
                 .builder()
@@ -100,7 +99,6 @@ public class JwtService {
         } catch (Exception ex) {
             throw new CustomMessageException(ex.getLocalizedMessage(), String.valueOf(HttpStatus.UNAUTHORIZED.value()));
         }
-
     }
 
     private Key getSigningKey() {

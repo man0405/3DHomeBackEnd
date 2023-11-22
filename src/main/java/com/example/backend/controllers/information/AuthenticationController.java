@@ -4,7 +4,7 @@ package com.example.backend.controllers.information;
 import com.example.backend.dto.*;
 import com.example.backend.exception.CustomMessageException;
 import com.example.backend.repository.UserRepository;
-import com.example.backend.services.AuthenticationService;
+import com.example.backend.services.information.AuthenticationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,9 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final UserRepository userRepository;
-//    @PostMapping("/signup")
+
+
+    //    @PostMapping("/signup")
 //    public JwtAuthenticationResponse signup(@RequestBody SignUpRequest request) {
 //        if(request.getEmail().isBlank() || request.getPassword().isBlank()){
 //            throw new CustomMessageException("Your Email or your password mustn't blank" , String.valueOf(HttpStatus.BAD_REQUEST));

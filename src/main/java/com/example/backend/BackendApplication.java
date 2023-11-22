@@ -19,10 +19,11 @@ public class BackendApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(OwnerService theOwnerService, OwnerRepo theOwnerRepository){
 		return runner ->{
-			addOwner(theOwnerService);
+//			addOwner(theOwnerService);
 //			addHouse(theOwnerService, theOwnerRepository);
-			findOwnerById(theOwnerService);
+//			findOwnerById(theOwnerService);
 //			findOwnerAndHouses(theOwnerService);
+
 		};
 	}
 
@@ -53,7 +54,7 @@ public class BackendApplication {
 	}
 
 	private void addOwner(OwnerService theOwnerService) {
-		Owner theOwner = new Owner("Gia Thinh", "giathinh824@gmail.com", "0774562721");
+		Owner theOwner = new Owner("Gia", "Thinh", "giathinh824@gmail.com", "0774562721");
 		theOwner.addHouse(new House("34 Pham","50m2" ));
 		theOwner.addHouse(new House("36 Pham","10m2"));
 //		theOwner.addHouse(new House("Nguyen Thanh Han", "100m2"));

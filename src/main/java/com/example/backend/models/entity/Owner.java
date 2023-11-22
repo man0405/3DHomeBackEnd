@@ -13,8 +13,10 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int Id;
-    @Column(name = "full_name")
-    private String fullName;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
     @Column(name = "email")
     private String email;
     @Column(name = "phone")
@@ -23,12 +25,16 @@ public class Owner {
     @JoinColumn(name = "owner_id")
     private List<House> houses;
 
+    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private User user;
 
     public Owner() {
     }
 
-    public Owner(String fullName, String email, String phone) {
-        this.fullName = fullName;
+    public Owner(String firstName, String lastName, String email, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phone = phone;
     }
@@ -41,12 +47,20 @@ public class Owner {
         Id = id;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -83,7 +97,7 @@ public class Owner {
     public String toString() {
         return "Owner{" +
                 "Id=" + Id +
-                ", fullName='" + fullName + '\'' +
+                ", fullName='" + firstName + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
 //                ", houses=" + houses +
