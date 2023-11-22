@@ -30,8 +30,9 @@ public class AuthenticationController {
     public CheckResponse signupCheck(@RequestBody SignUpCheck request){
         userService.userValidation(request.getEmail());
         CheckAuth(request.getEmail(), request.getPassword());
-        return new CheckResponse("GOOD");
+        return new CheckResponse("true");
     }
+
 
     @PostMapping(value = "/signup")
     public CheckResponse register(@RequestBody SignUpRequest request){
@@ -63,6 +64,9 @@ public class AuthenticationController {
         String token = authenticationService.signin(request).getToken();
         return new JwtAuthenticationResponse(token);
     }
+
+
+
 
     private void CheckAuth (String email, String password){
         if(email.isBlank() || password.isBlank()){
