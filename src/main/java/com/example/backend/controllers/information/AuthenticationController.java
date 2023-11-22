@@ -7,12 +7,17 @@ import com.example.backend.exception.CustomMessageException;
 import com.example.backend.services.information.AuthenticationService;
 import com.example.backend.services.information.RegistrationService;
 import com.example.backend.services.information.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
+
+import java.time.Duration;
 
 import static com.example.backend.util.Regex.CheckMail;
 import static com.example.backend.util.Regex.CheckPassword;
@@ -44,14 +49,27 @@ public class AuthenticationController {
 
 
 
+//    @PostMapping(value="/signin" )
+//    public JwtAuthenticationResponse signin(@RequestBody SignInRequest request) {
+//        System.out.println(request.getEmail() + request.getPassword());
+//
+//        CheckAuth(request.getEmail(), request.getPassword());
+//        String token = authenticationService.signin(request).getToken();
+//        return new JwtAuthenticationResponse(token);
+//    }
+
     @PostMapping(value="/signin" )
-    public JwtAuthenticationResponse signin(@RequestBody SignInRequest request) {
+    public CheckResponse signin(@RequestBody SignInRequest request , HttpServletResponse response ) {
         System.out.println(request.getEmail() + request.getPassword());
 
         CheckAuth(request.getEmail(), request.getPassword());
         String token = authenticationService.signin(request).getToken();
-        return new JwtAuthenticationResponse(token);
+//        return new JwtAuthenticationResponse(token);
+        response.setHeader(HttpHeaders.SET_COOKIE,cookies(token).toString() );
+        return new CheckResponse("true");
     }
+
+
 
 
 
@@ -70,5 +88,23 @@ public class AuthenticationController {
     }
 
 
+    private ResponseCookie cookies(String token){
+//        Cookie jwtTokenCookie = new Cookie("uss", token);
+//        jwtTokenCookie.setMaxAge(60*60);
+//        jwtTokenCookie.setSecure(true);
+//        jwtTokenCookie.setHttpOnly(true);
+//        jwtTokenCookie.setPath("/");
+//        jwtTokenCookie.setDomain("http://localhost:3000/");
+
+        ResponseCookie cookie = ResponseCookie.from("uss", token)
+                .httpOnly(true)
+                .secure(true)
+                .maxAge(Duration.ofHours(1))
+                .sameSite("None")
+                .path("/")
+                .build();
+
+        return cookie;
+    }
 
 }
