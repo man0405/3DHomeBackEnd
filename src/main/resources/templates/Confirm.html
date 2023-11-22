@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Active Account</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        p{
+            font-size: 24px;
+        }
+        a{
+        }
+    </style>
+</head>
+
+<body>
+    <p th:text="'Status of your account: ' + ${result}"/>
+    <div>
+        Click on this <a href="http://localhost:3000/">Link</a> to return to the home page
+        or after 5s it will automatically
+    <div/>
+        <script>
+            setTimeout(()=>{
+                window.location.href="http://localhost:3000/"
+            },5000)
+        </script>
+</body>
+
+</html>

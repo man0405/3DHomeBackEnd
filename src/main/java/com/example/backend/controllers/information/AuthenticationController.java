@@ -8,6 +8,8 @@ import com.example.backend.services.information.AuthenticationService;
 import com.example.backend.services.information.RegistrationService;
 import com.example.backend.services.information.UserService;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
@@ -40,20 +42,6 @@ public class AuthenticationController {
         return new CheckResponse("true");
     }
 
-
-    @GetMapping(path = "confirm")
-    public String confirm(@RequestParam("token") String token){
-        String result;
-        try{
-            result = registrationService.verifyToken(token);
-        }catch (IllegalStateException e ){
-            result = e.getMessage();
-        }
-
-        //TODO create Thymeleaf for Confirm token
-
-        return "Oke done";
-    }
 
 
     @PostMapping(value="/signin" )
