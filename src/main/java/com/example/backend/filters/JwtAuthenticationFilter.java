@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.example.backend.exception.CustomMessageException;
 import com.example.backend.services.information.JwtService;
 import com.example.backend.services.information.UserService;
+import jakarta.servlet.http.Cookie;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,6 +39,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
+//        Cookie[] cookies = request.getCookies();
+//        for (Cookie cookie : cookies){
+//            System.out.println("Cookie: "+ cookie.getName() +" " +cookie.getValue());
+//        }
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
