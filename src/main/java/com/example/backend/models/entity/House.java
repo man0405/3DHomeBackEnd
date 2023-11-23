@@ -1,10 +1,12 @@
 package com.example.backend.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.javafaker.PhoneNumber;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Entity
 @Table(name = "House")
@@ -27,6 +29,10 @@ public class House {
             inverseJoinColumns=@JoinColumn(name = "customer_id")
     )
     private List<Customer> customers;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "house_id")
+    private List<Image> images;
+
     public House() {
     }
 
@@ -71,6 +77,12 @@ public class House {
         if(customers == null)
             customers = new ArrayList<>();
         customers.add(theCustomer);
+    }
+
+    public void addImage(Image theImage){
+        if(images == null)
+            images = new ArrayList<>();
+        images.add(theImage);
     }
 
     @Override

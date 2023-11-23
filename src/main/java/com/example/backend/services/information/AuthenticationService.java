@@ -38,7 +38,7 @@ public class AuthenticationService {
                 .builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.ROLE_USER)
+                .role(Role.ROLE_CUSTOMER)
                 .build();
         var customer = Customer
                 .builder()

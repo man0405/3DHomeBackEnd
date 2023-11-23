@@ -8,8 +8,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @ToString
+@Entity
 @Table(name = "customer")
 public class Customer {
 
@@ -32,3 +32,5 @@ public class Customer {
     private User user;
 
 }
+
+

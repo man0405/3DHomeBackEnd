@@ -1,10 +1,16 @@
 package com.example.backend.models.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "Owners")
 public class Owner {
@@ -21,6 +27,7 @@ public class Owner {
     private String email;
     @Column(name = "phone")
     private String phone;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "owner_id")
     private List<House> houses;
@@ -29,9 +36,6 @@ public class Owner {
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private User user;
 
-    public Owner() {
-    }
-
     public Owner(String firstName, String lastName, String email, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,68 +43,9 @@ public class Owner {
         this.phone = phone;
     }
 
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public List<House> getHouses() {
-        return houses;
-    }
-
-    public void setHouses(List<House> houses) {
-        this.houses = houses;
-    }
-
     public void addHouse(House theHouse){
         if(houses == null)
             houses = new ArrayList<>();
         houses.add(theHouse);
-    }
-
-    @Override
-    public String toString() {
-        return "Owner{" +
-                "Id=" + Id +
-                ", fullName='" + firstName + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-//                ", houses=" + houses +
-                '}';
     }
 }

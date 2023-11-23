@@ -1,7 +1,8 @@
-package com.example.backend.services;
+package com.example.backend.services.Impl;
 
 import com.example.backend.repository.OwnerRepo;
 import com.example.backend.models.entity.Owner;
+import com.example.backend.services.OwnerService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
