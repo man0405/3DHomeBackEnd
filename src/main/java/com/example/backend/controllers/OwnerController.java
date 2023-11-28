@@ -51,13 +51,11 @@ public class OwnerController {
 
         // also just in case they pass an id in JSON ... set id to 0
         // this is to force a save of new item ... instead of update
-
         theOwner.setId(0);
-
         return ownerService.save(theOwner);
     }
 
-    // add mapping for PUT /owners - update existing owner
+    //  add mapping for PUT /owners - update existing owner
 
     @PutMapping("/owners")
     public Owner updateOwner(@RequestBody Owner theOwner) {
