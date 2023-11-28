@@ -33,4 +33,9 @@ public class ImageServiceImpl implements ImageService {
         return ImageUtils.decompressImage(dbImageData.get().getImageData());
     }
 
+    public byte[] downloadImage(Long imageId){
+        Optional<Image> dbImageData = imageRepo.findById(imageId);
+        return ImageUtils.decompressImage(dbImageData.get().getImageData());
+    }
+
 }

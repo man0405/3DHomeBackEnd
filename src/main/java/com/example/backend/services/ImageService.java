@@ -8,4 +8,6 @@ public interface ImageService {
     String uploadImage(MultipartFile file) throws IOException;
 
     byte[] downloadImage(String fileName);
+
+    byte[] downloadImage(Long imageId);
 }

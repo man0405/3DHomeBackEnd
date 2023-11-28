@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ImageRepo extends JpaRepository<Image, Long> {
     Optional<Image> findByName(String name);
+
 }

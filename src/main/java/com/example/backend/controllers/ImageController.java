@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@RequestMapping("/image")
 public class ImageController {
     @Autowired
     private ImageService imageService;
@@ -29,6 +30,14 @@ public class ImageController {
         byte[] imageData = imageService.downloadImage(fileName);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
+                .body(imageData);
+    }
+
+    @GetMapping("/{imageId}")
+    public ResponseEntity<?> downloadImage(@PathVariable Long imageId){
+        byte[] imageData = imageService.downloadImage(imageId);
+        return ResponseEntity.status(HttpStatus.OK)
+        .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);
     }
 

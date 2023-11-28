@@ -25,6 +25,7 @@ public class House {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "information_id")
     private Information information;
+
     @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Owner owner;
@@ -35,9 +36,12 @@ public class House {
             inverseJoinColumns=@JoinColumn(name = "customer_id")
     )
     private List<Customer> customers;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "house_id")
     private List<Image> images;
+
+
 
 
 
