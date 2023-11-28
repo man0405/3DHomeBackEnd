@@ -67,10 +67,11 @@ public class OwnerController {
     // add mapping for PUT /owners - add house for an owner
 
     @PutMapping("/add-house/{ownerId}")
-    public House addOwner(@PathVariable Integer ownerId, @RequestBody House theHouse){
+    public House addHouseForOwner(@PathVariable Integer ownerId, @RequestBody House theHouse){
         int addedHouse = houseService.save(theHouse);
         return ownerService.addHouse(ownerId, addedHouse);
     }
+
 
     // add mapping for DELETE /owners/{ownerId} - delete owner
 

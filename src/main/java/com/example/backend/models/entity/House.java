@@ -39,10 +39,7 @@ public class House {
     @JoinColumn(name = "house_id")
     private List<Image> images;
 
-    public House(double price, Information theInformation){
-        this.price = price;
-        this.information = theInformation;
-    }
+
 
     public House(double price, long number, String street, String province, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets) {
         this.price = price;
