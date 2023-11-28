@@ -8,8 +8,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @ToString
+@Entity
 @Table(name = "customer")
 public class Customer {
 
@@ -22,7 +22,10 @@ public class Customer {
 
     private String lastName;
 
+    private String email;
+
     private String phone;
+
 
 
     @JoinColumn(name = "user_id")
@@ -30,3 +33,5 @@ public class Customer {
     private User user;
 
 }
+
+

@@ -10,7 +10,6 @@ import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.entity.Customer;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -64,7 +63,7 @@ public class JwtService {
                 .compact();
     }
 
-    private  String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, Customer customer) {
+    private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, Customer customer) {
 //        extraClaims.put("id", customer.getId());
         return Jwts
                 .builder()
@@ -101,7 +100,6 @@ public class JwtService {
         } catch (Exception ex) {
             throw new CustomMessageException(ex.getLocalizedMessage(), String.valueOf(HttpStatus.UNAUTHORIZED.value()));
         }
-
     }
 
     private Key getSigningKey() {
