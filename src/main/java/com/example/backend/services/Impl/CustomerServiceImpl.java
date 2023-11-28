@@ -1,6 +1,7 @@
 package com.example.backend.services.Impl;
 
 import com.example.backend.models.entity.Customer;
+import com.example.backend.models.entity.House;
 import com.example.backend.repository.CustomerRepository;
 import com.example.backend.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +27,5 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer findByUser_Id(Long id) {
         return customerRepository.findByUser_Id(id);
     }
+
 }

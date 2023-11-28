@@ -1,6 +1,7 @@
 package com.example.backend.services;
 
 import com.example.backend.models.entity.Customer;
+import com.example.backend.models.entity.House;
 
 public interface CustomerService
 {

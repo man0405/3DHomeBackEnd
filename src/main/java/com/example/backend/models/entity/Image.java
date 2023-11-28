@@ -11,6 +11,7 @@ import lombok.*;
 @Entity
 @Table(name = "photo")
 public class Image {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 

@@ -15,4 +15,6 @@ public class Purchase {
     @JoinColumn(name = "house_id")
     private House house;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    public java.util.Date date;
 }

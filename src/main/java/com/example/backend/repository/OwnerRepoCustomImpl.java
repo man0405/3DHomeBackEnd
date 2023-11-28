@@ -1,5 +1,6 @@
 package com.example.backend.repository;
 
+import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Owner;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -25,4 +26,5 @@ public class OwnerRepoCustomImpl implements OwnerRepoCustom {
     public void updateOwner(Owner theOwner) {
         entityManager.merge(theOwner);
     }
+
 }

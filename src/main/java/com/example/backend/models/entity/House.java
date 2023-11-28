@@ -1,25 +1,31 @@
 package com.example.backend.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.github.javafaker.PhoneNumber;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "House")
+@Table(name = "house")
 public class House {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int Id;
-    @Column(name = "address")
-    private String address;
-    @Column(name = "information")
-    private String information;
-//    @JsonIgnore
+    @Column (name = "price")
+    private double price;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "information_id")
+    private Information information;
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Owner owner;
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
@@ -33,44 +39,24 @@ public class House {
     @JoinColumn(name = "house_id")
     private List<Image> images;
 
-    public House() {
+    public House(double price, Information theInformation){
+        this.price = price;
+        this.information = theInformation;
     }
 
-    public House(String address, String information) {
-        this.address = address;
-        this.information = information;
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getInformation() {
-        return information;
-    }
-
-    public void setInformation(String information) {
-        this.information = information;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
+    public House(double price, long number, String street, String province, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets) {
+        this.price = price;
+        information = new Information();
+        this.information.setNumber(number);
+        this.information.setStreet(street);
+        this.information.setProvince(province);
+        this.information.setCity(city);
+        this.information.setCountry(country);
+        this.information.setLandSize(landSize);
+        this.information.setNumberOfFloor(numberOfFloor);
+        this.information.setDirection(direction);
+        this.information.setBedrooms(bedrooms);
+        this.information.setToilets(toilets);
     }
 
     public void addCustomer(Customer theCustomer){
@@ -83,14 +69,5 @@ public class House {
         if(images == null)
             images = new ArrayList<>();
         images.add(theImage);
-    }
-
-    @Override
-    public String toString() {
-        return "House{" +
-                "Id=" + Id +
-                ", address='" + address + '\'' +
-                ", information='" + information + '\'' +
-                '}';
     }
 }

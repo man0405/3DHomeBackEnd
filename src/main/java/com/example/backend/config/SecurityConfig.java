@@ -65,6 +65,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/signup", "/api/v1/signin","/api/v1/signup/check").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/test/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "auto-api/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "api/add-house/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
