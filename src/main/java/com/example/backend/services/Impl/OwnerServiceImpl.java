@@ -33,7 +33,7 @@ public class OwnerServiceImpl implements OwnerService {
 	public Owner findById(int theId) {
 		Optional<Owner> result = ownerRepo.findById(theId);
 
-		Owner theOwner = null;
+		Owner theOwner;
 
 		if (result.isPresent()) {
 			theOwner = result.get();
