@@ -39,18 +39,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
-//        Cookie[] cookies = request.getCookies();
-//        for (Cookie cookie : cookies){
-//            System.out.println("Cookie: "+ cookie.getName() +" " +cookie.getValue());
-//        }
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
+         String jwt = null;
         final String userEmail;
-        if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for (Cookie cookie : cookies){
+                System.out.println("cookie : " + cookie.getName() +" " +cookie.getValue());
+                if(cookie.getName().equals("uss") ){
+                    System.out.println("uss" + cookie.getValue());
+                    jwt = cookie.getValue();
+                    break;
+                }
+            }
         }
-        jwt = authHeader.substring(7);
+//        System.out.println("cookie" + request.getCookies());
+        if(StringUtils.isEmpty(jwt)){
+            if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+            jwt = authHeader.substring(7);
+
+        }
+
         userEmail = jwtService.extractUserName(jwt);
         log.debug("useEmail - {}" , userEmail);
         if (StringUtils.isNotEmpty(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {

@@ -65,7 +65,14 @@ public class AuthenticationController {
         CheckAuth(request.getEmail(), request.getPassword());
         String token = authenticationService.signin(request).getToken();
 //        return new JwtAuthenticationResponse(token);
-        response.setHeader(HttpHeaders.SET_COOKIE,cookies(token).toString() );
+        response.setHeader(HttpHeaders.SET_COOKIE,cookies(token ,  1).toString() );
+        return new CheckResponse("true");
+    }
+
+
+    @GetMapping("/logout")
+    public CheckResponse logout(HttpServletResponse response){
+        response.setHeader(HttpHeaders.SET_COOKIE,cookies("", 0).toString());
         return new CheckResponse("true");
     }
 
@@ -88,7 +95,7 @@ public class AuthenticationController {
     }
 
 
-    private ResponseCookie cookies(String token){
+    private ResponseCookie cookies(String token, int hours){
 //        Cookie jwtTokenCookie = new Cookie("uss", token);
 //        jwtTokenCookie.setMaxAge(60*60);
 //        jwtTokenCookie.setSecure(true);
@@ -99,7 +106,7 @@ public class AuthenticationController {
         ResponseCookie cookie = ResponseCookie.from("uss", token)
                 .httpOnly(true)
                 .secure(true)
-                .maxAge(Duration.ofHours(1))
+                .maxAge(Duration.ofHours(hours))
                 .sameSite("None")
                 .path("/")
                 .build();
