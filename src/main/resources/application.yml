@@ -12,7 +12,7 @@ logging:
 spring:
   datasource:
     username: postgres
-    password: ${PASSWORD}
+    password: 160504
     url: jdbc:postgresql://localhost:5432/dacs
 #  jpa:
 #    hibernate:
