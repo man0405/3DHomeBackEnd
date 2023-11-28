@@ -1,18 +1,17 @@
 package com.example.backend.controllers.information;
 
 
+import com.example.backend.services.information.JwtService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/api/v1/test")
-@CrossOrigin
-
+@PreAuthorize("hasRole('USER')")
 public class TestController {
+
 
     @GetMapping("/anon")
     public String anonEndPoint() {
@@ -20,14 +19,18 @@ public class TestController {
     }
 
     @GetMapping("/users")
-    @PreAuthorize("hasRole('USER')")
     public String usersEndPoint() {
         return "ONLY users can see this";
     }
 
     @GetMapping("/admins")
-    @PreAuthorize("hasRole('ADMIN')")
     public String adminsEndPoint() {
         return "ONLY admins can see this";
     }
+
+    @GetMapping("/verify")
+    public String verifyToken(){
+        return "Oke";
+    }
+
 }
