@@ -77,6 +77,7 @@ public class OwnerController {
         ownerService.deleteById(ownerId);
 
         return "Deleted owner id - " + ownerId;
+        // Hello
     }
 
 }
