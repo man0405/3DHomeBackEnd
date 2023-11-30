@@ -1,7 +1,10 @@
-package com.example.backend.services;
+package com.example.backend.services.Impl;
 
-import com.example.backend.dao.OwnerRepo;
+import com.example.backend.models.entity.House;
+import com.example.backend.repository.HouseRepo;
+import com.example.backend.repository.OwnerRepo;
 import com.example.backend.models.entity.Owner;
+import com.example.backend.services.OwnerService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ import java.util.Optional;
 public class OwnerServiceImpl implements OwnerService {
 
 	private OwnerRepo ownerRepo;
+	@Autowired
+	private HouseRepo houseRepo;
 
 	@Autowired
 	public OwnerServiceImpl(OwnerRepo theOwnerRepo) {
@@ -28,7 +33,7 @@ public class OwnerServiceImpl implements OwnerService {
 	public Owner findById(int theId) {
 		Optional<Owner> result = ownerRepo.findById(theId);
 
-		Owner theOwner = null;
+		Owner theOwner;
 
 		if (result.isPresent()) {
 			theOwner = result.get();
@@ -70,10 +75,22 @@ public class OwnerServiceImpl implements OwnerService {
 		}
 	}
 
+
+
 	@Override
 	@Transactional
 	public void deleteById(int theId) {
 		ownerRepo.deleteById(theId);
+	}
+
+	@Override
+	@Transactional
+	public House addHouse(int OwnerId, int houseId) {
+		Owner theOwner = this.findById(OwnerId);
+		House theHouse = houseRepo.findBy_Id(houseId);
+		theOwner.addHouse(theHouse);
+		update(theOwner);
+		return theHouse;
 	}
 }
 

@@ -62,12 +62,15 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/v1/signup", "/api/v1/signin","/api/v1/signup/check").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/test/**").permitAll()
+                        .requestMatchers(HttpMethod.POST , "/api/v1/auth/**" ,"/api/test/v1/**" ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/auth/**","/api/test/v1/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "auto-api/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "api/add-house/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 
@@ -77,6 +80,7 @@ public class SecurityConfig {
             configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000/"));
             configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT" ,"DELETE" , "HEAD" , "OPTIONS"));
             configuration.setAllowedHeaders(List.of("Content-type"));
+            configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**" , configuration);
         return source;

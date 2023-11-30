@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.example.backend.exception.CustomMessageException;
 import com.example.backend.services.information.JwtService;
 import com.example.backend.services.information.UserService;
+import jakarta.servlet.http.Cookie;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,13 +40,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
+         String jwt = null;
         final String userEmail;
-        if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for (Cookie cookie : cookies){
+                System.out.println("cookie : " + cookie.getName() +" " +cookie.getValue());
+                if(cookie.getName().equals("uss") ){
+                    System.out.println("uss" + cookie.getValue());
+                    jwt = cookie.getValue();
+                    break;
+                }
+            }
         }
-        jwt = authHeader.substring(7);
+//        System.out.println("cookie" + request.getCookies());
+        if(StringUtils.isEmpty(jwt)){
+            if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+            jwt = authHeader.substring(7);
+
+        }
+
         userEmail = jwtService.extractUserName(jwt);
         log.debug("useEmail - {}" , userEmail);
         if (StringUtils.isNotEmpty(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {

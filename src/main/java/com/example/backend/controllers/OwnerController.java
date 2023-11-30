@@ -1,7 +1,10 @@
 package com.example.backend.controllers;
 
 
+import com.example.backend.models.entity.House;
+import com.example.backend.models.entity.Information;
 import com.example.backend.models.entity.Owner;
+import com.example.backend.services.HouseService;
 import com.example.backend.services.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,8 @@ import java.util.List;
 public class OwnerController {
 
     private OwnerService ownerService;
+    @Autowired
+    private HouseService houseService;
 
     @Autowired
     public OwnerController(OwnerService theOwnerService) {
@@ -59,6 +64,13 @@ public class OwnerController {
         return ownerService.save(theOwner);
     }
 
+    // add mapping for PUT /owners - add house for an owner
+
+    @PutMapping("/add-house/{ownerId}")
+    public House addHouseForOwner(@PathVariable Integer ownerId, @RequestBody House theHouse){
+        int addedHouse = houseService.save(theHouse);
+        return ownerService.addHouse(ownerId, addedHouse);
+    }
 
 
     // add mapping for DELETE /owners/{ownerId} - delete owner
@@ -79,6 +91,7 @@ public class OwnerController {
         return "Deleted owner id - " + ownerId;
         // Hellobwew
     }
+
 
 }
 

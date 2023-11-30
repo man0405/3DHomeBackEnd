@@ -10,7 +10,7 @@ public interface HouseService {
 	
 	House findById(int theId);
 	
-	void save(House theHouse);
+	int save(House theHouse);
 	
 	void deleteById(int theId);
 	

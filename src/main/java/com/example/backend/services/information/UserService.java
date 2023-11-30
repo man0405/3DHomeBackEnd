@@ -2,7 +2,9 @@ package com.example.backend.services.information;
 
 import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.entity.User;
+import com.example.backend.models.entity.Verification;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.repository.VerificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -13,12 +15,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final VerificationService verificationService;
 
     public UserDetailsService userDetailsService(){
         return new UserDetailsService() {
@@ -30,7 +34,7 @@ public class UserService {
     }
 
     public User save(User newUser){
-        this.userValidation(newUser);
+        this.userValidation(newUser.getEmail());
         if(newUser.getId() == null){
             newUser.setCreateAt(LocalDateTime.now());
         }
@@ -38,8 +42,20 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    private void userValidation(User newUser) {
-        if (userRepository.findByEmail(newUser.getEmail()).isPresent()) {
+    public String createToken(User user){
+
+        String token = UUID.randomUUID().toString();
+        Verification verification = new Verification(token, LocalDateTime.now() , LocalDateTime.now().plusMinutes(15),user);
+        verificationService.saveVerificationToken(verification);
+        return token;
+    }
+
+    public int enableUser(String email) {
+        return userRepository.enableUser(email);
+    }
+
+    public void userValidation(String email) {
+        if (userRepository.findByEmail(email).isPresent()) {
             throw new CustomMessageException("Email already exists", String.valueOf(HttpStatus.BAD_REQUEST.value()));
         }
     }
