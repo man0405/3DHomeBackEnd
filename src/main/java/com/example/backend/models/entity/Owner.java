@@ -1,6 +1,9 @@
 package com.example.backend.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,9 +32,14 @@ public class Owner {
     @Column(name = "phone")
     private String phone;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(
+            mappedBy = "owner",
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+//            orphanRemoval = true
+    )
     @JoinColumn(name = "owner_id")
+    @JsonManagedReference
     private List<House> houses;
 
     @JoinColumn(name = "user_id")

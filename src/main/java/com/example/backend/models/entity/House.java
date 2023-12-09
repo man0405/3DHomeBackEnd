@@ -1,6 +1,8 @@
 package com.example.backend.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -26,9 +28,14 @@ public class House {
     @JoinColumn(name = "information_id")
     private Information information;
 
-    @JsonIgnore
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+//    @JsonIgnore
+    @ManyToOne(
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "owner_id")
+//    @JsonBackReference
     private Owner owner;
+
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(
             name = "Visit",
@@ -41,16 +48,12 @@ public class House {
     @JoinColumn(name = "house_id")
     private List<Image> images;
 
-
-
-
-
-    public House(double price, long number, String street, String province, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets) {
+    public House(double price, long number, String street, String district, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets) {
         this.price = price;
         information = new Information();
         this.information.setNumber(number);
         this.information.setStreet(street);
-        this.information.setProvince(province);
+        this.information.setDistrict(district);
         this.information.setCity(city);
         this.information.setCountry(country);
         this.information.setLandSize(landSize);

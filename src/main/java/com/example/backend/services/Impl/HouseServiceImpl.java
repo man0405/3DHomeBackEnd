@@ -7,6 +7,9 @@ import com.example.backend.repository.InformationRepo;
 import com.example.backend.services.HouseService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,6 +62,13 @@ public class HouseServiceImpl implements HouseService {
 		houseRepo.deleteById(theId);
 	}
 
+	public List<House> findHousesWithSorting(String field){
+		return houseRepo.findAll(Sort.by(Sort.Direction.ASC, field));
+	}
+
+	public Page<House> findHousesWithPaginationAndSort(int offset, int pageSet, String field){
+		return houseRepo.findAll(PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
+	}
 }
 
 

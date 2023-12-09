@@ -12,7 +12,7 @@ logging:
 spring:
   datasource:
     username: postgres
-    password: 160504
+    password: ${PASSWORD}
     url: jdbc:postgresql://localhost:5432/dacs
 #  jpa:
 #    hibernate:
@@ -25,7 +25,7 @@ spring:
 #          time_zone: UTC
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -57,7 +57,10 @@ spring:
           connectiontimeout: 5000
           timeout: 3000
           writetimeout: 5000
-
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
 
 token:
   secret:

@@ -2,7 +2,6 @@ package com.example.backend.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 @Data
 @Builder
@@ -10,8 +9,8 @@ import org.hibernate.annotations.Type;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "image")
-public class Image {
+@Table(name = "file")
+public class FileData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,9 +21,7 @@ public class Image {
 
     private String type;
 
-    @Lob
-    @Column(name = "imageData", length = 1000)
-    private byte[] imageData;
+    private String filePath;
 
-    private String getImage;
+    private String getPath;
 }
