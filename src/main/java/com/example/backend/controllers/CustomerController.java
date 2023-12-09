@@ -6,11 +6,9 @@ import com.example.backend.dto.CustomerProfile;
 import com.example.backend.services.CustomerService;
 import com.example.backend.services.information.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@RequestMapping("/api/v1/customer/")
 @RestController
 public class CustomerController {
     @Autowired
@@ -20,17 +18,17 @@ public class CustomerController {
 
 
 
-    @PutMapping(value = "api/v1/profile")
+    @PutMapping(value = "/profile")
     public CustomerProfile updateProfile(@RequestBody CustomerProfile customerProfile, @RequestHeader("Authorization") String bear){
         customerProfile.setId(getID(bear));
         return customerService.updateProfile(customerProfile);
     }
-    @PutMapping(value = "api/v1/phone")
+    @PutMapping(value = "/phone")
     public CustomerPhone updatePhone(@RequestBody CustomerPhone customerPhone, @RequestHeader("Authorization") String bear){
         customerPhone.setId(getID(bear));
         return customerService.updatePhone(customerPhone);
     }
-    @PutMapping(value = "api/v1/password")
+    @PutMapping(value = "/password")
     public CustomerPassword updatePassword(@RequestBody CustomerPassword customerPassword, @RequestHeader("Authorization") String bear ){
         customerPassword.setId(getID(bear));
         return customerService.updatePassword(customerPassword);

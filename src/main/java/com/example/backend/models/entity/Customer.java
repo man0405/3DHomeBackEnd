@@ -28,7 +28,7 @@ public class Customer {
 
     private String AvatarUrl;
 
-    private Date dob;
+    private String dob;
     private String country;
 
 

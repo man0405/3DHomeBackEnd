@@ -29,7 +29,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer saveCustomer(Customer customer) {
-
         return  customerRepository.save(customer);
     }
 
@@ -76,13 +75,15 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerPassword updatePassword(CustomerPassword customerPassword) {
         Customer newCustomer = new Customer();
         Customer oldCustomer = new Customer();
+        Customer main = new Customer();
         oldCustomer = customerRepository.findById(customerPassword.getId()).orElseThrow(()-> new CustomMessageException("Customer with id = "+customerPassword.getId()+" does not exists", String.valueOf(HttpStatus.BAD_REQUEST)));
         String password = oldCustomer.getUser().getPassword();
         if (isCorrectPassword(password, customerPassword)){
             newCustomer = customerConvert.toCustomer(customerPassword,oldCustomer);
+            main = customerRepository.save(newCustomer);
         } else throw new IllegalStateException("Password is not correct");
-        newCustomer = customerRepository.save(newCustomer);
-        return customerConvert.toCustomerPassword(newCustomer);
+
+        return customerConvert.toCustomerPassword(main);
     }
     public static boolean isValidPhoneNumber(String phoneNumber) {
         // Regular expression pattern for valid phone numbers

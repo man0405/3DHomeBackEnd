@@ -13,11 +13,11 @@ import java.util.Date;
 public class CustomerProfile {
     private Long id;
 
-    private String firstName;
+    private String firstname;
 
-    private String lastName;
+    private String lastname;
 
-    private Date dob;
+    private String dob;
     private String country;
 
 //    public Long getId() {

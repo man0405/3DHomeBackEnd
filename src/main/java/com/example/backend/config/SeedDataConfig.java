@@ -2,8 +2,11 @@ package com.example.backend.config;
 
 
 import com.example.backend.models.Role;
+import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.User;
+import com.example.backend.repository.CustomerRepository;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.services.CustomerService;
 import com.example.backend.services.information.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +25,7 @@ public class SeedDataConfig implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+    private final CustomerRepository customerRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -36,7 +40,6 @@ public class SeedDataConfig implements CommandLineRunner {
                     .password(passwordEncoder.encode("Man@12345"))
                     .role(Role.ROLE_ADMIN)
                     .build();
-
             userService.save(admin);
             log.debug("created ADMIN user - {}", admin);
         }

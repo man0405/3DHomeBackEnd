@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 public class CustomerConvert {
     public CustomerProfile toCustomerProfile(Customer customer){
         CustomerProfile customerProfile = new CustomerProfile();
-        customerProfile.setFirstName(customer.getFirstName());
-        customerProfile.setLastName(customer.getLastName());
+        customerProfile.setFirstname(customer.getFirstName());
+        customerProfile.setLastname(customer.getLastName());
         customerProfile.setDob(customer.getDob());
         customerProfile.setCountry(customer.getCountry());
         return customerProfile;
@@ -24,15 +24,15 @@ public class CustomerConvert {
 
     public Customer toCustomer(CustomerProfile customerProfile, Customer customer){
         customer.setId(customerProfile.getId());
-        customer.setFirstName(customerProfile.getFirstName());
-        customer.setLastName(customerProfile.getLastName());
+        customer.setFirstName(customerProfile.getFirstname());
+        customer.setLastName(customerProfile.getLastname());
         customer.setDob(customerProfile.getDob());
         customer.setCountry(customerProfile.getCountry());
         return customer;
     }
     public Customer toCustomer(CustomerPhone customerPhone, Customer customer){
         customer.setId(customerPhone.getId());
-        customer.setCountry(customerPhone.getPhone());
+        customer.setPhone(customerPhone.getPhone());
         return customer;
     }
     public Customer toCustomer(CustomerPassword customerPassword, Customer customer){
@@ -56,8 +56,8 @@ public class CustomerConvert {
     public Customer toCustomer(CustomerProfile customerProfile){
         Customer customer = new Customer();
         customer.setId(customerProfile.getId());
-        customer.setFirstName(customerProfile.getFirstName());
-        customer.setLastName(customerProfile.getLastName());
+        customer.setFirstName(customerProfile.getFirstname());
+        customer.setLastName(customerProfile.getLastname());
         customer.setDob(customerProfile.getDob());
         customer.setCountry(customerProfile.getCountry());
         return customer;
