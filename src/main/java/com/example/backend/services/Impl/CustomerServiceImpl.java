@@ -4,6 +4,7 @@ import com.example.backend.convertDTO.CustomerConvert;
 import com.example.backend.dto.CustomerPassword;
 import com.example.backend.dto.CustomerPhone;
 import com.example.backend.dto.CustomerProfile;
+import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.House;
 import com.example.backend.repository.CustomerRepository;
@@ -44,9 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerProfile updateProfile(CustomerProfile customerProfile) {
         Customer oldCustomer = customerRepository.findById(customerProfile.getId()).orElseThrow(
                 ()-> new IllegalStateException("Customer with id = "+customerProfile.getId()+" does not exists"));
-        Customer newCustomer = new Customer();
-
-        newCustomer = customerConvert.toCustomer(customerProfile,oldCustomer);
+        Customer newCustomer =  customerConvert.toCustomer(customerProfile,oldCustomer);
 
         if (newCustomer.getFirstName()!=null && newCustomer.getLastName()!=null && !newCustomer.getFirstName().equals(oldCustomer.getFirstName()) && !newCustomer.getLastName().equals(oldCustomer.getLastName()))
             newCustomer = customerRepository.save(newCustomer);
@@ -77,7 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
         String password = oldCustomer.getUser().getPassword();
         if (isCorrectPassword(password, customerPassword)){
             newCustomer = customerConvert.toCustomer(customerPassword,oldCustomer);
-        } else throw new IllegalStateException("Password is not correct");
+        } else throw new CustomMessageException("Password is not correct","401");
         newCustomer = customerRepository.save(newCustomer);
         return customerConvert.toCustomerPassword(newCustomer);
     }

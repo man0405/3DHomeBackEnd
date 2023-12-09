@@ -40,14 +40,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
-         String jwt = null;
+        String jwt = null;
         final String userEmail;
         Cookie[] cookies = request.getCookies();
         if(cookies != null){
             for (Cookie cookie : cookies){
-                System.out.println("cookie : " + cookie.getName() +" " +cookie.getValue());
                 if(cookie.getName().equals("uss") ){
-                    System.out.println("uss" + cookie.getValue());
                     jwt = cookie.getValue();
                     break;
                 }
@@ -60,8 +58,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
             jwt = authHeader.substring(7);
-
         }
+        System.out.println("jwt :" + jwt);
 
         userEmail = jwtService.extractUserName(jwt);
         log.debug("useEmail - {}" , userEmail);
@@ -75,6 +73,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 context.setAuthentication(authToken);
                 SecurityContextHolder.setContext(context);
+                log.debug("done");
             } else {
                 throw new CustomMessageException("Unauthorized" , String.valueOf(HttpStatus.UNAUTHORIZED.value()));
             }

@@ -5,14 +5,14 @@ import com.example.backend.dto.CustomerPhone;
 import com.example.backend.dto.CustomerProfile;
 import com.example.backend.services.CustomerService;
 import com.example.backend.services.information.JwtService;
+import jakarta.servlet.http.Cookie;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class CustomerController {
+
     @Autowired
     CustomerService customerService;
     @Autowired
@@ -21,23 +21,24 @@ public class CustomerController {
 
 
     @PutMapping(value = "api/v1/profile")
-    public CustomerProfile updateProfile(@RequestBody CustomerProfile customerProfile, @RequestHeader("Authorization") String bear){
-        customerProfile.setId(getID(bear));
+    public CustomerProfile updateProfile(@RequestBody CustomerProfile customerProfile, @CookieValue("uss") String cookie){
+        System.out.println("Cookie: "  + cookie);
+        customerProfile.setId(getID(cookie));
         return customerService.updateProfile(customerProfile);
     }
     @PutMapping(value = "api/v1/phone")
-    public CustomerPhone updatePhone(@RequestBody CustomerPhone customerPhone, @RequestHeader("Authorization") String bear){
-        customerPhone.setId(getID(bear));
+    public CustomerPhone updatePhone(@RequestBody CustomerPhone customerPhone, @CookieValue("uss") String cookie){
+        customerPhone.setId(getID(cookie));
         return customerService.updatePhone(customerPhone);
     }
     @PutMapping(value = "api/v1/password")
-    public CustomerPassword updatePassword(@RequestBody CustomerPassword customerPassword, @RequestHeader("Authorization") String bear ){
-        customerPassword.setId(getID(bear));
+    public CustomerPassword updatePassword(@RequestBody CustomerPassword customerPassword, @CookieValue("uss") String cookie){
+        customerPassword.setId(getID(cookie));
         return customerService.updatePassword(customerPassword);
     }
     private Long getID(String bear){
-        String jwt =  bear.substring(7);
-        Long id = Long.parseLong(jwtService.extractId(jwt));
+//        String jwt =  bear.substring(7);
+        Long id = Long.parseLong(jwtService.extractId(bear));
         return id;
     }
 
