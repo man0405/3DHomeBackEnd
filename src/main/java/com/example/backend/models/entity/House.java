@@ -48,6 +48,8 @@ public class House {
     @JoinColumn(name = "house_id")
     private List<Image> images;
 
+    private String src;
+
     public House(double price, long number, String street, String district, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets) {
         this.price = price;
         information = new Information();
