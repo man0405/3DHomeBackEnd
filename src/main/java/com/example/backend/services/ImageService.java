@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.ImageResponse;
 import com.example.backend.models.entity.Image;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,5 +19,5 @@ public interface ImageService {
 
     byte[] downloadImageFromFileSystem(String fileName) throws IOException;
 
-    Page<Image> getLibary(int offset, int size, String field);
+    Page<ImageResponse> getLibary(int offset, int size, String field);
 }

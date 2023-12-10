@@ -1,6 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.APIResponse;
+import com.example.backend.dto.ImageResponse;
 import com.example.backend.models.entity.Image;
 import com.example.backend.services.ImageService;
 import org.springframework.data.domain.Page;
@@ -57,14 +58,15 @@ public class ImageController {
     }
 
     @GetMapping("/library/{offset}/{size}/{field}")
-    public APIResponse<Page<Image>> getLibraryImage(@PathVariable int offset, @PathVariable int size, @PathVariable String field){
-        Page<Image> imagesWithPaginationAndSort = imageService.getLibary(offset - 1, size, field);
+    public APIResponse<Page<ImageResponse>> getLibraryImage(@PathVariable int offset, @PathVariable int size, @PathVariable String field){
+        Page<ImageResponse> imagesWithPaginationAndSort = imageService.getLibary(offset - 1, size, field);
+
         return new APIResponse<>(imagesWithPaginationAndSort.getSize(), imagesWithPaginationAndSort);
     }
 
     @GetMapping("/library")
-    public APIResponse<Page<Image>> getLibraryImage(@RequestParam("page") int offset, @RequestParam("field") String field){
-        Page<Image> imagesWithPaginationAndSort = imageService.getLibary(offset - 1, 10, field);
+    public APIResponse<Page<ImageResponse>> getLibraryImage(@RequestParam("page") int offset, @RequestParam("field") String field){
+        Page<ImageResponse> imagesWithPaginationAndSort = imageService.getLibary(offset - 1, 10, field);
         return new APIResponse<>(imagesWithPaginationAndSort.getSize(), imagesWithPaginationAndSort);
     }
 }

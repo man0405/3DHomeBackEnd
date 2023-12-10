@@ -1,5 +1,6 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.ImageResponse;
 import com.example.backend.models.entity.FileData;
 import com.example.backend.models.entity.Image;
 import com.example.backend.repository.FileDataRepo;
@@ -18,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -89,7 +90,12 @@ public class ImageServiceImpl implements ImageService {
         return Files.readAllBytes(new File(filePath).toPath());
     }
 
-    public Page<Image> getLibary(int offset, int size, String field){
-        return imageRepo.findAll(PageRequest.of(offset, size).withSort(Sort.by(field)));
+    public Page<ImageResponse> getLibary(int offset, int size, String field){
+        return imageRepo.findAll(PageRequest.of(offset, size).withSort(Sort.by(field)))
+                .map(image -> new ImageResponse(
+                        image.getId(),
+                        image.getName(),
+                        image.getGetImage()
+                ));
     }
 }
