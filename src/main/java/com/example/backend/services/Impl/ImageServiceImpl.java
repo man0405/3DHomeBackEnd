@@ -1,5 +1,6 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.FileDataResponse;
 import com.example.backend.dto.ImageResponse;
 import com.example.backend.models.entity.FileData;
 import com.example.backend.models.entity.Image;
@@ -26,11 +27,11 @@ public class ImageServiceImpl implements ImageService {
 
     @Autowired
     private ImageRepo imageRepo;
-
+    
     @Autowired
     private FileDataRepo fileDataRepo;
 
-    private final String FOLDER_PATH = "/Users/mac/Library/CloudStorage/OneDrive-man1605/Springcore/10-spring-boot-aop/3DHomeBackEnd/image/";
+    private final String FOLDER_PATH = "/Users/mac/Downloads/3DHomeBackEnd/images/";
 
     @Transactional
     public String uploadImage(MultipartFile file) throws IOException {
@@ -90,12 +91,35 @@ public class ImageServiceImpl implements ImageService {
         return Files.readAllBytes(new File(filePath).toPath());
     }
 
-    public Page<ImageResponse> getLibary(int offset, int size, String field){
+    @Override
+    public String deleteFileSystem(String fileName) {
+        Optional<FileData> theFileData = fileDataRepo.findByName(fileName);
+        if(theFileData.isEmpty())
+            return "File doesn't exist";
+        String filePath = theFileData.get().getFilePath();
+        File theFile = new File(filePath);
+        if(!theFile.delete())
+            return "Delete Unsuccessfully";
+        fileDataRepo.delete(theFileData.get());
+        return "Deleted Successfully";
+    }
+
+    public Page<ImageResponse> getLibrary(int offset, int size, String field){
         return imageRepo.findAll(PageRequest.of(offset, size).withSort(Sort.by(field)))
                 .map(image -> new ImageResponse(
                         image.getId(),
                         image.getName(),
                         image.getGetImage()
+                ));
+    }
+
+    @Override
+    public Page<FileDataResponse> getLibrary(int offset) {
+        return fileDataRepo.findAll(PageRequest.of(offset, 10))
+                .map(fileData -> new FileDataResponse(
+                        fileData.getId(),
+                        fileData.getName(),
+                        fileData.getGetPath()
                 ));
     }
 }

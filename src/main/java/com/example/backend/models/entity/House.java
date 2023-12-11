@@ -28,7 +28,7 @@ public class House {
     @JoinColumn(name = "information_id")
     private Information information;
 
-//    @JsonIgnore
+
     @ManyToOne(
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY
     )
@@ -46,7 +46,7 @@ public class House {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "house_id")
-    private List<Image> images;
+    private List<FileData> images;
 
     private String src;
 
@@ -71,7 +71,7 @@ public class House {
         customers.add(theCustomer);
     }
 
-    public void addImage(Image theImage){
+    public void addImage(FileData theImage){
         if(images == null)
             images = new ArrayList<>();
         images.add(theImage);

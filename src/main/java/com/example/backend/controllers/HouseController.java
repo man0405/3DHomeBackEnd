@@ -17,8 +17,12 @@ import java.util.List;
 @RequestMapping("/house")
 public class HouseController {
 
-    @Autowired
-    private HouseService houseService;
+    private final HouseService houseService;
+
+    public HouseController(HouseService houseService) {
+        this.houseService = houseService;
+    }
+
     @GetMapping("/{field}")
     private APIResponse<List<House>> getHousesWithSort(@PathVariable String field) {
         List<House> allProducts = houseService.findHousesWithSorting(field);

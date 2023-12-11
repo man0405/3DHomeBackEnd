@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.FileDataResponse;
 import com.example.backend.dto.ImageResponse;
 import com.example.backend.models.entity.Image;
 import org.springframework.data.domain.Page;
@@ -19,5 +20,9 @@ public interface ImageService {
 
     byte[] downloadImageFromFileSystem(String fileName) throws IOException;
 
-    Page<ImageResponse> getLibary(int offset, int size, String field);
+    String deleteFileSystem(String fileName);
+
+    Page<ImageResponse> getLibrary(int offset, int size, String field);
+
+    Page<FileDataResponse> getLibrary(int offset);
 }

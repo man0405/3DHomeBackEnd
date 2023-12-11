@@ -25,7 +25,7 @@ spring:
 #          time_zone: UTC
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -59,8 +59,8 @@ spring:
           writetimeout: 5000
   servlet:
     multipart:
-      max-request-size: 10MB
-      max-file-size: 10MB
+      max-request-size: 50MB
+      max-file-size: 50MB
 
 token:
   secret:
