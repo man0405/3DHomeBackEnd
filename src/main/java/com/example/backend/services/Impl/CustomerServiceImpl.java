@@ -10,7 +10,10 @@ import com.example.backend.models.entity.House;
 import com.example.backend.repository.CustomerRepository;
 import com.example.backend.services.CustomerService;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.Matcher;
@@ -18,17 +21,14 @@ import java.util.regex.Pattern;
 
 
 @Service
+@AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
     private CustomerRepository customerRepository;
 
-    @Autowired
     private CustomerConvert customerConvert;
+    private PasswordEncoder passwordEncoder;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
 
     @Override
     public Customer saveCustomer(Customer customer) {
@@ -74,10 +74,14 @@ public class CustomerServiceImpl implements CustomerService {
         Customer oldCustomer = new Customer();
         oldCustomer = customerRepository.findById(customerPassword.getId()).orElseThrow(()-> new IllegalStateException("ID = "+customerPassword.getId()+" does not exists"));;
         String password = oldCustomer.getUser().getPassword();
-        if (isCorrectPassword(password, customerPassword)){
+        if(!customerPassword.getNewPassword().equals(customerPassword.getAgainNewPassword())){
+            throw  new CustomMessageException("The two passwords do not match", "401");
+        }
+        if (passwordEncoder.matches(customerPassword.getOldPassword(), password)){
+            customerPassword.setNewPassword(passwordEncoder.encode(customerPassword.getNewPassword()));
             newCustomer = customerConvert.toCustomer(customerPassword,oldCustomer);
         } else throw new CustomMessageException("Password is not correct","401");
-        newCustomer = customerRepository.save(newCustomer);
+//        newCustomer = customerRepository.save(newCustomer);
         return customerConvert.toCustomerPassword(newCustomer);
     }
     public static boolean isValidPhoneNumber(String phoneNumber) {

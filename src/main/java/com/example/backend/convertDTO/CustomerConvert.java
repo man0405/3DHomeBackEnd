@@ -32,7 +32,7 @@ public class CustomerConvert {
     }
     public Customer toCustomer(CustomerPhone customerPhone, Customer customer){
         customer.setId(customerPhone.getId());
-        customer.setCountry(customerPhone.getPhone());
+        customer.setPhone(customerPhone.getPhone());
         return customer;
     }
     public Customer toCustomer(CustomerPassword customerPassword, Customer customer){
@@ -47,12 +47,7 @@ public class CustomerConvert {
         customerPassword.setAgainNewPassword("");
         return customerPassword;
     }
-    public Customer toCustomer(CustomerPhone customerPhone){
-        Customer customer = new Customer();
-        customer.setId(customerPhone.getId());
-        customer.setPhone(customerPhone.getPhone());
-        return customer;
-    }
+
     public Customer toCustomer(CustomerProfile customerProfile){
         Customer customer = new Customer();
         customer.setId(customerProfile.getId());
