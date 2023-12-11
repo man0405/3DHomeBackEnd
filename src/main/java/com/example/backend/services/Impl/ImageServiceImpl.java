@@ -10,6 +10,7 @@ import com.example.backend.services.ImageService;
 import com.example.backend.util.ImageUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -31,7 +32,8 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private FileDataRepo fileDataRepo;
 
-    private final String FOLDER_PATH = "/Users/mac/Downloads/3DHomeBackEnd/images/";
+    @Value(value = "${local.path}")
+    private String FOLDER_PATH;
 
     @Transactional
     public String uploadImage(MultipartFile file) throws IOException {

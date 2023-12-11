@@ -66,6 +66,8 @@ token:
   secret:
     key: 48a868a4042f634ac04a117f00a87202131dd7c46c4b32c4acb3edc5e15f4511
   expirations: 3600000
+local:
+  path: ${PATH}
 
 
 
