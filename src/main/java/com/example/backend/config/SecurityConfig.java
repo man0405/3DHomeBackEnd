@@ -66,7 +66,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/auth/**","/api/test/v1/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "auto-api/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "api/add-house/**").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "api/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/image/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/image/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/house/**").permitAll()
