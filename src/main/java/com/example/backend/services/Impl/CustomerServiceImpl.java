@@ -6,16 +6,14 @@ import com.example.backend.dto.CustomerPhone;
 import com.example.backend.dto.CustomerProfile;
 import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.entity.Customer;
-import com.example.backend.models.entity.House;
 import com.example.backend.repository.CustomerRepository;
 import com.example.backend.services.CustomerService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +36,11 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer findByUser_Id(Long id) {
         return customerRepository.findByUser_Id(id);
+    }
+
+    @Override
+    public Customer findById(Long id) {
+        return customerRepository.findCustomerById(id);
     }
 
     @Transactional(rollbackOn = {Exception.class, Throwable.class})

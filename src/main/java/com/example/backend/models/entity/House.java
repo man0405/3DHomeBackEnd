@@ -33,7 +33,7 @@ public class House {
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY
     )
     @JoinColumn(name = "owner_id")
-//    @JsonBackReference
+    @JsonBackReference
     private Owner owner;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })

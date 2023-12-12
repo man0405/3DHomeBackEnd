@@ -23,7 +23,8 @@ public class CustomerController {
 
     @GetMapping(value ="info" )
     public InfoResponse getProfile(@CookieValue("uss") String cookie ){
-        Customer customer = customerService.findByUser_Id(ExtractIdFromToken(cookie));
+
+        Customer customer = customerService.findById(ExtractIdFromToken(cookie));
         return InfoResponse
                 .builder()
                 .phone(customer.getPhone())
