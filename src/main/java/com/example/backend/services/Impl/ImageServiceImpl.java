@@ -28,7 +28,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Autowired
     private ImageRepo imageRepo;
-    
+
     @Autowired
     private FileDataRepo fileDataRepo;
 
@@ -60,8 +60,8 @@ public class ImageServiceImpl implements ImageService {
 
     @Transactional
     public byte[] downloadImage(String fileName){
-       Optional<Image> image = imageRepo.findByName(fileName);
-       return ImageUtils.decompressImage(image.get().getImageData());
+        Optional<Image> image = imageRepo.findByName(fileName);
+        return ImageUtils.decompressImage(image.get().getImageData());
     }
 
     public String uploadImageToFileSystem(MultipartFile file) throws IOException {
@@ -83,7 +83,7 @@ public class ImageServiceImpl implements ImageService {
         if (fileData != null) {
             return "file uploaded successfully : " + filePath;
         }
-            return null;
+        return null;
     }
 
     @Transactional

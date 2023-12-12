@@ -14,7 +14,6 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Entity
-@ToString
 @Table(name = "customer")
 public class Customer {
 
@@ -29,6 +28,9 @@ public class Customer {
 
     private String phone;
 
+
+    private Date dob;
+    private String country;
 
 
     @JoinColumn(name = "user_id")
