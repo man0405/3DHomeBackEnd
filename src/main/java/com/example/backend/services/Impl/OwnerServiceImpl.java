@@ -40,7 +40,7 @@ public class OwnerServiceImpl implements OwnerService {
 		}
 		else {
 			// we didn't find the employee
-			throw new RuntimeException("Did not find employee id - " + theId);
+			throw new RuntimeException("Did not find owner id - " + theId);
 		}
 
 		return theOwner;
@@ -70,6 +70,7 @@ public class OwnerServiceImpl implements OwnerService {
 	public void update(Owner theOwner) {
 		try {
 			ownerRepo.updateOwner(theOwner);
+			System.out.println("hello");
 		}catch (Exception e){
 			e.printStackTrace();
 		}
@@ -88,6 +89,7 @@ public class OwnerServiceImpl implements OwnerService {
 	public House addHouse(int OwnerId, int houseId) {
 		Owner theOwner = this.findById(OwnerId);
 		House theHouse = houseRepo.findBy_Id(houseId);
+		theHouse.setOwner(theOwner);
 		theOwner.addHouse(theHouse);
 		update(theOwner);
 		return theHouse;

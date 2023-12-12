@@ -1,6 +1,11 @@
 package com.example.backend.models.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.security.Timestamp;
+import java.sql.Time;
 
 @Entity
 public class Purchase {
@@ -17,4 +22,12 @@ public class Purchase {
 
     @Temporal(TemporalType.TIMESTAMP)
     public java.util.Date date;
+
+    @CreationTimestamp
+    @Column (updatable = false)
+    private Timestamp createdDate;
+
+    @UpdateTimestamp
+    private java.sql.Timestamp lastModifiedDate;
+
 }

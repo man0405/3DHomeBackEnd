@@ -9,6 +9,4 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 
     Customer findByUser_Id(Long userId);
-
-
 }

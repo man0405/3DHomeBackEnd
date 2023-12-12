@@ -2,7 +2,6 @@ package com.example.backend.controllers;
 
 
 import com.example.backend.models.entity.House;
-import com.example.backend.models.entity.Information;
 import com.example.backend.models.entity.Owner;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.OwnerService;

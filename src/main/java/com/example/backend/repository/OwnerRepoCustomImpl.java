@@ -22,6 +22,7 @@ public class OwnerRepoCustomImpl implements OwnerRepoCustom {
         return query.getSingleResult();
     }
 
+
     @Override
     public void updateOwner(Owner theOwner) {
         entityManager.merge(theOwner);
