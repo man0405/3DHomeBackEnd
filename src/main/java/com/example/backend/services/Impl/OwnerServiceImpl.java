@@ -15,13 +15,13 @@ import java.util.Optional;
 @Service
 public class OwnerServiceImpl implements OwnerService {
 
-	private OwnerRepo ownerRepo;
-	@Autowired
-	private HouseRepo houseRepo;
+	private final OwnerRepo ownerRepo;
+	private final HouseRepo houseRepo;
 
 	@Autowired
-	public OwnerServiceImpl(OwnerRepo theOwnerRepo) {
+	public OwnerServiceImpl(OwnerRepo theOwnerRepo, HouseRepo houseRepo) {
 		ownerRepo = theOwnerRepo;
+		this.houseRepo = houseRepo;
 	}
 	
 	@Override
@@ -86,13 +86,12 @@ public class OwnerServiceImpl implements OwnerService {
 
 	@Override
 	@Transactional
-	public House addHouse(int OwnerId, int houseId) {
+	public int addHouse(int OwnerId, House theHouse) {
 		Owner theOwner = this.findById(OwnerId);
-		House theHouse = houseRepo.findBy_Id(houseId);
 		theHouse.setOwner(theOwner);
 		theOwner.addHouse(theHouse);
 		update(theOwner);
-		return theHouse;
+		return theHouse.getId();
 	}
 }
 

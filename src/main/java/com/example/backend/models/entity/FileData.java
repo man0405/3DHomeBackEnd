@@ -21,6 +21,7 @@ public class FileData {
 
     private String type;
 
+    @Column(length = 1024)
     private String filePath;
 
     private String getPath;

@@ -26,14 +26,12 @@ public class ImageController {
         this.imageService = imageService;
     }
 
-    @PostMapping
-    public ResponseEntity<?> uploadImage(@RequestParam("image")MultipartFile[] files) throws IOException {
-        String uploadImage = null;
-        for(MultipartFile file : files)
-            uploadImage = uploadImage + "\n" + imageService.uploadImage(file);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(uploadImage);
-    }
+//    @PostMapping
+//    public ResponseEntity<?> uploadImage(@RequestParam("image")MultipartFile[] files) throws IOException {
+//        String uploadImage = imageService.uploadImage(files);
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(uploadImage);
+//    }
 
     @GetMapping("/{fileName}")
     public ResponseEntity<?> downloadImage(@PathVariable String fileName){

@@ -3,13 +3,12 @@ package com.example.backend.controllers;
 import com.example.backend.dto.APIResponse;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
+import com.example.backend.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,10 +17,13 @@ import java.util.List;
 public class HouseController {
 
     private final HouseService houseService;
+    private final ImageService imageService;
 
-    public HouseController(HouseService houseService) {
+    public HouseController(HouseService houseService, ImageService imageService) {
         this.houseService = houseService;
+        this.imageService = imageService;
     }
+
 
     @GetMapping("/{field}")
     private APIResponse<List<House>> getHousesWithSort(@PathVariable String field) {
@@ -40,4 +42,10 @@ public class HouseController {
         return houseService.findById(id);
     }
 
+    @PutMapping("/add-image/{houseId}")
+    public House addImageToHouse(@PathVariable int houseId, @RequestParam("image")MultipartFile[] files) throws Exception {
+        House theHouse = houseService.findById(houseId);
+        imageService.addImagesToHouse(files, theHouse);
+        return theHouse;
+    }
 }

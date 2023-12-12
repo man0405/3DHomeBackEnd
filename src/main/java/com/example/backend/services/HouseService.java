@@ -13,7 +13,7 @@ public interface HouseService {
 	
 	House findById(int theId);
 	
-	int save(House theHouse);
+	House save(House theHouse);
 	
 	void deleteById(int theId);
 

@@ -3,6 +3,7 @@ package com.example.backend.services.Impl;
 import com.example.backend.dto.FileDataResponse;
 import com.example.backend.dto.ImageResponse;
 import com.example.backend.models.entity.FileData;
+import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Image;
 import com.example.backend.repository.FileDataRepo;
 import com.example.backend.repository.ImageRepo;
@@ -21,36 +22,58 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    @Autowired
-    private ImageRepo imageRepo;
+    private final ImageRepo imageRepo;
     
-    @Autowired
-    private FileDataRepo fileDataRepo;
+    private final FileDataRepo fileDataRepo;
 
-    @Value(value = "${local.path}")
+    @Value("${local.path}")
     private String FOLDER_PATH;
 
-    @Transactional
-    public String uploadImage(MultipartFile file) throws IOException {
-        Optional<Image> theImage = imageRepo.findByName(file.getOriginalFilename());
-        if(theImage.isPresent())
-            return "image is already existed";
-        String getPath = "http://localhost:8080/image/" + file.getOriginalFilename();
+    public ImageServiceImpl(ImageRepo imageRepo, FileDataRepo fileDataRepo) {
+        this.imageRepo = imageRepo;
+        this.fileDataRepo = fileDataRepo;
+    }
 
-        Image imageData = imageRepo.save(Image.builder()
-                .name(file.getOriginalFilename())
-                .type(file.getContentType())
-                .imageData(ImageUtils.compressImage(file.getBytes()))
-                .getImage(getPath)
-                .build());
-        if (imageData != null)
-            return "file uploaded successfully: " + file.getOriginalFilename();
-        return null;
+//    @Transactional
+    public String uploadImage(MultipartFile[] files) throws IOException {
+        String status = null;
+        for(MultipartFile file : files){
+            Optional<Image> theImage = imageRepo.findByName(file.getOriginalFilename());
+            if(theImage.isPresent())
+                status += "image is already existed \n";
+            String getPath = "http://localhost:8080/image/" + file.getOriginalFilename();
+            Image imageData = imageRepo.save(Image.builder()
+                    .name(file.getOriginalFilename())
+                    .type(file.getContentType())
+                    .imageData(ImageUtils.compressImage(file.getBytes()))
+                    .getImage(getPath)
+                    .build());
+            if (imageData != null)
+                status += "file uploaded successfully: " + file.getOriginalFilename() + "\n";
+        }
+        return status;
+    }
+
+    @Transactional
+    public House addImagesToHouse(MultipartFile[] files, House theHouse) throws IOException {
+        for(MultipartFile file : files){
+            String filePath = FOLDER_PATH + file.getOriginalFilename();
+            String getPath = "http://localhost:8080/image/fileSystem/" + file.getOriginalFilename();
+
+            FileData fileData = fileDataRepo.save(FileData.builder()
+                    .name(file.getOriginalFilename())
+                    .type(file.getContentType())
+                    .filePath(filePath)
+                    .getPath(getPath)
+                    .build());
+            file.transferTo(new File(filePath));
+            theHouse.addImage(fileData);
+        }
+        return theHouse;
     }
 
     @Transactional

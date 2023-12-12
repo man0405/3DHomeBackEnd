@@ -71,6 +71,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/image/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/house/**").permitAll()
                                 .requestMatchers(HttpMethod.DELETE,"/image/**").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/house/**").permitAll()
 //                        .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

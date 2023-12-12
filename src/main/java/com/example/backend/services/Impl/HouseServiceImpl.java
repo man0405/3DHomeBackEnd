@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 public class HouseServiceImpl implements HouseService {
 
-	private HouseRepo houseRepo;
+	private final HouseRepo houseRepo;
 	private final InformationRepo informationRepo;
 
 	@Autowired
@@ -50,10 +50,8 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	@Transactional
-	public int save(House theHouse) {
-		houseRepo.save(theHouse);
-		System.out.println(theHouse);
-		return theHouse.getId();
+	public House save(House theHouse) {
+		return houseRepo.save(theHouse);
 	}
 
 	@Override
