@@ -25,7 +25,7 @@ public class BackendApplication {
 	public CommandLineRunner commandLineRunner(OwnerService theOwnerService, HouseRepo theHouseRepo){
 		return runner ->{
 //			addOwner(theOwnerService);
-			addHouse(theOwnerService, theHouseRepo);
+//			addHouse(theOwnerService, theHouseRepo);
 //			findOwnerById(theOwnerService);
 //			findOwnerAndHouses(theOwnerService);
 
