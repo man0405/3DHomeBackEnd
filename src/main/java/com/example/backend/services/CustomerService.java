@@ -11,7 +11,6 @@ public interface CustomerService
 {
 
     Customer saveCustomer(Customer customer);
-    Customer findById(Long id);
     Customer findByUser_Id(Long id);
 
     Customer findById(Long id);

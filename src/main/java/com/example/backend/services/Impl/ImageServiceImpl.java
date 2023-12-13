@@ -3,6 +3,7 @@ package com.example.backend.services.Impl;
 import com.example.backend.dto.FileDataResponse;
 import com.example.backend.dto.ImageResponse;
 import com.example.backend.models.entity.FileData;
+import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Image;
 import com.example.backend.repository.FileDataRepo;
 import com.example.backend.repository.ImageRepo;
