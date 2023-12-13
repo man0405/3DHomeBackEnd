@@ -9,6 +9,7 @@ public interface CustomerService
 {
 
     Customer saveCustomer(Customer customer);
+    Customer findById(Long id);
     Customer findByUser_Id(Long id);
     CustomerProfile updateProfile(CustomerProfile customerProfile);
     CustomerPhone updatePhone(CustomerPhone customerPhone);
