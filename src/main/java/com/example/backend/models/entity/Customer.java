@@ -3,9 +3,11 @@ package com.example.backend.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Date;
 
+@DynamicUpdate
 @Data
 @Builder
 @AllArgsConstructor
@@ -26,16 +28,15 @@ public class Customer {
 
     private String phone;
 
-    private String AvatarUrl;
 
     private Date dob;
     private String country;
 
 
-
     @JoinColumn(name = "user_id")
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private User user;
+
 }
 
 

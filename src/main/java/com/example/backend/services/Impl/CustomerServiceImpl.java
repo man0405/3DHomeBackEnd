@@ -6,7 +6,6 @@ import com.example.backend.dto.CustomerPhone;
 import com.example.backend.dto.CustomerProfile;
 import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.entity.Customer;
-import com.example.backend.models.entity.House;
 import com.example.backend.repository.CustomerRepository;
 import com.example.backend.services.CustomerService;
 import jakarta.transaction.Transactional;
