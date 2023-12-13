@@ -22,8 +22,8 @@ public class Information {
     @Column(name = "street")
     private String street;
 
-    @Column(name = "province")
-    private String province;
+    @Column(name = "district")
+    private String district;
 
     @Column(name = "city")
     private String city;
@@ -47,10 +47,10 @@ public class Information {
     @Column(name = "toilets")
     private int toilets;
 
-    public Information(long number, String street, String province, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets) {
+    public Information(long number, String street, String district, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets) {
         this.number = number;
         this.street = street;
-        this.province = province;
+        this.district = district;
         this.city = city;
         this.country = country;
         this.landSize = landSize;

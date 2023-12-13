@@ -67,7 +67,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "auto-api/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "api/add-house/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.GET,"/image/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/image/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/house/**").permitAll()
+                                .requestMatchers(HttpMethod.DELETE,"/image/**").permitAll()
+                                .requestMatchers(HttpMethod.PUT,"/house/**").permitAll()
+//                        .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider()).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

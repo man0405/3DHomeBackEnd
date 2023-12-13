@@ -1,27 +1,33 @@
 package com.example.backend.controllers;
 
 
+import com.example.backend.models.entity.FileData;
 import com.example.backend.models.entity.House;
-import com.example.backend.models.entity.Information;
 import com.example.backend.models.entity.Owner;
 import com.example.backend.services.HouseService;
+import com.example.backend.services.ImageService;
 import com.example.backend.services.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class OwnerController {
 
-    private OwnerService ownerService;
-    @Autowired
-    private HouseService houseService;
+    private final OwnerService ownerService;
+    private final HouseService houseService;
+
+    private final ImageService imageService;
 
     @Autowired
-    public OwnerController(OwnerService theOwnerService) {
+    public OwnerController(OwnerService theOwnerService, HouseService houseService, ImageService imageService) {
         ownerService = theOwnerService;
+        this.houseService = houseService;
+        this.imageService = imageService;
     }
 
     // expose "/owners" and return a list of owners
@@ -51,7 +57,9 @@ public class OwnerController {
 
         // also just in case they pass an id in JSON ... set id to 0
         // this is to force a save of new item ... instead of update
+
         theOwner.setId(0);
+
         return ownerService.save(theOwner);
     }
 
@@ -65,8 +73,8 @@ public class OwnerController {
     // add mapping for PUT /owners - add house for an owner
 
     @PutMapping("/add-house/{ownerId}")
-    public House addHouseForOwner(@PathVariable Integer ownerId, @RequestBody House theHouse){
-        int addedHouse = houseService.save(theHouse);
+    public int addHouseForOwner(@PathVariable Integer ownerId, @RequestBody House theHouse) {
+        House addedHouse = houseService.save(theHouse);
         return ownerService.addHouse(ownerId, addedHouse);
     }
 
@@ -87,7 +95,6 @@ public class OwnerController {
         ownerService.deleteById(ownerId);
 
         return "Deleted owner id - " + ownerId;
-        // Hellobwew
     }
 
 

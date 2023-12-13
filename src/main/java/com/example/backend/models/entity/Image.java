@@ -2,6 +2,7 @@ package com.example.backend.models.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 @Data
 @Builder
@@ -9,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "photo")
+@Table(name = "image")
 public class Image {
 
     @Id
@@ -25,6 +26,5 @@ public class Image {
     @Column(name = "imageData", length = 1000)
     private byte[] imageData;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
-    private House house;
+    private String getImage;
 }

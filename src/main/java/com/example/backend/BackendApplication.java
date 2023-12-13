@@ -1,6 +1,7 @@
 package com.example.backend;
 
 import com.example.backend.models.entity.FacingDirection;
+import com.example.backend.repository.HouseRepo;
 import com.example.backend.repository.OwnerRepo;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Owner;
@@ -21,10 +22,10 @@ public class BackendApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(OwnerService theOwnerService, OwnerRepo theOwnerRepository){
+	public CommandLineRunner commandLineRunner(OwnerService theOwnerService, HouseRepo theHouseRepo){
 		return runner ->{
-			addOwner(theOwnerService);
-//			addHouse(theOwnerService, theOwnerRepository);
+//			addOwner(theOwnerService);
+			addHouse(theOwnerService, theHouseRepo);
 //			findOwnerById(theOwnerService);
 //			findOwnerAndHouses(theOwnerService);
 
@@ -99,7 +100,9 @@ public class BackendApplication {
 		houses.add(new House(1882890, 50, "Cedar Avenue", "Moscow", "", "Russia", 28890.58, 2, FacingDirection.NORTH, 5, 5));
 		for (int i = 1; i <= 50; i++){
 			Owner theOwner = theOwnerService.findById(i);
-			theOwner.addHouse(houses.get(i - 1));
+			House theHouse = houses.get(i - 1);
+			theHouse.setOwner(theOwner);
+			theOwner.addHouse(theHouse);
 			try{
 				theOwnerService.update(theOwner);
 			}catch (Exception e){

@@ -63,6 +63,7 @@ public class RegistrationService {
         if(verification.getConfirmedAt() != null){
             throw new IllegalStateException("Email already confirmed");
         }
+
         LocalDateTime expiredAt = verification.getExpiresAt();
         if(expiredAt.isBefore(LocalDateTime.now())){
             throw new IllegalStateException("Token expired");

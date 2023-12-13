@@ -20,5 +20,5 @@ public interface OwnerService {
 	
 	void deleteById(int theId);
 
-	House addHouse(int OnwerId, int HouseId);
+	int addHouse(int OnwerId, House House);
 }
