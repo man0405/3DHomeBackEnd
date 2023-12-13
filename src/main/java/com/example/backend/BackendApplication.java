@@ -46,7 +46,7 @@ public class BackendApplication {
 		System.out.println(theOwner.getHouses());
 	}
 
-	private void addHouse(OwnerService theOwnerService, OwnerRepo theownerRepo) {
+	private void addHouse(OwnerService theOwnerService, HouseRepo theHouseRepo) {
 		List<House> houses = new ArrayList<>();
 		houses.add(new House(1000000, 1, "Main Street", "New York", "NY", "USA", 28890.58, 2, FacingDirection.NORTH, 5, 5));
 		houses.add(new House(1939213, 2, "Oak Avenue", "London", "", "United Kingdom", 28890.58, 2, FacingDirection.NORTH, 5, 5));

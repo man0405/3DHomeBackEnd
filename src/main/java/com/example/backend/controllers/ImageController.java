@@ -1,5 +1,8 @@
 package com.example.backend.controllers;
 
+import com.example.backend.dto.APIResponse;
+import com.example.backend.dto.FileDataResponse;
+import com.example.backend.dto.ImageResponse;
 import com.example.backend.models.entity.Image;
 import com.example.backend.services.ImageService;
 import org.springframework.data.domain.Page;
@@ -74,6 +77,11 @@ public class ImageController {
         return new APIResponse<>(imagesWithPaginationAndSort.getSize(), imagesWithPaginationAndSort);
     }
 
+//    @GetMapping("/library")
+//    public APIResponse<Page<ImageResponse>> getLibraryImage(@RequestParam("page") int offset, @RequestParam("field") String field){
+//        Page<ImageResponse> imagesWithPaginationAndSort = imageService.getLibary(offset - 1, 10, field);
+//        return new APIResponse<>(imagesWithPaginationAndSort.getSize(), imagesWithPaginationAndSort);
+//    }
 
     @GetMapping("/library")
     public APIResponse<Page<FileDataResponse>> getLibraryImage(@RequestParam("page") int offset){

@@ -72,6 +72,12 @@ public class OwnerController {
 
     // add mapping for PUT /owners - add house for an owner
 
+//    @PutMapping("/add-house/{ownerId}")
+//    public House addHouseForOwner(@PathVariable Integer ownerId, @RequestBody House theHouse, @RequestParam("image") MultipartFile[] files) throws Exception {
+//        House addedHouse = houseService.save(theHouse);
+//        return ownerService.addHouse(ownerId,
+//                imageService.addImagesToHouse(files, addedHouse));
+//    }
     @PutMapping("/add-house/{ownerId}")
     public int addHouseForOwner(@PathVariable Integer ownerId, @RequestBody House theHouse) {
         House addedHouse = houseService.save(theHouse);

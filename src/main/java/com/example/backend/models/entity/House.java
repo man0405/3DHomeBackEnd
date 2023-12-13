@@ -35,6 +35,7 @@ public class House {
     @JoinColumn(name = "owner_id")
     @JsonBackReference
     private Owner owner;
+
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(
             name = "Visit",
@@ -42,6 +43,7 @@ public class House {
             inverseJoinColumns=@JoinColumn(name = "customer_id")
     )
     private List<Customer> customers;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "house_id")
     private List<FileData> images;
