@@ -1,6 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.APIResponse;
+import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;
@@ -32,8 +33,8 @@ public class HouseController {
     }
 
     @GetMapping("/pagination/{offset}/{pageSize}/{field}")
-    public APIResponse<Page<House>> getHousesWithSort(@PathVariable int offset, @PathVariable int pageSize, @PathVariable String field){
-        Page<House> housesWithPaginationAndSort = houseService.findHousesWithPaginationAndSort(offset - 1, pageSize, field);
+    public APIResponse<Page<HouseResponse>> getHousesWithSort(@PathVariable int offset, @PathVariable int pageSize, @PathVariable String field){
+        Page<HouseResponse> housesWithPaginationAndSort = houseService.findHousesWithPaginationAndSort(offset - 1, pageSize, field);
         return new APIResponse<>(housesWithPaginationAndSort.getSize(), housesWithPaginationAndSort);
     }
 

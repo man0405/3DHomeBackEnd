@@ -1,5 +1,8 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.FileDataResponse;
+import com.example.backend.dto.HouseResponse;
+import com.example.backend.models.entity.FileData;
 import com.example.backend.models.entity.Information;
 import com.example.backend.repository.HouseRepo;
 import com.example.backend.models.entity.House;
@@ -12,8 +15,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class HouseServiceImpl implements HouseService {
@@ -35,18 +40,19 @@ public class HouseServiceImpl implements HouseService {
 	@Override
 	public House findById(int theId) {
 		Optional<House> result = houseRepo.findById(theId);
-		
+
 		House theHouse = null;
-		
+
 		if (result.isPresent()) {
 			theHouse = result.get();
-		}
-		else {
+		} else {
 			// we didn't find the employee
 			throw new RuntimeException("Did not find owner id - " + theId);
 		}
+
 		return theHouse;
 	}
+
 
 	@Override
 	@Transactional
@@ -64,8 +70,15 @@ public class HouseServiceImpl implements HouseService {
 		return houseRepo.findAll(Sort.by(Sort.Direction.ASC, field));
 	}
 
-	public Page<House> findHousesWithPaginationAndSort(int offset, int pageSet, String field){
-		return houseRepo.findAll(PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
+	public Page<HouseResponse> findHousesWithPaginationAndSort(int offset, int pageSet, String field){
+		return houseRepo.findAll(PageRequest.of(offset, pageSet).withSort(Sort.by(field))).map(
+				house -> new HouseResponse(
+						house.getId(),
+						house.getName(),
+						house.getDescription(),
+						house.getImages().get(0)
+				)
+		);
 	}
 }
 

@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import org.springframework.data.domain.Page;
 
@@ -17,6 +18,6 @@ public interface HouseService {
 	
 	void deleteById(int theId);
 
-	Page<House> findHousesWithPaginationAndSort(int offset, int pageSet, String field);
+	Page<HouseResponse> findHousesWithPaginationAndSort(int offset, int pageSet, String field);
 
 }

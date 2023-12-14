@@ -22,6 +22,9 @@ public class House {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int Id;
+
+    private String name;
+
     @Column (name = "price")
     private double price;
     @OneToOne(cascade = CascadeType.ALL)
@@ -47,6 +50,8 @@ public class House {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "house_id")
     private List<FileData> images;
+
+    private String description;
 
     private String src;
 

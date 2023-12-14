@@ -1,5 +1,8 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.CustomerPassword;
+import com.example.backend.dto.CustomerPhone;
+import com.example.backend.dto.CustomerProfile;
 import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.House;
 import com.example.backend.repository.CustomerRepository;
@@ -26,6 +29,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer findByUser_Id(Long id) {
         return customerRepository.findByUser_Id(id);
+    }
+
+    @Override
+    public CustomerProfile updateProfile(CustomerProfile customerProfile) {
+        return null;
+    }
+
+    @Override
+    public CustomerPhone updatePhone(CustomerPhone customerPhone) {
+        return null;
+    }
+
+    @Override
+    public CustomerPassword updatePassword(CustomerPassword customerPassword) {
+        return null;
     }
 
 }
