@@ -57,6 +57,7 @@ public class HouseServiceImpl implements HouseService {
 	@Override
 	@Transactional
 	public House save(House theHouse) {
+		theHouse.addImage(new FileData());
 		return houseRepo.save(theHouse);
 	}
 
