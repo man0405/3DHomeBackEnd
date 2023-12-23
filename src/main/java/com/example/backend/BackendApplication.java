@@ -26,7 +26,7 @@ public class BackendApplication {
 		return runner ->{
 //			addOwner(theOwnerService);
 //			addHouse(theOwnerService, theHouseRepo);
-//			findOwnerById(theOwnerService);
+//			findOwnerById(theOwnerService)
 //			findOwnerAndHouses(theOwnerService);
 
 		};
