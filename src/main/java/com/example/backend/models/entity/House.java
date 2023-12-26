@@ -36,6 +36,7 @@ public class House {
     @JsonBackReference
     private Owner owner;
 
+    @JsonBackReference
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(
             name = "Visit",

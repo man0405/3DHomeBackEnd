@@ -4,13 +4,14 @@ import com.example.backend.dto.APIResponse;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.backend.services.VisitService;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static com.example.backend.util.ExtractId.ExtractIdFromToken;
 
 @RestController
 @RequestMapping("/house")
@@ -18,10 +19,12 @@ public class HouseController {
 
     private final HouseService houseService;
     private final ImageService imageService;
+    private final VisitService visitService;
 
-    public HouseController(HouseService houseService, ImageService imageService) {
+    public HouseController(HouseService houseService, ImageService imageService, VisitService visitService) {
         this.houseService = houseService;
         this.imageService = imageService;
+        this.visitService = visitService;
     }
 
 
@@ -38,7 +41,9 @@ public class HouseController {
     }
 
     @GetMapping("/id/{id}")
-    public House getHouseById(@PathVariable int id){
+    public House getHouseById(@PathVariable int id, @CookieValue("uss") String cookie){
+        Long customerId = ExtractIdFromToken(cookie);
+        visitService.save(Math.toIntExact(customerId),id);
         return houseService.findById(id);
     }
 

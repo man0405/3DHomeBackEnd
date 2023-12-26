@@ -1,12 +1,15 @@
 package com.example.backend.controllers;
 
-import com.example.backend.dto.CustomerPassword;
-import com.example.backend.dto.CustomerPhone;
-import com.example.backend.dto.CustomerProfile;
-import com.example.backend.dto.InfoResponse;
+import com.example.backend.dto.*;
 import com.example.backend.models.entity.Customer;
+import com.example.backend.models.entity.House;
 import com.example.backend.services.CustomerService;
+import com.example.backend.services.Impl.CustomerServiceImpl;
+import com.example.backend.services.Impl.VisitServiceImpl;
+import com.example.backend.services.VisitService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +22,7 @@ public class CustomerController {
 
     private final
     CustomerService customerService;
-    private PasswordEncoder passwordEncoder;
+    private final VisitService visitService;
 
     @GetMapping(value ="info" )
     public InfoResponse getProfile(@CookieValue("uss") String cookie ){
@@ -30,6 +33,12 @@ public class CustomerController {
                 .phone(customer.getPhone())
                 .name(customer.getFirstName() +" "+  customer.getLastName())
                 .build();
+    }
+
+    @GetMapping("seen/{offset}")
+    public CustomPage<House> getSeenProject(@CookieValue("uss") String cookie, @PathVariable int offset){
+        Page<House> housesPage = visitService.findSeenHouse(offset,5, Math.toIntExact((ExtractIdFromToken(cookie))));
+        return new CustomPage<>(housesPage);
     }
 
 
