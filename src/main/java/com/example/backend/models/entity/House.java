@@ -39,6 +39,7 @@ public class House {
     @JsonBackReference
     private Owner owner;
 
+    @JsonBackReference
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(
             name = "Visit",
@@ -54,8 +55,12 @@ public class House {
     private String description;
 
     private String src;
+    private String name;
 
-    public House(double price, long number, String street, String district, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets) {
+    @Column(length = 100000)
+    private String description;
+
+    public House(double price, long number, String street, String district, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets, String src ,String name, String description) {
         this.price = price;
         information = new Information();
         this.information.setNumber(number);
@@ -68,6 +73,9 @@ public class House {
         this.information.setDirection(direction);
         this.information.setBedrooms(bedrooms);
         this.information.setToilets(toilets);
+        this.src= src;
+        this.name= name;
+        this.description = description;
     }
 
     public void addCustomer(Customer theCustomer){

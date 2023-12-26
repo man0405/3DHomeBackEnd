@@ -17,5 +17,7 @@ public class Visit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Boolean priority;
+
 
 }
