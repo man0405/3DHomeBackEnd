@@ -37,7 +37,7 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 //    List<Integer> findAllHouseIdsByCustomerId(int customerId);
 //
 
-    @Query(value = "select v.house from Visit v where v.customer.id = ?1")
+    @Query(value = "select v.house from Visit v where v.customer.id = ?1 order by v.id desc")
     Page<House> findAllHouseIdsByCustomerId(int customerId, Pageable pageable);
 
 }

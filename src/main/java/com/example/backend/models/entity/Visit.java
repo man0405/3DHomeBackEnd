@@ -1,5 +1,6 @@
 package com.example.backend.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,10 +22,12 @@ public class Visit {
     private Long id;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "house_id")
     private House house;
 
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

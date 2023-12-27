@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Reference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -49,7 +51,8 @@ public class House {
 //    private List<Customer> customers;
 
     @OneToMany(mappedBy = "house")
-    private List<Visit> visits;
+    @JsonBackReference
+    private Set<Visit> visits;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "house_id")

@@ -1,6 +1,7 @@
 package com.example.backend.models.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -34,8 +35,11 @@ public class Customer {
     private String country;
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
+    @JsonBackReference
     private List<Visit> visits;
+
+
     @JoinColumn(name = "user_id")
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private User user;
