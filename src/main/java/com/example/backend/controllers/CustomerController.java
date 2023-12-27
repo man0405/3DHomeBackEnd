@@ -50,17 +50,17 @@ public class CustomerController {
         customerProfile.setId(ExtractIdFromToken(cookie));
         return customerService.updateProfile(customerProfile);
     }
+
     @PutMapping(value = "phone")
     public CustomerPhone updatePhone(@RequestBody CustomerPhone customerPhone, @CookieValue("uss") String cookie){
         customerPhone.setId(ExtractIdFromToken(cookie));
         return customerService.updatePhone(customerPhone);
     }
+
     @PutMapping(value = "password")
     public CustomerPassword updatePassword(@RequestBody CustomerPassword customerPassword, @CookieValue("uss") String cookie){
         customerPassword.setId(ExtractIdFromToken(cookie));
         System.out.println("customer password" + customerPassword);
         return customerService.updatePassword(customerPassword);
     }
-
-
 }

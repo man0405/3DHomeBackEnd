@@ -1,6 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.APIResponse;
+import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;

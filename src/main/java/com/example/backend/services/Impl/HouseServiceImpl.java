@@ -26,7 +26,7 @@ public class HouseServiceImpl implements HouseService {
 		houseRepo = theHouseRepo;
 		this.informationRepo = informationRepo;
 	}
-	
+
 	@Override
 	public List<House> findAll() {
 		return houseRepo.findAll();
@@ -35,9 +35,9 @@ public class HouseServiceImpl implements HouseService {
 	@Override
 	public House findById(int theId) {
 		Optional<House> result = houseRepo.findById(theId);
-		
+
 		House theHouse = null;
-		
+
 		if (result.isPresent()) {
 			theHouse = result.get();
 		}
@@ -68,9 +68,3 @@ public class HouseServiceImpl implements HouseService {
 		return houseRepo.findAll(PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
 	}
 }
-
-
-
-
-
-

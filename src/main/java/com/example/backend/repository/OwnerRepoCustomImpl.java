@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class OwnerRepoCustomImpl implements OwnerRepoCustom {
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
     @Autowired
     public OwnerRepoCustomImpl(EntityManager entityManager) {
         this.entityManager = entityManager;

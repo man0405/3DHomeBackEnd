@@ -14,7 +14,5 @@ public interface HouseRepo extends JpaRepository<House,Integer>, HouseRepoCustom
 
     List<House> findByIdIn(List<Integer> id);
     Page<House> findByIdIn(List<Integer> id, Pageable pageable);
-
-
 }
 

@@ -30,15 +30,17 @@ public class VisitServiceImpl implements VisitService {
         visitRepository.save(customerId, houseId);
     }
 
+//    @Override
+//    public Page<House> findSeenHouse(int offSet, int pageSet, int customerId) {
+//        List<Integer> houseIds= visitRepository.findAllHouseIdsByCustomerId(customerId);
+//        PageRequest pageRequest = PageRequest.of(offSet, pageSet);
+//        Page<House> houses = houseRepo.findByIdIn(houseIds,pageRequest);
+//        return houses;
+//    }
+
     @Override
     public Page<House> findSeenHouse(int offSet, int pageSet, int customerId) {
-        List<Integer> houseIds= visitRepository.findAllHouseIdsByCustomerId(customerId);
-
-        PageRequest pageRequest = PageRequest.of(offSet, pageSet);
-
-        Page<House> page = houseRepo.findByIdIn(houseIds,pageRequest);
-        return page;
-
+        return visitRepository.findAllHouseIdsByCustomerId(customerId, PageRequest.of(offSet, pageSet));
     }
 
     private boolean checkExisting(int customerId, int houseId){
