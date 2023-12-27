@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "file")
+@Table(name = "files")
 public class FileData {
 
     @Id
@@ -25,4 +25,8 @@ public class FileData {
     private String filePath;
 
     private String getPath;
+
+    private String src;
+
+    private Boolean main;
 }

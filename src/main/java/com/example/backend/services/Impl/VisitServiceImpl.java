@@ -33,10 +33,10 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public Page<House> findSeenHouse(int offSet, int pageSet, int customerId) {
         List<Integer> houseIds= visitRepository.findAllHouseIdsByCustomerId(customerId);
+
         PageRequest pageRequest = PageRequest.of(offSet, pageSet);
+
         Page<House> page = houseRepo.findByIdIn(houseIds,pageRequest);
-
-
         return page;
 
     }
