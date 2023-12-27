@@ -18,6 +18,6 @@ public interface HouseService {
 	
 	void deleteById(int theId);
 
-	Page<HouseResponse> findHousesWithPaginationAndSort(int offset, int pageSet, String field);
+	Page<House> findHousesWithPaginationAndSort(int offset, int pageSet, String field);
 
 }

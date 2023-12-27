@@ -39,26 +39,24 @@ public class House {
     @JsonBackReference
     private Owner owner;
 
-    @JsonBackReference
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
-    @JoinTable(
-            name = "Visit",
-            joinColumns = @JoinColumn(name = "house_id"),
-            inverseJoinColumns=@JoinColumn(name = "customer_id")
-    )
-    private List<Customer> customers;
+//    @JsonBackReference
+//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+//    @JoinTable(
+//            name = "visit",
+//            joinColumns = @JoinColumn(name = "house_id"),
+//            inverseJoinColumns=@JoinColumn(name = "customer_id")
+//    )
+//    private List<Customer> customers;
+
+    @OneToMany(mappedBy = "house")
+    private List<Visit> visits;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "house_id")
     private List<FileData> images;
 
     private String description;
-
     private String src;
-    private String name;
-
-    @Column(length = 100000)
-    private String description;
 
     public House(double price, long number, String street, String district, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets, String src ,String name, String description) {
         this.price = price;
@@ -73,16 +71,17 @@ public class House {
         this.information.setDirection(direction);
         this.information.setBedrooms(bedrooms);
         this.information.setToilets(toilets);
-        this.src= src;
-        this.name= name;
+        this.src = src;
+        this.name = name;
         this.description = description;
     }
 
-    public void addCustomer(Customer theCustomer){
-        if(customers == null)
-            customers = new ArrayList<>();
-        customers.add(theCustomer);
-    }
+
+//    public void addCustomer(Customer theCustomer){
+//        if(customers == null)
+//            customers = new ArrayList<>();
+//        customers.add(theCustomer);
+//    }
 
     public void addImage(FileData theImage){
         if(images == null)

@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Date;
+import java.util.List;
 
 @DynamicUpdate
 @Data
@@ -33,6 +34,8 @@ public class Customer {
     private String country;
 
 
+    @OneToMany
+    private List<Visit> visits;
     @JoinColumn(name = "user_id")
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private User user;

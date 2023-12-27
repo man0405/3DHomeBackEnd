@@ -1,6 +1,10 @@
 package com.example.backend.repository;
 
+import com.example.backend.models.entity.Customer;
+import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Visit;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,7 +32,12 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 //    @Query(value = "select house_id from Visit  where customer_id = ?1 order by id desc" , nativeQuery = true)
 //    List<Integer> findAllHouseIdsByCustomerId(int customerId);
 
-    @Query(value = "SELECT house_id FROM Visit WHERE customer_id = ?1 ORDER BY id DESC", nativeQuery = true)
-    List<Integer> findAllHouseIdsByCustomerId(int customerId);
+
+//    @Query(value = "SELECT house_id FROM Visit WHERE customer_id = ?1 ORDER BY id DESC", nativeQuery = true)
+//    List<Integer> findAllHouseIdsByCustomerId(int customerId);
+//
+
+    @Query(value = "select v.house from Visit v where v.customer.id = ?1")
+    Page<House> findAllHouseIdsByCustomerId(int customerId, Pageable pageable);
 
 }
