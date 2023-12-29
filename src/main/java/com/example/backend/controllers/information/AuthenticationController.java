@@ -5,21 +5,23 @@ import com.example.backend.dto.*;
 import com.example.backend.exception.CustomMessageException;
 
 
+import com.example.backend.models.entity.Customer;
+import com.example.backend.services.CustomerService;
 import com.example.backend.services.information.AuthenticationService;
 import com.example.backend.services.information.RegistrationService;
 import com.example.backend.services.information.UserService;
-import jakarta.servlet.http.Cookie;
+import com.example.backend.util.ExtractId;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
 
 import java.time.Duration;
 
+import static com.example.backend.util.ExtractId.ExtractIdFromToken;
 import static com.example.backend.util.Regex.CheckMail;
 import static com.example.backend.util.Regex.CheckPassword;
 
@@ -54,10 +56,8 @@ public class AuthenticationController {
     @PostMapping(value="/signin" )
     public CheckResponse signin(@RequestBody SignInRequest request , HttpServletResponse response ) {
         System.out.println(request.getEmail() + request.getPassword());
-
         CheckAuth(request.getEmail(), request.getPassword());
         String token = authenticationService.signin(request).getToken();
-//        return new JwtAuthenticationResponse(token);
         response.setHeader(HttpHeaders.SET_COOKIE,cookies(token ,  1).toString() );
         return new CheckResponse("true");
     }

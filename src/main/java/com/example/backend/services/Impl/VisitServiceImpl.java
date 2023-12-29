@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -19,7 +20,6 @@ import java.util.*;
 public class VisitServiceImpl implements VisitService {
 
     private final VisitRepository visitRepository;
-    private final HouseRepo houseRepo;
 
 
     @Override
@@ -27,7 +27,7 @@ public class VisitServiceImpl implements VisitService {
         if(checkExisting(customerId,houseId)){
             return;
         }
-        visitRepository.save(customerId, houseId);
+        visitRepository.save(customerId, houseId, LocalDateTime.now());
     }
 
 //    @Override
@@ -41,6 +41,15 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public Page<House> findSeenHouse(int offSet, int pageSet, int customerId) {
         return visitRepository.findAllHouseIdsByCustomerId(customerId, PageRequest.of(offSet, pageSet));
+    }
+
+    @Override
+    public void updatePriority(int customerId, int houseId) {
+        var visit = visitRepository.findVisitByCustomer_IdAndHouse_Id(customerId, houseId);
+        if(visit.isPresent() && visit.get().getPriority()==null){
+            visitRepository.updatePriority(customerId, houseId);
+        }
+
     }
 
     private boolean checkExisting(int customerId, int houseId){

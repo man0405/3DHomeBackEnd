@@ -22,16 +22,22 @@ public class CustomerController {
 
     private final
     CustomerService customerService;
+
     private final VisitService visitService;
 
     @GetMapping(value ="info" )
     public InfoResponse getProfile(@CookieValue("uss") String cookie ){
 
         Customer customer = customerService.findById(ExtractIdFromToken(cookie));
+
         return InfoResponse
                 .builder()
                 .phone(customer.getPhone())
                 .name(customer.getFirstName() +" "+  customer.getLastName())
+                .dob(customer.getDob())
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .country(customer.getCountry())
                 .build();
     }
 

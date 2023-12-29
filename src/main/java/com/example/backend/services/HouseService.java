@@ -1,6 +1,5 @@
 package com.example.backend.services;
 
-import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import org.springframework.data.domain.Page;
 

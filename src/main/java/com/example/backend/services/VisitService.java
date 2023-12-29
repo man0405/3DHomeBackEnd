@@ -11,4 +11,6 @@ public interface VisitService {
 
     Page<House> findSeenHouse(int offset, int pageSet, int customerId);
 
+    void updatePriority(int customerId , int houseId);
+
 }

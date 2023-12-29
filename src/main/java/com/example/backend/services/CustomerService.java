@@ -13,6 +13,7 @@ public interface CustomerService
     Customer saveCustomer(Customer customer);
     Customer findByUser_Id(Long id);
 
+    Optional<Customer> customer(Long id);
     Customer findById(Long id);
     CustomerProfile updateProfile(CustomerProfile customerProfile);
     CustomerPhone updatePhone(CustomerPhone customerPhone);

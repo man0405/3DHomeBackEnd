@@ -40,7 +40,13 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer findById(Long id) {
+//        return customerRepository.findCustomerById(id);
         return customerRepository.findCustomerById(id);
+    }
+
+    public Optional<Customer> customer(Long id) {
+//        return customerRepository.findCustomerById(id);
+        return customerRepository.findById(id);
     }
 
     @Transactional(rollbackOn = {Exception.class, Throwable.class})

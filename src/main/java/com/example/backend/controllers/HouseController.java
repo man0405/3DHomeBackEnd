@@ -1,7 +1,6 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.APIResponse;
-import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;
@@ -54,4 +53,13 @@ public class HouseController {
         imageService.addImagesToHouse(files, theHouse);
         return theHouse;
     }
+
+    @PutMapping("/leave-info/{id}")
+    public void leaveInformation(@PathVariable int id, @CookieValue("uss") String cookie){
+        Long customerId = ExtractIdFromToken(cookie);
+        visitService.updatePriority( Math.toIntExact(customerId),id );
+
+    }
+
+
 }
