@@ -67,6 +67,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "auto-api/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "api/add-house/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "api/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "house/**").permitAll()
                         .requestMatchers("/api/v1/customer/**").permitAll()
                         .anyRequest().authenticated()
                 )

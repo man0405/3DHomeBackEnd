@@ -5,6 +5,7 @@ import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Owner;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface OwnerService {
 
@@ -20,5 +21,5 @@ public interface OwnerService {
 	
 	void deleteById(int theId);
 
-	House addHouse(int OnwerId, int HouseId);
+	House addHouse(int OnwerId, UUID HouseId);
 }

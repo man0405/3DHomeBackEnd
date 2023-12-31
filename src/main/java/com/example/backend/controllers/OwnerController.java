@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -68,7 +69,7 @@ public class OwnerController {
 
     @PutMapping("/add-house/{ownerId}")
     public House addHouseForOwner(@PathVariable Integer ownerId, @RequestBody House theHouse){
-        int addedHouse = houseService.save(theHouse);
+        UUID addedHouse = houseService.save(theHouse);
         return ownerService.addHouse(ownerId, addedHouse);
     }
 

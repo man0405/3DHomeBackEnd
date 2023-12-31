@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class HouseServiceImpl implements HouseService {
@@ -30,7 +31,7 @@ public class HouseServiceImpl implements HouseService {
 	}
 
 	@Override
-	public House findById(int theId) {
+	public House findById(UUID theId) {
 		Optional<House> result = houseRepo.findById(theId);
 		
 		House theHouse = null;
@@ -47,7 +48,7 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	@Transactional
-	public int save(House theHouse) {
+	public UUID save(House theHouse) {
 		houseRepo.save(theHouse);
 		System.out.println(theHouse);
 		return theHouse.getId();
@@ -55,7 +56,7 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	@Transactional
-	public void deleteById(int theId) {
+	public void deleteById(UUID theId) {
 		houseRepo.deleteById(theId);
 	}
 

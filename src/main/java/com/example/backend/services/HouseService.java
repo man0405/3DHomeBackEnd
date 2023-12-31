@@ -3,15 +3,16 @@ package com.example.backend.services;
 import com.example.backend.models.entity.House;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface HouseService {
 
 	List<House> findAll();
 	
-	House findById(int theId);
+	House findById(UUID theId);
 	
-	int save(House theHouse);
+	UUID save(House theHouse);
 	
-	void deleteById(int theId);
+	void deleteById(UUID theId);
 	
 }

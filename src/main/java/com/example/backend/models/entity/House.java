@@ -3,9 +3,11 @@ package com.example.backend.models.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Data
@@ -17,9 +19,9 @@ import java.util.List;
 @Table(name = "house")
 public class House {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @UuidGenerator(style = UuidGenerator.Style.TIME)
     @Column(name = "id")
-    private int Id;
+    private UUID Id;
     @Column (name = "price")
     private double price;
     @OneToOne(cascade = CascadeType.ALL)

@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 @Repository
 public class HouseRepoCustomImpl implements HouseRepoCustom{
     @Autowired
@@ -12,7 +14,7 @@ public class HouseRepoCustomImpl implements HouseRepoCustom{
 
 
     @Override
-    public House findBy_Id(int id) {
+    public House findBy_Id(UUID id) {
         return entityManager.find(House.class, id);
     }
 }

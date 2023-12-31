@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
@@ -85,7 +86,7 @@ public class OwnerServiceImpl implements OwnerService {
 
 	@Override
 	@Transactional
-	public House addHouse(int OwnerId, int houseId) {
+	public House addHouse(int OwnerId, UUID houseId) {
 		Owner theOwner = this.findById(OwnerId);
 		House theHouse = houseRepo.findBy_Id(houseId);
 		theOwner.addHouse(theHouse);
