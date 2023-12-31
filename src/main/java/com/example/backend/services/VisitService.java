@@ -4,6 +4,8 @@ import com.example.backend.models.entity.House;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
+import java.util.Optional;
+
 
 public interface VisitService {
 
@@ -13,4 +15,5 @@ public interface VisitService {
 
     void updatePriority(int customerId , int houseId);
 
+    List<Integer> visitPerWeek(int theHouseId);
 }

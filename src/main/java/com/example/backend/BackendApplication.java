@@ -6,6 +6,7 @@ import com.example.backend.repository.OwnerRepo;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Owner;
 import com.example.backend.services.OwnerService;
+import com.example.backend.services.VisitService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,13 +23,14 @@ public class BackendApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(OwnerService theOwnerService, HouseRepo theHouseRepo){
+	public CommandLineRunner commandLineRunner(VisitService theVisitService, HouseRepo theHouseRepo){
 		return runner ->{
 //			addOwner(theOwnerService);
 //			addHouse(theOwnerService, theHouseRepo);
 //			findOwnerById(theOwnerService)
 //			findOwnerAndHouses(theOwnerService);
-
+//			System.out.println(theHouseRepo.findBy_Id(1));
+			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
 		};
 	}
 

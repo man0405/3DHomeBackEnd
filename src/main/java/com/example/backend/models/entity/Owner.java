@@ -34,7 +34,7 @@ public class Owner {
 
     @OneToMany(
             mappedBy = "owner",
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
 //            orphanRemoval = true
     )

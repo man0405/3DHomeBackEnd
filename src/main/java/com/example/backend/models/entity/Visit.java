@@ -1,13 +1,16 @@
 package com.example.backend.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @NoArgsConstructor
 @Data
@@ -31,7 +34,9 @@ public class Visit {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    private LocalDateTime VisitedAt;
+    private LocalDate dayVisited;
+
+    private LocalTime timeVisited;
 
     private Boolean priority;
 
