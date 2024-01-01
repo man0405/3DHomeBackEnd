@@ -1,6 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.APIResponse;
+import com.example.backend.dto.CustomPage;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;
@@ -33,6 +34,13 @@ public class HouseController {
     private APIResponse<List<House>> getHousesWithSort(@PathVariable String field) {
         List<House> allProducts = houseService.findHousesWithSorting(field);
         return new APIResponse<>(allProducts.size(), allProducts);
+    }
+
+    @GetMapping("/owner-houses/{offset}/{pageSize}/{field}")
+    public CustomPage<House> getHouses(@CookieValue("uss") String cookie, @PathVariable int offset, @PathVariable int pageSize, @PathVariable String field){
+        Page<House> houses = houseService.findOwnerHouses(Math.toIntExact(ExtractIdFromToken(cookie)),offset,pageSize,field);
+        return new CustomPage<>(houses);
+
     }
 
     @GetMapping("/pagination/{offset}/{pageSize}/{field}")

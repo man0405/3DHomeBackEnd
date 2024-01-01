@@ -20,12 +20,12 @@ public class CustomPage<T> {
     class CustomPageable {
         int pageNumber;
         int pageSize;
-        int totalPage;
+        int totalPages;
 
         public CustomPageable(int pageNumber, int pageSize, int totalPage){
             this.pageNumber= pageNumber;
             this.pageSize= pageSize;
-            this.totalPage = totalPage;
+            this.totalPages = totalPage;
         }
 
     }
