@@ -1,5 +1,6 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.VisitCustomerRes;
 import com.example.backend.models.entity.House;
 import com.example.backend.repository.HouseRepo;
 import com.example.backend.repository.OwnerRepo;
@@ -106,6 +107,27 @@ public class OwnerServiceImpl implements OwnerService {
 		temp.add( ownerRepo.leaveInformation(ownerId));
 		temp.add( ownerRepo.totalProject(ownerId));
 		return temp;
+	}
+
+	@Override
+	public List<VisitCustomerRes> findVisitCustomerInfo(int ownerId) {
+//		return ownerRepo.VisitCustomerInfo(ownerId);
+		List<VisitCustomerRes> res = new ArrayList<>();
+		List<Object[]> temp = ownerRepo.VisitCustomerInfo(ownerId);
+		temp.forEach(item -> {
+			VisitCustomerRes visit = VisitCustomerRes.builder()
+					.priority(item[0] != null)
+					.project((String) item[1])
+					.firstName((String) item[2])
+					.lastName((String) item[3])
+					.email((String) item[4])
+					.phone((String) item[5])
+					.build();
+			res.add(visit);
+
+		});
+
+		return res;
 	}
 }
 

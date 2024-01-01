@@ -1,6 +1,7 @@
 package com.example.backend.controllers;
 
 
+import com.example.backend.dto.VisitCustomerRes;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Owner;
 import com.example.backend.services.HouseService;
@@ -89,6 +90,12 @@ public class OwnerController {
     }
 
 
+    @GetMapping("/visitCustomerInfo")
+    public List<VisitCustomerRes> findVisitInfo(@CookieValue("uss") String cookie){
+        return ownerService.findVisitCustomerInfo(Math.toIntExact(ExtractIdFromToken(cookie)));
+    }
+
+
     // add mapping for DELETE /owners/{ownerId} - delete owner
 
     @DeleteMapping("/owners/{ownerId}")
@@ -106,6 +113,8 @@ public class OwnerController {
 
         return "Deleted owner id - " + ownerId;
     }
+
+
 
 
 }

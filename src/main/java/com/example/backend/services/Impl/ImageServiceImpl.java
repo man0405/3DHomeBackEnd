@@ -147,7 +147,6 @@ public class ImageServiceImpl implements ImageService {
         return fileDataRepo.findAll(PageRequest.of(offset, 10))
                 .map(fileData -> new FileDataResponse(
                         fileData.getId(),
-                        fileData.getName(),
                         fileData.getGetPath()
                 ));
     }

@@ -1,6 +1,7 @@
 package com.example.backend.services;
 
 
+import com.example.backend.dto.VisitCustomerRes;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Owner;
 
@@ -26,4 +27,7 @@ public interface OwnerService {
 	int addHouse(int OnwerId, House House);
 
 	List<Integer> statistics(int ownerId);
+
+	List<VisitCustomerRes> findVisitCustomerInfo(int ownerId);
 }
+

@@ -1,8 +1,8 @@
 package com.example.backend;
 
+import com.example.backend.dto.VisitCustomerRes;
 import com.example.backend.models.entity.FacingDirection;
 import com.example.backend.repository.HouseRepo;
-import com.example.backend.repository.OwnerRepo;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Owner;
 import com.example.backend.services.OwnerService;
@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class BackendApplication {
@@ -26,12 +27,17 @@ public class BackendApplication {
 	public CommandLineRunner commandLineRunner(VisitService theVisitService, HouseRepo theHouseRepo, OwnerService theOwnerService){
 		return runner ->{
 //			addOwner(theOwnerService);
-			addHouse(theOwnerService, theHouseRepo);
+//			addHouse(theOwnerService, theHouseRepo);
 //			findOwnerById(theOwnerService)
 //			findOwnerAndHouses(theOwnerService);
 //			System.out.println(theHouseRepo.findBy_Id(1));
 //			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
-		};
+//			System.out.println(theOwnerService.findVisitCustomerInfo(51));
+
+
+
+
+        };
 	}
 
 	private void findOwnerAndHouses(OwnerService theOwnerService) {

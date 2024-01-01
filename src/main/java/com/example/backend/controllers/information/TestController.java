@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/test")
-@PreAuthorize("hasRole('CUSTOMER')")
+@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 public class TestController {
 
 
