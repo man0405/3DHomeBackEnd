@@ -7,13 +7,10 @@ import com.example.backend.repository.VisitRepository;
 import com.example.backend.services.VisitService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.*;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -58,12 +55,33 @@ public class VisitServiceImpl implements VisitService {
     @Override
     public List<Integer> visitPerWeek(int theHouseId) {
         List<Integer> integerList = new ArrayList<>();
+        int currentMonth = LocalDate.now().getMonthValue();
+        Integer integer = null;
         for(int i = 2; i >= 0; i--){
-            Integer integer = visitRepository.visitPerWeek(theHouseId, LocalDate.now().getMonthValue() - i);
+            if(currentMonth - i > 0)
+               integer  = visitRepository.visitPerWeek(theHouseId, currentMonth - i);
+            else
+                integer = visitRepository.visitPerWeek(theHouseId, currentMonth - i + 12);
             integerList.add(integer);
         }
             return integerList;
     }
+
+    @Override
+    public List<Integer> totalVisitPerMonth(int ownerId){
+        List<Integer> integerList = new ArrayList<>();
+        int currentMonth = LocalDate.now().getMonthValue();
+        Integer integer = null;
+        for(int i = 11; i >= 0; i--){
+            if(currentMonth - i > 0)
+                integer = visitRepository.totalVisitPerMonth(ownerId, currentMonth - i);
+            else
+                integer = visitRepository.totalVisitPerMonth(ownerId, currentMonth - i + 12);
+            integerList.add(integer);
+        }
+        return integerList;
+    }
+
 
     private boolean checkExisting(int customerId, int houseId){
         Integer id = visitRepository.findExisting(customerId, houseId);

@@ -26,11 +26,11 @@ public class BackendApplication {
 	public CommandLineRunner commandLineRunner(VisitService theVisitService, HouseRepo theHouseRepo, OwnerService theOwnerService){
 		return runner ->{
 //			addOwner(theOwnerService);
-			addHouse(theOwnerService, theHouseRepo);
+//			addHouse(theOwnerService, theHouseRepo);
 //			findOwnerById(theOwnerService)
 //			findOwnerAndHouses(theOwnerService);
 //			System.out.println(theHouseRepo.findBy_Id(1));
-//			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
+			System.out.println(theVisitService.totalVisitPerMonth(11).toString() + " visits this week");
 		};
 	}
 

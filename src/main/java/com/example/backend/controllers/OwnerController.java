@@ -6,6 +6,7 @@ import com.example.backend.models.entity.Owner;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;
 import com.example.backend.services.OwnerService;
+import com.example.backend.services.VisitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -17,13 +18,13 @@ public class OwnerController {
     private final OwnerService ownerService;
     private final HouseService houseService;
 
-    private final ImageService imageService;
+    private final VisitService visitService;
 
     @Autowired
-    public OwnerController(OwnerService theOwnerService, HouseService houseService, ImageService imageService) {
+    public OwnerController(OwnerService theOwnerService, HouseService houseService, VisitService visitService) {
         ownerService = theOwnerService;
         this.houseService = houseService;
-        this.imageService = imageService;
+        this.visitService = visitService;
     }
 
     // expose "/owners" and return a list of owners
@@ -80,6 +81,11 @@ public class OwnerController {
         return ownerService.addHouse(ownerId, addedHouse);
     }
 
+
+    @GetMapping("/visitPerMonth/{ownerId}")
+    public List<Integer> totalVisitPerMonth(@PathVariable int ownerId){
+        return visitService.totalVisitPerMonth(ownerId);
+    }
 
     // add mapping for DELETE /owners/{ownerId} - delete owner
 
