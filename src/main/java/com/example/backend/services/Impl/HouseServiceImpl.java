@@ -1,6 +1,7 @@
 package com.example.backend.services.Impl;
 
 import com.example.backend.models.entity.Information;
+import com.example.backend.models.entity.Owner;
 import com.example.backend.repository.HouseRepo;
 import com.example.backend.models.entity.House;
 import com.example.backend.repository.InformationRepo;
@@ -60,7 +61,9 @@ public class HouseServiceImpl implements HouseService {
 		houseRepo.deleteById(theId);
 	}
 
-	public List<House> findHousesWithSorting(String field){
+
+
+    public List<House> findHousesWithSorting(String field){
 		return houseRepo.findAll(Sort.by(Sort.Direction.ASC, field));
 	}
 

@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,11 @@ public class OwnerServiceImpl implements OwnerService {
 		}
 
 		return theOwner;
+	}
+
+	@Override
+	public Owner findByUser_Id(Long userId) {
+		return ownerRepo.findByUser_Id(userId);
 	}
 
 	@Override
@@ -92,6 +98,15 @@ public class OwnerServiceImpl implements OwnerService {
 		theOwner.addHouse(theHouse);
 		update(theOwner);
 		return theHouse.getId();
+	}
+
+	@Override
+	public List<Integer> statistics(int ownerId) {
+		List<Integer> temp = new ArrayList<>();
+		temp.add( ownerRepo.viewProject(ownerId));
+		temp.add( ownerRepo.leaveInformation(ownerId));
+		temp.add( ownerRepo.totalProject(ownerId));
+		return temp;
 	}
 }
 

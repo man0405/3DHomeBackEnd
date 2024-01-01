@@ -45,7 +45,6 @@ spring:
     port: 1025
     username: hello
     password: hello
-
     properties:
       mail:
         smtp:

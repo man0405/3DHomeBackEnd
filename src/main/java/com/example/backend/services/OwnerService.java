@@ -12,6 +12,9 @@ public interface OwnerService {
 	
 	Owner findById(int theId);
 
+	Owner findByUser_Id(Long userId);
+	
+
 	Owner getOwnerAlongWithHouses(int theId);
 
 	Owner save(Owner theOwner);
@@ -21,4 +24,6 @@ public interface OwnerService {
 	void deleteById(int theId);
 
 	int addHouse(int OnwerId, House House);
+
+	List<Integer> statistics(int ownerId);
 }

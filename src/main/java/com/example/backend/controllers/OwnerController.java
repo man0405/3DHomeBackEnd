@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+import static com.example.backend.util.ExtractId.ExtractIdFromToken;
+
 @RestController
 @RequestMapping("/api")
 public class OwnerController {
@@ -36,6 +38,12 @@ public class OwnerController {
         return ownerService.findAll();
     }
 
+
+    @GetMapping("/owners/statistic")
+    public List<Integer> statistic( @CookieValue("uss") String cookie){
+        return  ownerService.statistics(Math.toIntExact(ExtractIdFromToken(cookie)));
+
+    }
     // add mapping for GET /owners/{ownerId}
 
     @GetMapping("/owners/{ownerId}")
@@ -78,10 +86,10 @@ public class OwnerController {
 //        return ownerService.addHouse(ownerId,
 //                imageService.addImagesToHouse(files, addedHouse));
 //    }
-    @PutMapping("/add-house/{ownerId}")
-    public int addHouseForOwner(@PathVariable Integer ownerId, @RequestBody House theHouse) {
+    @PutMapping("/add-house")
+    public int addHouseForOwner( @CookieValue("uss") String cookie, @RequestBody House theHouse) {
         House addedHouse = houseService.save(theHouse);
-        return ownerService.addHouse(ownerId, addedHouse);
+        return ownerService.addHouse(Math.toIntExact(ExtractIdFromToken(cookie)), addedHouse);
     }
 
 

@@ -90,6 +90,8 @@ public class ImageServiceImpl implements ImageService {
 
     public String uploadImageToFileSystem(MultipartFile file) throws IOException {
         Optional<FileData> theFile = fileDataRepo.findByName(file.getOriginalFilename());
+        System.out.println(theFile.isPresent());
+        System.out.println("Hello3");
         if(theFile.isPresent()){
             return "file image is already existed";
         }

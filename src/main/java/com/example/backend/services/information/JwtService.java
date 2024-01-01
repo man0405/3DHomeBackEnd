@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 import com.example.backend.exception.CustomMessageException;
 import com.example.backend.models.entity.Customer;
+import com.example.backend.models.entity.Owner;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,9 @@ public class JwtService {
     public String generateToken(UserDetails userDetails, Customer customer) {
         return generateToken(new HashMap<>(), userDetails, customer);
     }
+    public String generateToken(UserDetails userDetails, Owner owner) {
+        return generateToken(new HashMap<>(), userDetails, owner);
+    }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
@@ -70,6 +74,19 @@ public class JwtService {
                 .builder()
                 .setClaims(extraClaims)
                 .setId(customer.getId().toString())
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    private  String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, Owner owner) {
+//        extraClaims.put("id", customer.getId());
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setId(owner.getId() + "")
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))

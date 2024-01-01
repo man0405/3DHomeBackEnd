@@ -5,6 +5,7 @@ import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;
 import com.example.backend.services.VisitService;
+import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,6 +45,10 @@ public class HouseController {
     public House getHouseById(@PathVariable int id, @CookieValue("uss") String cookie){
         Long customerId = ExtractIdFromToken(cookie);
         visitService.save(Math.toIntExact(customerId),id);
+        return houseService.findById(id);
+    }
+    @GetMapping("/owner/id/{id}")
+    public House getHouseById(@PathVariable int id){
         return houseService.findById(id);
     }
 
