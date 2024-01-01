@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,7 +65,6 @@ public class ImageServiceImpl implements ImageService {
         for(MultipartFile file : files){
             String filePath = FOLDER_PATH + file.getOriginalFilename();
             String getPath = "http://localhost:8080/image/fileSystem/" + file.getOriginalFilename();
-
             FileData fileData = fileDataRepo.save(FileData.builder()
                     .name(file.getOriginalFilename())
                     .type(file.getContentType())
@@ -76,6 +76,8 @@ public class ImageServiceImpl implements ImageService {
         }
         return theHouse;
     }
+
+
 
     @Transactional
     public Optional<Image> findById(Long Id){

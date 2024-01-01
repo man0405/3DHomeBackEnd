@@ -34,11 +34,11 @@ public class Owner {
 
     @OneToMany(
             mappedBy = "owner",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
 //            orphanRemoval = true
     )
-    @JsonManagedReference
+//    @JsonManagedReference
     private List<House> houses;
 
     @JoinColumn(name = "user_id")

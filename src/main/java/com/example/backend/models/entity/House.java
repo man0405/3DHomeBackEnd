@@ -10,7 +10,6 @@ import org.springframework.data.annotation.Reference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 
 @Data
@@ -39,7 +38,7 @@ public class House {
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER
     )
     @JoinColumn(name = "owner_id")
-    @JsonBackReference
+//    @JsonBackReference
     private Owner owner;
 
 //    @JsonBackReference
@@ -53,7 +52,7 @@ public class House {
 
     @OneToMany(mappedBy = "house")
     @JsonBackReference
-    private Set<Visit> visits;
+    private List<Visit> visits;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "house_id")
@@ -92,5 +91,4 @@ public class House {
             images = new ArrayList<>();
         images.add(theImage);
     }
-
 }

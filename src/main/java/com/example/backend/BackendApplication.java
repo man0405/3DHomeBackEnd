@@ -23,14 +23,14 @@ public class BackendApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(VisitService theVisitService, HouseRepo theHouseRepo){
+	public CommandLineRunner commandLineRunner(VisitService theVisitService, HouseRepo theHouseRepo, OwnerService theOwnerService){
 		return runner ->{
 //			addOwner(theOwnerService);
 //			addHouse(theOwnerService, theHouseRepo);
 //			findOwnerById(theOwnerService)
 //			findOwnerAndHouses(theOwnerService);
 //			System.out.println(theHouseRepo.findBy_Id(1));
-			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
+//			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
 		};
 	}
 

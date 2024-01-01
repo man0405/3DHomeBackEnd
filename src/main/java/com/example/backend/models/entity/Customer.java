@@ -2,12 +2,14 @@ package com.example.backend.models.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @DynamicUpdate
 @Data
@@ -37,7 +39,7 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     @JsonBackReference
-    private List<Visit> visits;
+    private Set<Visit> visits;
 
 
     @JoinColumn(name = "user_id")

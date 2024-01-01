@@ -1,5 +1,6 @@
 package com.example.backend.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -25,12 +26,11 @@ public class Visit {
     private Long id;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "house_id")
     private House house;
 
     @ManyToOne
-    @JsonManagedReference
+    @JsonBackReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
