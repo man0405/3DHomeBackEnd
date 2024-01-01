@@ -16,4 +16,6 @@ public interface VisitService {
     void updatePriority(int customerId , int houseId);
 
     List<Integer> visitPerWeek(int theHouseId);
+
+    List<Integer> totalVisitPerMonth(int ownerId);
 }

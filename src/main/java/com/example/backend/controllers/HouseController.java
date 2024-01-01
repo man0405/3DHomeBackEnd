@@ -74,9 +74,8 @@ public class HouseController {
     }
 
 
-    @GetMapping("visitPerMonth/{houseId}")
+    @GetMapping("/visitPerMonth/{houseId}")
     public List<Integer> visitPerMonth(@PathVariable int houseId){
         return visitService.visitPerWeek(houseId);
     }
-
 }

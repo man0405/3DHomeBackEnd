@@ -1,8 +1,8 @@
 package com.example.backend;
 
-import com.example.backend.dto.VisitCustomerRes;
 import com.example.backend.models.entity.FacingDirection;
 import com.example.backend.repository.HouseRepo;
+import com.example.backend.repository.OwnerRepo;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Owner;
 import com.example.backend.services.OwnerService;
@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @SpringBootApplication
 public class BackendApplication {

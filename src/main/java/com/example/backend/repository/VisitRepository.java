@@ -52,4 +52,7 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     @Query(value = "select COUNT(v) from Visit v where v.house.Id = ?1 and MONTH (v.dayVisited) = ?2")
     Integer visitPerWeek(int HouseId, int month);
+
+    @Query(value = "select COUNT(v) from Visit v where v.house.owner.Id = ?1 and MONTH (v.dayVisited) = ?2")
+    Integer totalVisitPerMonth(int ownerId, int month);
 }
