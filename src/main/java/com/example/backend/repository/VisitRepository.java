@@ -11,9 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 
 
@@ -25,8 +24,8 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into visit (house_id, customer_id , visited_at) values(?2, ?1, ?3)", nativeQuery = true)
-    void save(int customerId, int houseId, LocalDateTime date);
+    @Query(value = "insert into visit (house_id, customer_id ,day_visited, time_visited) values(?2, ?1, ?3, ?4)", nativeQuery = true)
+    void save(int customerId, int houseId, LocalDate dayVisited, LocalTime timeVisited);
 
     @Query(value = "select id from Visit where house_id = ?2 and customer_id=?1", nativeQuery = true)
     Integer findExisting(int customerId, int houseId);
@@ -48,9 +47,9 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 //    List<Integer> findAllHouseIdsByCustomerId(int customerId);
 //
 
-    @Query(value = "select v.house from Visit v where v.customer.id = ?1 order by v.VisitedAt desc")
+    @Query(value = "select v.house from Visit v where v.customer.id = ?1 order by v.dayVisited, v.timeVisited desc")
     Page<House> findAllHouseIdsByCustomerId(int customerId, Pageable pageable);
 
-
-
+    @Query(value = "select COUNT(v) from Visit v where v.house.Id = ?1 and MONTH (v.dayVisited) = ?2")
+    Integer visitPerWeek(int HouseId, int month);
 }

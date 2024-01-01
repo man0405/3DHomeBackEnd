@@ -51,8 +51,8 @@ public class House {
 //    private List<Customer> customers;
 
     @OneToMany(mappedBy = "house")
-//    @JsonBackReference
-    private Set<Visit> visits;
+    @JsonBackReference
+    private List<Visit> visits;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "house_id")

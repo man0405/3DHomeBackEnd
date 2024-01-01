@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ImageService {
     String uploadImage(MultipartFile[] file) throws IOException;
@@ -18,13 +19,13 @@ public interface ImageService {
 
     byte[] downloadImage(String fileName);
 
-    Optional<Image> findById(Long Id);
+    Optional<Image> findById(Long theId);
 
     String uploadImageToFileSystem(MultipartFile file) throws IOException;
 
-    byte[] downloadImageFromFileSystem(String fileName) throws IOException;
+    byte[] downloadImageFromFileSystem(UUID fileName) throws IOException;
 
-    String deleteFileSystem(String fileName);
+    String deleteFileSystem(UUID fileName);
 
     Page<ImageResponse> getLibrary(int offset, int size, String field);
 

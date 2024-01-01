@@ -11,7 +11,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.*;
+import java.time.LocalTime;
 import java.util.*;
 
 
@@ -27,8 +30,9 @@ public class VisitServiceImpl implements VisitService {
         if(checkExisting(customerId,houseId)){
             return;
         }
-        visitRepository.save(customerId, houseId, LocalDateTime.now());
+        visitRepository.save(customerId, houseId, LocalDate.now(), LocalTime.now());
     }
+
 
 //    @Override
 //    public Page<House> findSeenHouse(int offSet, int pageSet, int customerId) {
@@ -49,7 +53,16 @@ public class VisitServiceImpl implements VisitService {
         if(visit.isPresent() && visit.get().getPriority()==null){
             visitRepository.updatePriority(customerId, houseId);
         }
+    }
 
+    @Override
+    public List<Integer> visitPerWeek(int theHouseId) {
+        List<Integer> integerList = new ArrayList<>();
+        for(int i = 2; i >= 0; i--){
+            Integer integer = visitRepository.visitPerWeek(theHouseId, LocalDate.now().getMonthValue() - i);
+            integerList.add(integer);
+        }
+            return integerList;
     }
 
     private boolean checkExisting(int customerId, int houseId){

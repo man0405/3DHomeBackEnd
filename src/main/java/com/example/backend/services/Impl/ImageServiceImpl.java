@@ -18,10 +18,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,11 +64,11 @@ public class ImageServiceImpl implements ImageService {
     @Transactional
     public House addImagesToHouse(MultipartFile[] files, House theHouse) throws IOException {
         for(MultipartFile file : files){
-            String filePath = FOLDER_PATH + file.getOriginalFilename();
-            String getPath = "http://localhost:8080/image/fileSystem/" + file.getOriginalFilename();
-
+            UUID id = UUID.randomUUID();
+            String filePath = FOLDER_PATH + id;
+            String getPath = "http://localhost:8080/image/fileSystem/" + id;
             FileData fileData = fileDataRepo.save(FileData.builder()
-                    .name(file.getOriginalFilename())
+                    .Id(id)
                     .type(file.getContentType())
                     .filePath(filePath)
                     .getPath(getPath)
@@ -89,17 +91,16 @@ public class ImageServiceImpl implements ImageService {
     }
 
     public String uploadImageToFileSystem(MultipartFile file) throws IOException {
-        Optional<FileData> theFile = fileDataRepo.findByName(file.getOriginalFilename());
-        System.out.println(theFile.isPresent());
-        System.out.println("Hello3");
-        if(theFile.isPresent()){
-            return "file image is already existed";
-        }
-        String filePath = FOLDER_PATH + file.getOriginalFilename();
-        String getPath = "http://localhost:8080/image/fileSystem/" + file.getOriginalFilename();
-
+        UUID id = null;
+        Optional<FileData> holder = null;
+        do{
+            id = UUID.randomUUID();
+            holder = fileDataRepo.findById(id);
+        }while(holder.isPresent());
+        String filePath = FOLDER_PATH + id;
+        String getPath = "http://localhost:8080/image/fileSystem/" + id;
         FileData fileData = fileDataRepo.save(FileData.builder()
-                .name(file.getOriginalFilename())
+                .Id(id)
                 .type(file.getContentType())
                 .filePath(filePath)
                 .getPath(getPath)
@@ -113,15 +114,15 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Transactional
-    public byte[] downloadImageFromFileSystem(String fileName) throws IOException {
-        Optional<FileData> fileData = fileDataRepo.findByName(fileName);
+    public byte[] downloadImageFromFileSystem(UUID fileName) throws IOException {
+        Optional<FileData> fileData = fileDataRepo.findById(fileName);
         String filePath = fileData.get().getFilePath();
         return Files.readAllBytes(new File(filePath).toPath());
     }
 
     @Override
-    public String deleteFileSystem(String fileName) {
-        Optional<FileData> theFileData = fileDataRepo.findByName(fileName);
+    public String deleteFileSystem(UUID fileName) {
+        Optional<FileData> theFileData = fileDataRepo.findById(fileName);
         if(theFileData.isEmpty())
             return "File doesn't exist";
         String filePath = theFileData.get().getFilePath();

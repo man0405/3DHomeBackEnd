@@ -15,6 +15,4 @@ public class HouseRepoCustomImpl implements HouseRepoCustom{
     public House findBy_Id(int id) {
         return entityManager.find(House.class, id);
     }
-
-
 }
