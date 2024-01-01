@@ -97,9 +97,9 @@ public class OwnerController {
     }
 
 
-    @GetMapping("/visitPerMonth/{ownerId}")
-    public List<Integer> totalVisitPerMonth(@PathVariable int ownerId){
-        return visitService.totalVisitPerMonth(ownerId);
+    @GetMapping("/visitPerMonth")
+    public List<Integer> totalVisitPerMonth(@CookieValue("uss") String cookie ){
+        return visitService.totalVisitPerMonth(Math.toIntExact(ExtractIdFromToken(cookie)));
     }
 
     // add mapping for DELETE /owners/{ownerId} - delete owner
