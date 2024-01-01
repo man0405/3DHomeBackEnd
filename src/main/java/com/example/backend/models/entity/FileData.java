@@ -3,6 +3,8 @@ package com.example.backend.models.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -13,11 +15,7 @@ import lombok.*;
 public class FileData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private Long Id;
-
-    private String name;
+    private UUID Id;
 
     private String type;
 

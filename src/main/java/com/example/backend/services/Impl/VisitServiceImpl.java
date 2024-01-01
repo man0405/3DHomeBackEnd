@@ -53,7 +53,6 @@ public class VisitServiceImpl implements VisitService {
         if(visit.isPresent() && visit.get().getPriority()==null){
             visitRepository.updatePriority(customerId, houseId);
         }
-
     }
 
     @Override

@@ -38,7 +38,7 @@ public class Owner {
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
 //            orphanRemoval = true
     )
-//    @JsonManagedReference
+    @JsonManagedReference
     private List<House> houses;
 
     @JoinColumn(name = "user_id")

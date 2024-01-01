@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/image")
@@ -51,7 +52,7 @@ public class ImageController {
     }
 
     @GetMapping("/fileSystem/{fileName}")
-    public ResponseEntity<?> downloadImageToFileSystem(@PathVariable String fileName) throws IOException {
+    public ResponseEntity<?> downloadImageToFileSystem(@PathVariable UUID fileName) throws IOException {
         byte[] image = imageService.downloadImageFromFileSystem(fileName);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
@@ -60,7 +61,7 @@ public class ImageController {
 
 
     @DeleteMapping("/fileSystem/{fileName}")
-    public ResponseEntity<?> deleteFileSystem(@PathVariable String fileName){
+    public ResponseEntity<?> deleteFileSystem(@PathVariable UUID fileName){
         String deleteFile = imageService.deleteFileSystem(fileName);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(deleteFile);

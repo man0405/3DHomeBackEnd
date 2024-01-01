@@ -38,7 +38,7 @@ public class House {
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER
     )
     @JoinColumn(name = "owner_id")
-//    @JsonBackReference
+    @JsonBackReference
     private Owner owner;
 
 //    @JsonBackReference
@@ -79,12 +79,6 @@ public class House {
         this.description = description;
     }
 
-
-//    public void addCustomer(Customer theCustomer){
-//        if(customers == null)
-//            customers = new ArrayList<>();
-//        customers.add(theCustomer);
-//    }
 
     public void addImage(FileData theImage){
         if(images == null)

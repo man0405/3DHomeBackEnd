@@ -58,8 +58,12 @@ public class HouseController {
     public void leaveInformation(@PathVariable int id, @CookieValue("uss") String cookie){
         Long customerId = ExtractIdFromToken(cookie);
         visitService.updatePriority( Math.toIntExact(customerId),id );
-
     }
 
+
+    @GetMapping("visitPerMonth/{houseId}")
+    public List<Integer> visitPerMonth(@PathVariable int houseId){
+        return visitService.visitPerWeek(houseId);
+    }
 
 }
