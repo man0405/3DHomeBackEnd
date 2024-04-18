@@ -38,11 +38,12 @@ public class Owner {
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
 //            orphanRemoval = true
     )
-    @JsonManagedReference
+    @JsonIgnore
     private List<House> houses;
 
     @JoinColumn(name = "user_id")
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JsonIgnore
     private User user;
 
     public Owner(String firstName, String lastName, String email, String phone) {

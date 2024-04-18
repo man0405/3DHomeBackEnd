@@ -44,13 +44,13 @@ public class OwnerController {
     }
     // add mapping for GET /owners/{ownerId}
 
-    @GetMapping("/owners/{ownerId}")
-    public Owner getOwner(@PathVariable int ownerId) {
+    @GetMapping("/owner")
+    public Owner getOwner(@CookieValue("uss") String cookie) {
 
-        Owner theOwner = ownerService.findById(ownerId);
+        Owner theOwner = ownerService.findById(Math.toIntExact(ExtractIdFromToken(cookie)));
 
         if (theOwner == null) {
-            throw new RuntimeException("Owner id not found - " + ownerId);
+            throw new RuntimeException("Owner id not found - " + Math.toIntExact(ExtractIdFromToken(cookie)));
         }
         return theOwner;
     }
