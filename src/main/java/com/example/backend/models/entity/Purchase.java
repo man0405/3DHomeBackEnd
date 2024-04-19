@@ -26,7 +26,6 @@ public class Purchase {
     @CreationTimestamp
     @Column (updatable = false)
     private Timestamp createdDate;
-
     @UpdateTimestamp
     private java.sql.Timestamp lastModifiedDate;
 

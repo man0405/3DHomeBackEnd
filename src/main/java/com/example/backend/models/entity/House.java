@@ -41,15 +41,6 @@ public class House {
     @JsonBackReference
     private Owner owner;
 
-//    @JsonBackReference
-//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
-//    @JoinTable(
-//            name = "visit",
-//            joinColumns = @JoinColumn(name = "house_id"),
-//            inverseJoinColumns=@JoinColumn(name = "customer_id")
-//    )
-//    private List<Customer> customers;
-
     @OneToMany(mappedBy = "house")
 //    @JsonBackReference
     @JsonIgnore
