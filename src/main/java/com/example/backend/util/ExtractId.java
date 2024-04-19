@@ -17,7 +17,7 @@ public class ExtractId {
     }
 
     public static Long ExtractIdFromToken(String bear){
-        return Long.parseLong(jwtService.extractId(bear));
+        return Long.parseLong(jwtService.extractId(bear.substring(7)));
     }
 
 }

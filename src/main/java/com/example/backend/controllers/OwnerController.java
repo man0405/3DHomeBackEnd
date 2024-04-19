@@ -45,7 +45,7 @@ public class OwnerController {
     // add mapping for GET /owners/{ownerId}
 
     @GetMapping("/owner")
-    public Owner getOwner(@CookieValue("uss") String cookie) {
+    public Owner getOwner( @RequestHeader("Authorization")  String cookie) {
 
         Owner theOwner = ownerService.findById(Math.toIntExact(ExtractIdFromToken(cookie)));
 

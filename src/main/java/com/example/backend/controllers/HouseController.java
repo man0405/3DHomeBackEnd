@@ -6,6 +6,8 @@ import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;
 import com.example.backend.services.VisitService;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import static com.example.backend.util.ExtractId.ExtractIdFromToken;
 
 @RestController
 @RequestMapping("/house")
+@Slf4j
 public class HouseController {
 
     private final HouseService houseService;
@@ -37,7 +40,7 @@ public class HouseController {
     }
 
     @GetMapping("/owner-houses/{offset}/{pageSize}/{field}")
-    public CustomPage<House> getHouses(@CookieValue("uss") String cookie, @PathVariable int offset, @PathVariable int pageSize, @PathVariable String field){
+    public CustomPage<House> getHouses( @RequestHeader("Authorization")  String cookie, @PathVariable int offset, @PathVariable int pageSize, @PathVariable String field){
         Page<House> houses = houseService.findOwnerHouses(Math.toIntExact(ExtractIdFromToken(cookie)),offset,pageSize,field);
         return new CustomPage<>(houses);
 
@@ -50,8 +53,9 @@ public class HouseController {
     }
 
     @GetMapping("/id/{id}")
-    public House getHouseById(@PathVariable int id, @CookieValue("uss") String cookie){
-        Long customerId = ExtractIdFromToken(cookie);
+    public House getHouseById(@PathVariable int id, @RequestHeader("Authorization") String bear){
+        log.debug(bear);
+        Long customerId = ExtractIdFromToken(bear);
         visitService.save(Math.toIntExact(customerId),id);
         return houseService.findById(id);
     }
@@ -68,7 +72,7 @@ public class HouseController {
     }
 
     @PutMapping("/leave-info/{id}")
-    public void leaveInformation(@PathVariable int id, @CookieValue("uss") String cookie){
+    public void leaveInformation(@PathVariable int id,  @RequestHeader("Authorization")  String cookie){
         Long customerId = ExtractIdFromToken(cookie);
         visitService.updatePriority( Math.toIntExact(customerId),id );
     }
