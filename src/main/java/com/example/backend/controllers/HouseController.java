@@ -50,7 +50,7 @@ public class HouseController {
     }
 
     @GetMapping("/id/{id}")
-    public House getHouseById(@PathVariable int id, @CookieValue("uss") String cookie){
+    public House getHouseById(@PathVariable int id, @RequestHeader("Authorization") String cookie){
         Long customerId = ExtractIdFromToken(cookie);
         visitService.save(Math.toIntExact(customerId),id);
         return houseService.findById(id);
@@ -68,7 +68,7 @@ public class HouseController {
     }
 
     @PutMapping("/leave-info/{id}")
-    public void leaveInformation(@PathVariable int id, @CookieValue("uss") String cookie){
+    public void leaveInformation(@PathVariable int id,@RequestHeader("Authorization") String cookie){
         Long customerId = ExtractIdFromToken(cookie);
         visitService.updatePriority( Math.toIntExact(customerId),id );
     }
