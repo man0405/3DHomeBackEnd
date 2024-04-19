@@ -54,12 +54,13 @@ public class AuthenticationController {
 
 
     @PostMapping(value="/signin" )
-    public CheckResponse signin(@RequestBody SignInRequest request , HttpServletResponse response ) {
+    public JwtAuthenticationResponse signin(@RequestBody SignInRequest request , HttpServletResponse response ) {
         System.out.println(request.getEmail() + request.getPassword());
         CheckAuth(request.getEmail(), request.getPassword());
         String token = authenticationService.signin(request).getToken();
-        response.setHeader(HttpHeaders.SET_COOKIE,cookies(token ,  1).toString() );
-        return new CheckResponse("true");
+//        response.setHeader(HttpHeaders.SET_COOKIE,cookies(token ,  1).toString() );
+//        return new CheckResponse("true");
+        return new JwtAuthenticationResponse(String.valueOf(HttpStatus.OK.value()), token);
     }
 
 
