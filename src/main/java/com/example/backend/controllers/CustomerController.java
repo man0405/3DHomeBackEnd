@@ -4,6 +4,7 @@ import com.example.backend.dto.*;
 import com.example.backend.models.entity.Cart;
 import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.House;
+import com.example.backend.models.entity.Invoice;
 import com.example.backend.services.CartService;
 import com.example.backend.services.CustomerService;
 import com.example.backend.services.InvoiceService;
@@ -97,14 +98,14 @@ public class CustomerController {
 
 
     @PutMapping(value = "succeed")
-    public CheckResponse succeedToOrder(@RequestParam("cart")Integer[] carts){
-        return  CheckResponse.builder().result(invoiceService.succeed(carts).toString()).build();
+    public Invoice succeedToOrder(@RequestParam("cart")Integer[] carts){
+        return  invoiceService.succeed(carts);
     }
 
 
     @GetMapping(value = "getInvoice/{id}")
-    public CheckResponse getInvoice(@PathVariable Long id){
-        return CheckResponse.builder().result(invoiceService.getInvoice(id).toString()).build();
+    public Invoice getInvoice(@PathVariable Long id){
+        return invoiceService.getInvoice(id);
     }
 
     @GetMapping(value = "getCart")

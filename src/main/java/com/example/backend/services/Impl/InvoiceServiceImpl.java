@@ -36,8 +36,8 @@ public class InvoiceServiceImpl implements InvoiceService {
             cartRepository.deleteById(Long.valueOf(c));
         }
         theInvoice.setPrice(sum);
-        theInvoice.setDayVisited(LocalDate.now());
-        theInvoice.setTimeVisited(LocalTime.now());
+//        theInvoice.setDayVisited(LocalDate.now());
+//        theInvoice.setTimeVisited(LocalTime.now());
          return invoiceRepo.save(theInvoice);
     }
 
