@@ -47,7 +47,11 @@ public class Information {
     @Column(name = "toilets")
     private int toilets;
 
-    public Information(long number, String street, String district, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets) {
+
+    private Boolean heart;
+
+
+    public Information(long number, String street, String district, String city, String country, double landSize, int numberOfFloor, FacingDirection direction, int bedrooms, int toilets, Boolean heart) {
         this.number = number;
         this.street = street;
         this.district = district;
@@ -58,5 +62,6 @@ public class Information {
         this.direction = direction;
         this.bedrooms = bedrooms;
         this.toilets = toilets;
+        this.heart= heart;
     }
 }
