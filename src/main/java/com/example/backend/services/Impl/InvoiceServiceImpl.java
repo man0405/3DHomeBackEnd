@@ -27,6 +27,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public Invoice succeed(Integer[] cartId, Long customerId) {
         Invoice theInvoice = new Invoice();
+        for(Integer i: cartId){
+            Cart theCart = cartRepository.findById(i.longValue()).get();
+            theCart.setPaid(true);
+            cartRepository.save(theCart);
+        }
         System.out.println("hello");
         double sum = 0;
         for(Integer c : cartId){
