@@ -31,9 +31,15 @@ public class CartServiceImpl implements CartService {
         }else {
             var theCustomer = customerService.findById((long) customerId);
             var theFurniture = furnitureRepo.findById(Long.valueOf(furnitureId));
-            theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(1).build();
+            if(quantity > 1) theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(quantity).build();
+            else theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(1).build();
         }
         cartRepository.save(theCart);
+    }
+
+    @Override
+    public Cart findById(Long id) {
+        return cartRepository.findById(id).get();
     }
 
 

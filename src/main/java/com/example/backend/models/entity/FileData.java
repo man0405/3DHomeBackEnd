@@ -29,5 +29,5 @@ public class FileData {
     private Boolean main;
 
     @Column(name = "furniture_id")
-    private int furnitureId;
+    private Integer furnitureId;
 }

@@ -45,7 +45,7 @@ public class FurnitureController {
         return new APIResponse<>(furnituresWithPaginationAndSort.getSize(), furnituresWithPaginationAndSort);
     }
 
-    @GetMapping("/owner/id/{id}")
+    @GetMapping("/id/{id}")
     public Furniture getFurnitureById(@PathVariable Long id){
         return furnitureService.findById(id);
     }

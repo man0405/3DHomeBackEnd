@@ -1,6 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.*;
+import com.example.backend.models.entity.Cart;
 import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.CartService;
@@ -8,6 +9,8 @@ import com.example.backend.services.CustomerService;
 import com.example.backend.services.InvoiceService;
 import com.example.backend.services.VisitService;
 import lombok.AllArgsConstructor;
+import lombok.Value;
+import org.hibernate.engine.spi.VersionValue;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +29,7 @@ public class CustomerController {
     private final CartService cartService;
 
     private final InvoiceService invoiceService;
+
 
     @GetMapping(value ="info" )
     public InfoResponse getProfile(@RequestHeader("Authorization") String cookie ){
@@ -99,5 +103,10 @@ public class CustomerController {
     @GetMapping(value = "getInvoice/{id}")
     public CheckResponse getInvoice(@PathVariable Long id){
         return CheckResponse.builder().result(invoiceService.getInvoice(id).toString()).build();
+    }
+
+    @GetMapping(value = "getCart/{id}")
+    public Cart getCart(@PathVariable Long id){
+        return cartService.findById(id);
     }
 }
