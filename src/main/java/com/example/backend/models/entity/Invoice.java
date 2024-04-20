@@ -34,10 +34,11 @@ public class Invoice {
 //    @JsonIgnore
     private List<Cart> cartList;
 
+    private Long customer_id;
 
-//    private LocalDate dayVisited;
+    private LocalDate dayVisited;
 //
-//    private LocalTime timeVisited;
+    private LocalTime timeVisited;
 
     private Double price;
 

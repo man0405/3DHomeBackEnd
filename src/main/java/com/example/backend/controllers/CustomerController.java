@@ -98,8 +98,9 @@ public class CustomerController {
 
 
     @PutMapping(value = "succeed")
-    public Invoice succeedToOrder(@RequestParam("cart")Integer[] carts){
-        return  invoiceService.succeed(carts);
+    public Invoice succeedToOrder(@RequestParam("cart")Integer[] carts, @RequestHeader("Authorization") String customerId){
+        Long theCustomerId = ExtractIdFromToken(customerId);
+        return  invoiceService.succeed(carts, theCustomerId );
     }
 
 

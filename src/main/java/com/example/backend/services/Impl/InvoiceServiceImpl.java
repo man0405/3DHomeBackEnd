@@ -25,7 +25,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Transactional
     @Override
-    public Invoice succeed(Integer[] cartId) {
+    public Invoice succeed(Integer[] cartId, Long customerId) {
         Invoice theInvoice = new Invoice();
         System.out.println("hello");
         double sum = 0;
@@ -36,8 +36,9 @@ public class InvoiceServiceImpl implements InvoiceService {
             cartRepository.deleteById(Long.valueOf(c));
         }
         theInvoice.setPrice(sum);
-//        theInvoice.setDayVisited(LocalDate.now());
-//        theInvoice.setTimeVisited(LocalTime.now());
+        theInvoice.setCustomer_id(customerId);
+        theInvoice.setDayVisited(LocalDate.now());
+        theInvoice.setTimeVisited(LocalTime.now());
          return invoiceRepo.save(theInvoice);
     }
 
