@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -38,8 +40,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart findById(Long id) {
-        return cartRepository.findById(id).get();
+    public List<Cart> findByCustomerId(Long id) {
+        return cartRepository.findByCustomer_Id(id);
     }
 
 

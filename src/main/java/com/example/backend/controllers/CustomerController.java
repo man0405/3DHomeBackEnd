@@ -14,6 +14,8 @@ import org.hibernate.engine.spi.VersionValue;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.example.backend.util.ExtractId.ExtractIdFromToken;
 
 @RestController
@@ -105,8 +107,9 @@ public class CustomerController {
         return CheckResponse.builder().result(invoiceService.getInvoice(id).toString()).build();
     }
 
-    @GetMapping(value = "getCart/{id}")
-    public Cart getCart(@PathVariable Long id){
-        return cartService.findById(id);
+    @GetMapping(value = "getCart")
+    public List<Cart> getCart(@RequestHeader("Authorization") String customerId){
+        Long theCustomerId = ExtractIdFromToken(customerId);
+        return cartService.findByCustomerId(theCustomerId);
     }
 }
