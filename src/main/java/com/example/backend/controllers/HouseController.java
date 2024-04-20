@@ -37,7 +37,7 @@ public class HouseController {
     }
 
     @GetMapping("/owner-houses/{offset}/{pageSize}/{field}")
-    public CustomPage<House> getHouses(@CookieValue("uss") String cookie, @PathVariable int offset, @PathVariable int pageSize, @PathVariable String field){
+    public CustomPage<House> getHouses(@RequestHeader("Authorization") String cookie, @PathVariable int offset, @PathVariable int pageSize, @PathVariable String field){
         Page<House> houses = houseService.findOwnerHouses(Math.toIntExact(ExtractIdFromToken(cookie)),offset,pageSize,field);
         return new CustomPage<>(houses);
 
