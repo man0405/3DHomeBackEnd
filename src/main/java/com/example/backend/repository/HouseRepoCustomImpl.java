@@ -7,9 +7,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class HouseRepoCustomImpl implements HouseRepoCustom{
-    @Autowired
-    private EntityManager entityManager;
 
+    private final EntityManager entityManager;
+
+    public HouseRepoCustomImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public House findBy_Id(int id) {

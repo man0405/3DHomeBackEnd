@@ -1,6 +1,5 @@
 package com.example.backend.repository;
 
-import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Visit;
 import org.springframework.data.domain.Page;

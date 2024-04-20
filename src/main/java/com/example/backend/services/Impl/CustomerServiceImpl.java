@@ -40,7 +40,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer findById(Long id) {
-//        return customerRepository.findCustomerById(id);
         return customerRepository.findCustomerById(id);
     }
 
@@ -116,4 +115,6 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return checkPass;
     }
+
+
 }

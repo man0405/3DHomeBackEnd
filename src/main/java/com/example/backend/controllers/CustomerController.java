@@ -1,11 +1,15 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.*;
+import com.example.backend.models.entity.Cart;
 import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.House;
+import com.example.backend.models.entity.Invoice;
+import com.example.backend.services.CartService;
 import com.example.backend.services.CustomerService;
 import com.example.backend.services.Impl.CustomerServiceImpl;
 import com.example.backend.services.Impl.VisitServiceImpl;
+import com.example.backend.services.InvoiceService;
 import com.example.backend.services.VisitService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,8 +29,12 @@ public class CustomerController {
 
     private final VisitService visitService;
 
+    private final CartService cartService;
+
+    private final InvoiceService invoiceService;
+
     @GetMapping(value ="info" )
-    public InfoResponse getProfile(@CookieValue("uss") String cookie ){
+    public InfoResponse getProfile(@RequestHeader("Authorization") String cookie ){
 
         Customer customer = customerService.findById(ExtractIdFromToken(cookie));
 
@@ -42,7 +50,7 @@ public class CustomerController {
     }
 
     @GetMapping("seen/{offset}")
-    public CustomPage<House> getSeenProject(@CookieValue("uss") String cookie, @PathVariable int offset){
+    public CustomPage<House> getSeenProject(@RequestHeader("Authorization") String cookie, @PathVariable int offset){
         Page<House> housesPage = visitService.findSeenHouse(offset,5, Math.toIntExact((ExtractIdFromToken(cookie))));
         return new CustomPage<>(housesPage);
     }
@@ -50,7 +58,7 @@ public class CustomerController {
 
 
     @PutMapping(value = "profile")
-    public CustomerProfile updateProfile(@RequestBody CustomerProfile customerProfile, @CookieValue("uss") String cookie){
+    public CustomerProfile updateProfile(@RequestBody CustomerProfile customerProfile, @RequestHeader("Authorization") String cookie){
         System.out.println("Cookie: "  + cookie);
 //        customerProfile.setId(getID(cookie));
         customerProfile.setId(ExtractIdFromToken(cookie));
@@ -60,15 +68,42 @@ public class CustomerController {
 
 
     @PutMapping(value = "phone")
-    public CustomerPhone updatePhone(@RequestBody CustomerPhone customerPhone, @CookieValue("uss") String cookie){
+    public CustomerPhone updatePhone(@RequestBody CustomerPhone customerPhone, @RequestHeader("Authorization") String cookie){
         customerPhone.setId(ExtractIdFromToken(cookie));
         return customerService.updatePhone(customerPhone);
     }
 
     @PutMapping(value = "password")
-    public CustomerPassword updatePassword(@RequestBody CustomerPassword customerPassword, @CookieValue("uss") String cookie){
+    public CustomerPassword updatePassword(@RequestBody CustomerPassword customerPassword, @RequestHeader("Authorization") String cookie){
         customerPassword.setId(ExtractIdFromToken(cookie));
         System.out.println("customer password" + customerPassword);
         return customerService.updatePassword(customerPassword);
+    }
+
+
+    @PutMapping(value = "addToCart")
+    public CheckResponse addToCart(@RequestHeader("Authorization") String customerId, @RequestParam("furnitureId") int furnitureId, @RequestParam("quantity") int quantity){
+        Long theCustomerId = ExtractIdFromToken(customerId);
+        cartService.save( theCustomerId.intValue(), furnitureId, quantity);
+        return CheckResponse.builder().result("TRUE").build();
+    }
+
+    @DeleteMapping(value = "removeFromCart")
+    public CheckResponse removeFromCart(@RequestHeader("Authorization") String customerId, @RequestParam("furnitureId") int furnitureId){
+        Long theCustomerId = ExtractIdFromToken(customerId);
+        cartService.delete( theCustomerId.intValue(), furnitureId);
+        return CheckResponse.builder().result("TRUE").build();
+    }
+
+
+    @PutMapping(value = "succeed")
+    public CheckResponse succeedToOrder(@RequestParam("cart")Integer[] carts){
+        return  CheckResponse.builder().result(invoiceService.succeed(carts).toString()).build();
+    }
+
+
+    @GetMapping(value = "getInvoice/{id}")
+    public CheckResponse getInvoice(@PathVariable Long id){
+        return CheckResponse.builder().result(invoiceService.getInvoice(id).toString()).build();
     }
 }
