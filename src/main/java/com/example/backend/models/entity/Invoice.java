@@ -27,10 +27,12 @@ public class Invoice {
 //            mappedBy = "invoice",
             fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
-            ,orphanRemoval = true
+//            ,orphanRemoval = true
     )
     @JsonIgnore
     private List<Cart> cartList;
+
+
 
     private LocalDate dayVisited;
 
@@ -43,6 +45,7 @@ public class Invoice {
             cartList = new ArrayList<>();
         cartList.add(theCart);
     }
+
 
 
 }

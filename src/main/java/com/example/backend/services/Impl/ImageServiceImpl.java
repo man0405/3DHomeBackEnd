@@ -3,6 +3,7 @@ package com.example.backend.services.Impl;
 import com.example.backend.dto.FileDataResponse;
 import com.example.backend.dto.ImageResponse;
 import com.example.backend.models.entity.FileData;
+import com.example.backend.models.entity.Furniture;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Image;
 import com.example.backend.repository.FileDataRepo;
@@ -77,6 +78,27 @@ public class ImageServiceImpl implements ImageService {
             theHouse.addImage(fileData);
         }
         return theHouse;
+    }
+
+
+
+    @Override
+    public Furniture addImagesToFurniture(MultipartFile[] files, Furniture theFurniture) throws Exception {
+        for(MultipartFile file : files){
+            UUID id = UUID.randomUUID();
+            String filePath = FOLDER_PATH + id;
+            String getPath = "http://localhost:8080/image/fileSystem/" + id;
+            FileData fileData = fileDataRepo.save(FileData.builder()
+                    .Id(id)
+                    .type(file.getContentType())
+                    .filePath(filePath)
+                    .getPath(getPath)
+                            .furnitureId(theFurniture.getId().intValue())
+                    .build());
+            file.transferTo(new File(filePath));
+            theFurniture.addImage(fileData);
+        }
+        return theFurniture;
     }
 
     @Transactional

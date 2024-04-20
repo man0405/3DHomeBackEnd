@@ -1,20 +1,14 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.*;
-import com.example.backend.models.entity.Cart;
 import com.example.backend.models.entity.Customer;
 import com.example.backend.models.entity.House;
-import com.example.backend.models.entity.Invoice;
 import com.example.backend.services.CartService;
 import com.example.backend.services.CustomerService;
-import com.example.backend.services.Impl.CustomerServiceImpl;
-import com.example.backend.services.Impl.VisitServiceImpl;
 import com.example.backend.services.InvoiceService;
 import com.example.backend.services.VisitService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import static com.example.backend.util.ExtractId.ExtractIdFromToken;

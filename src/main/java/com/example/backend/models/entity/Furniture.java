@@ -4,6 +4,9 @@ package com.example.backend.models.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -29,4 +32,14 @@ public class Furniture {
     private String description;
 
     private int warranty;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "furniture_id")
+    private List<FileData> images;
+
+    public void addImage(FileData theImage){
+        if(images == null)
+            images = new ArrayList<>();
+        images.add(theImage);
+    }
 }

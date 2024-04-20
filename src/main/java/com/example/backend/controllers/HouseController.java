@@ -40,7 +40,6 @@ public class HouseController {
     public CustomPage<House> getHouses(@RequestHeader("Authorization") String cookie, @PathVariable int offset, @PathVariable int pageSize, @PathVariable String field){
         Page<House> houses = houseService.findOwnerHouses(Math.toIntExact(ExtractIdFromToken(cookie)),offset,pageSize,field);
         return new CustomPage<>(houses);
-
     }
 
     @GetMapping("/pagination/{offset}/{pageSize}/{field}")

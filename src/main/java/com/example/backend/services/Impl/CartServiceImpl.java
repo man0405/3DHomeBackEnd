@@ -2,7 +2,7 @@ package com.example.backend.services.Impl;
 
 import com.example.backend.models.entity.Cart;
 import com.example.backend.repository.CartRepository;
-import com.example.backend.repository.FurnitureRepository;
+import com.example.backend.repository.FurnitureRepo;
 import com.example.backend.services.CartService;
 import com.example.backend.services.CustomerService;
 import jakarta.transaction.Transactional;
@@ -18,7 +18,7 @@ public class CartServiceImpl implements CartService {
 
     private CartRepository cartRepository;
     private CustomerService customerService;
-    private FurnitureRepository furnitureRepository;
+    private FurnitureRepo furnitureRepo;
 
     @Transactional
     @Override
@@ -30,8 +30,8 @@ public class CartServiceImpl implements CartService {
             theCart.setQuantity(quantity);
         }else {
             var theCustomer = customerService.findById((long) customerId);
-            var theFurniture = furnitureRepository.findById(furnitureId);
-            theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture).quantity(1).build();
+            var theFurniture = furnitureRepo.findById(Long.valueOf(furnitureId));
+            theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(1).build();
         }
         cartRepository.save(theCart);
     }

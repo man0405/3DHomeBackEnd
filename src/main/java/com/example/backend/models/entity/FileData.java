@@ -27,4 +27,7 @@ public class FileData {
     private String src;
 
     private Boolean main;
+
+    @Column(name = "furniture_id")
+    private int furnitureId;
 }

@@ -2,6 +2,7 @@ package com.example.backend.services;
 
 import com.example.backend.dto.FileDataResponse;
 import com.example.backend.dto.ImageResponse;
+import com.example.backend.models.entity.Furniture;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Image;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,8 @@ public interface ImageService {
     String uploadImage(MultipartFile[] file) throws IOException;
 
     House addImagesToHouse(MultipartFile[] file, House theHouse) throws Exception;
+
+    Furniture addImagesToFurniture(MultipartFile[] file, Furniture theFurniture) throws Exception;
 
     byte[] downloadImage(String fileName);
 
