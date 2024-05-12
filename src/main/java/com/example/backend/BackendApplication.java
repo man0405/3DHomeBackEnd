@@ -21,7 +21,7 @@ public class BackendApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(InvoiceService invoiceService){
+	public CommandLineRunner commandLineRunner(VisitService visitService){
 		return runner ->{
 //			addOwner(theOwnerService);
 //			addHouse(theOwnerService, theHouseRepo);
@@ -31,12 +31,16 @@ public class BackendApplication {
 //			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
 //			System.out.println(theOwnerService.findVisitCustomerInfo(51));
 
-			addToCart(invoiceService);
+			addToCart(visitService);
         };
 	}
 
-	private void addToCart(InvoiceService invoiceService) {
-//		Cart cart1 = Cart.builder()..build()
+	private void addToCart(VisitService invoiceService) {
+		int[] customerList = {8, 13, 12, 10, 4, 9, 3, 11, 7, 5};
+		int[] houseList = {34,72,73,75,74,32,38,33 ,81 ,22};
+		for(int i = 0; i < 9; i++){
+			invoiceService.save(3, houseList[i]);
+		}
 	}
 
 	private void findOwnerAndHouses(OwnerService theOwnerService) {

@@ -27,17 +27,25 @@ public class VisitServiceImpl implements VisitService {
         if(checkExisting(customerId,houseId)){
             return;
         }
-        visitRepository.save(customerId, houseId, LocalDate.now(), LocalTime.now());
+        visitRepository.save(customerId, houseId, LocalDate.now(), LocalTime.now(), false);
     }
 
+    @Override
+    public void updateFav(int customerId, int houseId) {
+        Optional<Visit> v = visitRepository.findVisitByCustomer_IdAndHouse_Id(customerId, houseId);
+        if(v.isPresent()){
+            v.get().setFavorite(!v.get().getFavorite());
+            visitRepository.save(v.get());
+        }else{
+//            visitRepository
+        }
+    }
 
-//    @Override
-//    public Page<House> findSeenHouse(int offSet, int pageSet, int customerId) {
-//        List<Integer> houseIds= visitRepository.findAllHouseIdsByCustomerId(customerId);
-//        PageRequest pageRequest = PageRequest.of(offSet, pageSet);
-//        Page<House> houses = houseRepo.findByIdIn(houseIds,pageRequest);
-//        return houses;
-//    }
+    @Override
+    public Page<House> likedHouse(int offset, int pageSet, int customerId) {
+        return visitRepository.findLikedHouse(customerId, PageRequest.of(offset, pageSet));
+    }
+
 
     @Override
     public Page<House> findSeenHouse(int offSet, int pageSet, int customerId) {

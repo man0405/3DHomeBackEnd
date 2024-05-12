@@ -23,8 +23,8 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into visit (house_id, customer_id ,day_visited, time_visited) values(?2, ?1, ?3, ?4)", nativeQuery = true)
-    void save(int customerId, int houseId, LocalDate dayVisited, LocalTime timeVisited);
+    @Query(value = "insert into visit (house_id, customer_id ,day_visited, time_visited, favorite) values(?2, ?1, ?3, ?4, ?5)", nativeQuery = true)
+    void save(int customerId, int houseId, LocalDate dayVisited, LocalTime timeVisited, Boolean fav);
 
     @Query(value = "select id from Visit where house_id = ?2 and customer_id=?1", nativeQuery = true)
     Integer findExisting(int customerId, int houseId);
@@ -48,6 +48,9 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     @Query(value = "select v.house from Visit v where v.customer.id = ?1 order by v.dayVisited, v.timeVisited desc")
     Page<House> findAllHouseIdsByCustomerId(int customerId, Pageable pageable);
+
+    @Query(value = "select v.house from Visit v where v.favorite = TRUE and v.customer.id = ?1  order by v.dayVisited, v.timeVisited desc")
+    Page<House> findLikedHouse(int customerId, Pageable pageable);
 
     @Query(value = "select COUNT(v) from Visit v where v.house.Id = ?1 and MONTH (v.dayVisited) = ?2")
     Integer visitPerWeek(int HouseId, int month);

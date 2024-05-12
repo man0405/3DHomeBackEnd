@@ -56,6 +56,12 @@ public class CustomerController {
         return new CustomPage<>(housesPage);
     }
 
+    @GetMapping("fav/{offset}")
+    public APIResponse<Page<House>> getLikedHouse(@RequestHeader("Authorization") String cookie, @PathVariable int offset){
+        Page<House> housesPage = visitService.likedHouse(offset,5, Math.toIntExact((ExtractIdFromToken(cookie))));
+        return new APIResponse<>(housesPage.getSize(), housesPage);
+    }
+
 
 
     @PutMapping(value = "profile")

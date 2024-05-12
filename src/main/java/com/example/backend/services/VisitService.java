@@ -11,6 +11,10 @@ public interface VisitService {
 
     void save(int customerId, int houseId);
 
+    void updateFav(int customerId, int houseId);
+
+    Page<House> likedHouse(int offset, int pageSet, int customerId);
+
     Page<House> findSeenHouse(int offset, int pageSet, int customerId);
 
     void updatePriority(int customerId , int houseId);

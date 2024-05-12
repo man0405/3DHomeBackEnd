@@ -41,5 +41,6 @@ public class Visit {
 
     private Boolean priority;
 
+    private Boolean favorite;
 
 }

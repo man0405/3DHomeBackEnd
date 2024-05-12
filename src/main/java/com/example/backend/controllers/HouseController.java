@@ -54,6 +54,14 @@ public class HouseController {
         visitService.save(Math.toIntExact(customerId),id);
         return houseService.findById(id);
     }
+
+    @PutMapping("/id/{id}")
+    public void updateFav(@PathVariable int id, @RequestHeader("Authorization") String cookie){
+        Long customerId = ExtractIdFromToken(cookie);
+        visitService.updateFav(Math.toIntExact(customerId), id);
+    }
+
+
     @GetMapping("/owner/id/{id}")
     public House getHouseById(@PathVariable int id){
         return houseService.findById(id);
