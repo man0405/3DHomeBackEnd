@@ -108,6 +108,11 @@ public class CustomerController {
         Long theCustomerId = ExtractIdFromToken(customerId);
         return  invoiceService.succeed(carts, theCustomerId );
     }
+    @GetMapping(value = "getCart")
+    public List<Cart> getCart(@RequestHeader("Authorization") String customerId){
+        Long theCustomerId = ExtractIdFromToken(customerId);
+        return cartService.findByCustomerId(theCustomerId);
+    }
 
 
     @GetMapping(value = "getInvoice/{id}")
@@ -115,9 +120,13 @@ public class CustomerController {
         return invoiceService.getInvoice(id);
     }
 
-    @GetMapping(value = "getCart")
-    public List<Cart> getCart(@RequestHeader("Authorization") String customerId){
+    @GetMapping(value = "getAllInvoice")
+    public List<Invoice> getAllInvoice(@RequestHeader("Authorization") String customerId){
         Long theCustomerId = ExtractIdFromToken(customerId);
-        return cartService.findByCustomerId(theCustomerId);
+        return invoiceService.getAllInvoice(theCustomerId);
     }
+
+
+
+
 }

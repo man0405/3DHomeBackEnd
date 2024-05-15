@@ -38,7 +38,7 @@ public class Invoice {
 
     private LocalDate dayVisited;
 //
-    private LocalTime timeVisited;
+//    private LocalTime timeVisited;
 
     private Double price;
 
