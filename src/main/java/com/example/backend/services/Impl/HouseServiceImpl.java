@@ -70,6 +70,11 @@ public class HouseServiceImpl implements HouseService {
 		return houseRepo.findAll(Sort.by(Sort.Direction.ASC, field));
 	}
 
+	@Override
+	public Page<House> searchHouse(String name, int offset, int pageSet) {
+		return houseRepo.searchHouseByName(name, PageRequest.of(offset - 1, pageSet));
+	}
+
 	public Page<House> findHousesWithPaginationAndSort(int offset, int pageSet, String field){
 		return houseRepo.findAll(PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
 	}

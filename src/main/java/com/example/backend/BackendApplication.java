@@ -3,6 +3,7 @@ package com.example.backend;
 import com.example.backend.models.entity.*;
 import com.example.backend.repository.*;
 import com.example.backend.services.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +16,8 @@ import java.util.List;
 
 @SpringBootApplication
 public class BackendApplication {
+
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -30,6 +33,7 @@ public class BackendApplication {
 //			System.out.println(theHouseRepo.findBy_Id(1));
 //			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
 //			System.out.println(theOwnerService.findVisitCustomerInfo(51));
+
 
 			addToCart(visitService);
         };

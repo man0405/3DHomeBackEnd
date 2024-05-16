@@ -3,6 +3,7 @@ package com.example.backend.controllers;
 import com.example.backend.dto.APIResponse;
 import com.example.backend.dto.CustomPage;
 import com.example.backend.models.entity.Furniture;
+import com.example.backend.models.entity.House;
 import com.example.backend.services.FurnitureService;
 import com.example.backend.services.ImageService;
 import com.example.backend.services.VisitService;
@@ -44,6 +45,14 @@ public class FurnitureController {
         Page<Furniture> furnituresWithPaginationAndSort = furnitureService.findFurnituresWithPaginationAndSort(offset - 1, pageSize, field);
         return new APIResponse<>(furnituresWithPaginationAndSort.getSize(), furnituresWithPaginationAndSort);
     }
+
+    @GetMapping("pagination/{offset}/{pageSize}/search={name}")
+    public APIResponse<Page<Furniture>> searchingFunction(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
+        System.out.println("Search name " + name);
+        Page<Furniture> furnitures = furnitureService.searchFurniture(name, offset, pageSize);
+        return new APIResponse<>(furnitures.getSize(), furnitures);
+    }
+
 
     @GetMapping("/id/{id}")
     public Furniture getFurnitureById(@PathVariable Long id){

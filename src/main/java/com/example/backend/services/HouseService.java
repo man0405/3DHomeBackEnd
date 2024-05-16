@@ -12,6 +12,7 @@ public interface HouseService {
 
 	List<House> findHousesWithSorting(String field);
 
+
 	House findById(int theId);
 	
 	House save(House theHouse);
@@ -19,6 +20,7 @@ public interface HouseService {
 	void deleteById(int theId);
 
 	Page<House> findOwnerHouses(int id,int offset , int pageSet, String field);
+	Page<House> searchHouse(String name, int offset, int pageSet);
 
 	Page<House> findHousesWithPaginationAndSort(int offset, int pageSet, String field);
 

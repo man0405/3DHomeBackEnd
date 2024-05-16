@@ -6,6 +6,7 @@ import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;
 import com.example.backend.services.VisitService;
+import lombok.extern.java.Log;
 import org.springframework.context.annotation.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,13 @@ public class HouseController {
         return new APIResponse<>(housesWithPaginationAndSort.getSize(), housesWithPaginationAndSort);
     }
 
+    @GetMapping("pagination/{offset}/{pageSize}/search={name}")
+    public APIResponse<Page<House>> searchingFunction(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
+        System.out.println("Search name " + name);
+        Page<House> houses = houseService.searchHouse(name, offset, pageSize);
+        return new APIResponse<>(houses.getSize(), houses);
+    }
+
     @GetMapping("/id/{id}")
     public House getHouseById(@PathVariable int id, @RequestHeader("Authorization") String cookie){
         Long customerId = ExtractIdFromToken(cookie);
@@ -85,4 +93,6 @@ public class HouseController {
     public List<Integer> visitPerMonth(@PathVariable int houseId){
         return visitService.visitPerWeek(houseId);
     }
+
+
 }
