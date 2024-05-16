@@ -1,8 +1,10 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.APIResponse;
+import com.example.backend.dto.CheckResponse;
+import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Visit;
-import com.example.backend.repository.HouseRepo;
 import com.example.backend.repository.VisitRepository;
 import com.example.backend.services.VisitService;
 import lombok.AllArgsConstructor;
@@ -23,26 +25,55 @@ public class VisitServiceImpl implements VisitService {
 
 
     @Override
-    public void save(int customerId, int houseId) {
-        if(checkExisting(customerId,houseId)){
+    public void saveHouse(int customerId, int houseId) {
+        if(checkHouseExisting(customerId,houseId)){
             return;
         }
         visitRepository.save(customerId, houseId, LocalDate.now(), LocalTime.now(), false);
     }
 
     @Override
-    public void updateFav(int customerId, int houseId) {
-        Optional<Visit> v = visitRepository.findVisitByCustomer_IdAndHouse_Id(customerId, houseId);
-        if(v.isPresent()){
-            v.get().setFavorite(!v.get().getFavorite());
-            visitRepository.save(v.get());
-        }else{
-//            visitRepository
+    public void saveFurniture(int customerId, int furnitureId) {
+        if(checkFurnitureExisting(customerId,furnitureId)){
+            return;
         }
+        visitRepository.save(customerId, LocalDate.now(), LocalTime.now(), false, furnitureId);
     }
 
     @Override
-    public Page<House> likedHouse(int offset, int pageSet, int customerId) {
+    public boolean updateFav(int customerId, int houseId) {
+        System.out.println("customerId, houseId: " + customerId + ' ' + houseId);
+        boolean f;
+        Optional<Visit> v = visitRepository.findVisitByCustomer_IdAndHouse_Id(customerId, houseId);
+        if(v.isPresent()){
+            f = !v.get().getFavorite();
+            v.get().setFavorite(!v.get().getFavorite());
+            visitRepository.save(v.get());
+        }else{
+            f = true;
+            visitRepository.save(customerId, houseId, LocalDate.now(), LocalTime.now(), true);
+        }
+        return f;
+    }
+
+    @Override
+    public Boolean updateFavF(int customerId, int furniture) {
+        System.out.println("customerId, houseId: " + customerId + ' ' + furniture);
+        boolean f;
+        Optional<Visit> v = visitRepository.findVisitByCustomer_IdAndFurniture_Id(customerId, furniture);
+        if(v.isPresent()){
+            f = !v.get().getFavorite();
+            v.get().setFavorite(!v.get().getFavorite());
+            visitRepository.save(v.get());
+        }else{
+            f = true;
+            visitRepository.save(customerId, LocalDate.now(), LocalTime.now(), true, furniture);
+        }
+        return f;
+    }
+
+    @Override
+    public Page<HouseResponse> likedHouse(int offset, int pageSet, int customerId) {
         return visitRepository.findLikedHouse(customerId, PageRequest.of(offset, pageSet));
     }
 
@@ -91,8 +122,13 @@ public class VisitServiceImpl implements VisitService {
     }
 
 
-    private boolean checkExisting(int customerId, int houseId){
-        Integer id = visitRepository.findExisting(customerId, houseId);
+    private boolean checkHouseExisting(int customerId, int houseId){
+        Integer id = visitRepository.findHouseExisting(customerId, houseId);
+        return id != null;
+    }
+
+    private boolean checkFurnitureExisting(int customerId, int houseId){
+        Integer id = visitRepository.findFurnitureExisting(customerId, houseId);
         return id != null;
     }
 }

@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckResponse {
-    private String result;
+public class CheckResponse<T> {
+    private T result;
 }

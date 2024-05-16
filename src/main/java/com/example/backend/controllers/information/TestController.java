@@ -1,8 +1,10 @@
 package com.example.backend.controllers.information;
 
 
+import com.example.backend.dto.CheckResponse;
 import com.example.backend.services.information.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +31,8 @@ public class TestController {
     }
 
     @GetMapping("/verify")
-    public String verifyToken(){
-        return "Oke";
+    public CheckResponse verifyToken(){
+        return new CheckResponse(HttpStatus.OK.toString());
     }
 
 }

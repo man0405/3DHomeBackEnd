@@ -57,8 +57,8 @@ public class CustomerController {
     }
 
     @GetMapping("fav/{offset}")
-    public APIResponse<Page<House>> getLikedHouse(@RequestHeader("Authorization") String cookie, @PathVariable int offset){
-        Page<House> housesPage = visitService.likedHouse(offset,5, Math.toIntExact((ExtractIdFromToken(cookie))));
+    public APIResponse<Page<HouseResponse>> getLikedHouse(@RequestHeader("Authorization") String cookie, @PathVariable int offset){
+        Page<HouseResponse> housesPage = visitService.likedHouse(offset,5, Math.toIntExact((ExtractIdFromToken(cookie))));
         return new APIResponse<>(housesPage.getSize(), housesPage);
     }
 

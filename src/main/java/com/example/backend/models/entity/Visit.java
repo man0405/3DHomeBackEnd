@@ -35,6 +35,11 @@ public class Visit {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "furniture_id")
+    private Furniture furniture;
+
     private LocalDate dayVisited;
 
     private LocalTime timeVisited;

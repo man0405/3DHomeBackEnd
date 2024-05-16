@@ -1,5 +1,6 @@
 package com.example.backend.repository;
 
+import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,8 +13,11 @@ import java.util.Optional;
 
 public interface HouseRepo extends JpaRepository<House,Integer>, HouseRepoCustom {
 
-    List<House> findByIdIn(List<Integer> id);
-    Page<House> findByIdIn(List<Integer> id, Pageable pageable);
+
+    @Query("SELECT new com.example.backend.dto.HouseResponse(h, coalesce(v.favorite, false) ) " +
+            "FROM House h " +
+            "LEFT JOIN Visit v ON h.Id = v.house.Id AND v.customer.id = ?1")
+    Page<HouseResponse> findHousesWithPaginationAndSort(int customerId, Pageable pageable);
 
     Page<House> findHousesByOwner_Id(int id , Pageable pageable);
 }

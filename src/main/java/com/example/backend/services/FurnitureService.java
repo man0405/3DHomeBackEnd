@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.FurnitureResponse;
 import com.example.backend.models.entity.Furniture;
 import org.springframework.data.domain.Page;
 
@@ -19,6 +20,6 @@ public interface FurnitureService {
 
 //	Page<Furniture> findOwnerFurnitures(int id,int offset , int pageSet, String field);
 
-	Page<Furniture> findFurnituresWithPaginationAndSort(int offset, int pageSet, String field);
+	Page<FurnitureResponse> findFurnituresWithPaginationAndSort(int offset, int pageSet, String field, int customerId);
 
 }
