@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,11 +44,16 @@ public class InvoiceServiceImpl implements InvoiceService {
         theInvoice.setPrice(sum);
         theInvoice.setCustomer_id(customerId);
         theInvoice.setDayVisited(LocalDate.now());
-        theInvoice.setTimeVisited(LocalTime.now());
+//        theInvoice.setTimeVisited(LocalTime.now());
          return invoiceRepo.save(theInvoice);
     }
 
     public Invoice getInvoice(Long invoiceId){
         return invoiceRepo.findById(invoiceId).get();
     }
+
+    public List<Invoice> getAllInvoice(Long customerId){
+        return invoiceRepo.findByCustomer_id(customerId);
+    }
+
 }
