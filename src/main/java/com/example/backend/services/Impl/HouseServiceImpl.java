@@ -72,9 +72,9 @@ public class HouseServiceImpl implements HouseService {
 	}
 
 
-	public Page<HouseResponse> findHousesWithPaginationAndSort(int offset, int pageSet, String field, Long customerId){
+	public Page<HouseResponse> findHousesWithPaginationAndSort(int offset, int pageSet, String field, Long customerId) {
 		return houseRepo.findHousesWithPaginationAndSort(customerId.intValue(), PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
-
+	}
 	@Override
 	public Page<House> searchHouse(String name, int offset, int pageSet) {
 		return houseRepo.searchHouseByName(name, PageRequest.of(offset - 1, pageSet));

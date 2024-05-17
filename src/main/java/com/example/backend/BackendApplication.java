@@ -38,7 +38,7 @@ public class BackendApplication {
 //			addToCart(visitService);
 
 
-			addToCart(visitService);
+//			addToCart(visitService);
 
         };
 	}
