@@ -24,6 +24,10 @@ public interface HouseRepo extends JpaRepository<House,Integer>, HouseRepoCustom
 
     Page<House> findHousesByOwner_Id(int id , Pageable pageable);
 
+   // select  from House h where lower(h.name) like lower(concat('%',':name','%'))
+//    @Query(value = "
+//            select h from House h where lower(h.name) like lower(concat('%',?1,'%'))
+//            ")
 
     @Query(value = "SELECT h FROM House h WHERE LOWER(h.name) like LOWER(CONCAT('%',:name,'%') ) ")
     Page<House> searchHouseByName(String name, Pageable pageable);
