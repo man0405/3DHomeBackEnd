@@ -35,7 +35,7 @@ public class BackendApplication {
 //			System.out.println(theOwnerService.findVisitCustomerInfo(51));
 
 
-			addToCart(visitService);
+//			addToCart(visitService);
         };
 	}
 
