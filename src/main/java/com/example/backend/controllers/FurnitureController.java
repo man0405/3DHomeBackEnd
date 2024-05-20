@@ -5,6 +5,7 @@ import com.example.backend.dto.CheckResponse;
 import com.example.backend.dto.CustomPage;
 import com.example.backend.dto.FurnitureResponse;
 import com.example.backend.models.entity.Furniture;
+import com.example.backend.models.entity.House;
 import com.example.backend.services.FurnitureService;
 import com.example.backend.services.ImageService;
 import com.example.backend.services.VisitService;
@@ -53,11 +54,22 @@ public class FurnitureController {
         return new APIResponse<>(furnituresWithPaginationAndSort.getSize(), furnituresWithPaginationAndSort);
     }
 
+
     @PutMapping("/like/{id}")
     public Boolean updateFav(@PathVariable int id, @RequestHeader("Authorization") String cookie){
         Long customerId = ExtractIdFromToken(cookie);
         return visitService.updateFavF(Math.toIntExact(customerId), id);
     }
+
+
+    @GetMapping("pagination/{offset}/{pageSize}/search={name}")
+    public APIResponse<Page<Furniture>> searchingFunction(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
+        System.out.println("Search name " + name);
+        Page<Furniture> furnitures = furnitureService.searchFurniture(name, offset, pageSize);
+        return new APIResponse<>(furnitures.getSize(), furnitures);
+    }
+
+
 
     @GetMapping("/id/{id}")
     public Furniture getFurnitureById(@PathVariable int id, @RequestHeader("Authorization") String cookie){

@@ -60,6 +60,11 @@ public class FurnitureServiceImpl implements FurnitureService {
 		furnitureRepo.deleteById(Long.valueOf(theId));
 	}
 
+	@Override
+	public Page<Furniture> searchFurniture(String name, int offset, int pageSet) {
+		return furnitureRepo.searchFurnitureByName(name, PageRequest.of(offset - 1, pageSet));
+	}
+
 
 //	@Override
 //	public Page<Furniture> findOwnerFurnitures(int id, int offset, int pageSet, String field) {
