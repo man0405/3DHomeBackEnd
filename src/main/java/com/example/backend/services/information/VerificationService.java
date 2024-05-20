@@ -24,6 +24,4 @@ public class VerificationService {
     public int setConfirmedAt(String token){
         return verificationRepository.updateConfirmedAy(token , LocalDateTime.now());
     }
-
-
 }

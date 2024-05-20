@@ -1,7 +1,7 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
-import com.example.backend.models.entity.Owner;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -22,6 +22,6 @@ public interface HouseService {
 	Page<House> findOwnerHouses(int id,int offset , int pageSet, String field);
 	Page<House> searchHouse(String name, int offset, int pageSet);
 
-	Page<House> findHousesWithPaginationAndSort(int offset, int pageSet, String field);
+	Page<HouseResponse> findHousesWithPaginationAndSort(int offset, int pageSet, String field, Long customerId);
 
 }

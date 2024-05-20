@@ -1,7 +1,9 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.APIResponse;
+import com.example.backend.dto.CheckResponse;
 import com.example.backend.dto.CustomPage;
+import com.example.backend.dto.FurnitureResponse;
 import com.example.backend.models.entity.Furniture;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.FurnitureService;
@@ -22,9 +24,12 @@ public class FurnitureController {
     private final FurnitureService furnitureService;
     private final ImageService imageService;
 
+    private final VisitService visitService;
+
     public FurnitureController(FurnitureService furnitureService, ImageService imageService, VisitService visitService) {
         this.furnitureService = furnitureService;
         this.imageService = imageService;
+        this.visitService = visitService;
     }
 
 
@@ -40,11 +45,22 @@ public class FurnitureController {
 //        return new CustomPage<>(furnitures);
 //    }
 
+
+
     @GetMapping("/pagination/{offset}/{pageSize}/{field}")
-    public APIResponse<Page<Furniture>> getFurnituresWithSort(@PathVariable int offset, @PathVariable int pageSize, @PathVariable String field){
-        Page<Furniture> furnituresWithPaginationAndSort = furnitureService.findFurnituresWithPaginationAndSort(offset - 1, pageSize, field);
+    public APIResponse<Page<FurnitureResponse>> getFurnituresWithSort(@PathVariable int offset, @PathVariable int pageSize, @PathVariable String field, @RequestHeader("Authorization") String cookie){
+        Long customerId = ExtractIdFromToken(cookie);
+        Page<FurnitureResponse> furnituresWithPaginationAndSort = furnitureService.findFurnituresWithPaginationAndSort(offset - 1, pageSize, field, customerId.intValue());
         return new APIResponse<>(furnituresWithPaginationAndSort.getSize(), furnituresWithPaginationAndSort);
     }
+
+
+    @PutMapping("/like/{id}")
+    public Boolean updateFav(@PathVariable int id, @RequestHeader("Authorization") String cookie){
+        Long customerId = ExtractIdFromToken(cookie);
+        return visitService.updateFavF(Math.toIntExact(customerId), id);
+    }
+
 
     @GetMapping("pagination/{offset}/{pageSize}/search={name}")
     public APIResponse<Page<Furniture>> searchingFunction(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
@@ -54,9 +70,12 @@ public class FurnitureController {
     }
 
 
+
     @GetMapping("/id/{id}")
-    public Furniture getFurnitureById(@PathVariable Long id){
-        return furnitureService.findById(id);
+    public Furniture getFurnitureById(@PathVariable int id, @RequestHeader("Authorization") String cookie){
+        Long customerId = ExtractIdFromToken(cookie);
+        visitService.saveFurniture(Math.toIntExact(customerId),id);
+        return furnitureService.findById(Long.valueOf(id));
     }
 
     @PutMapping("/add-image/{furnitureId}")
@@ -67,5 +86,6 @@ public class FurnitureController {
         imageService.addImagesToFurniture(files, theFurniture);
         return theFurniture;
     }
+
 
 }
