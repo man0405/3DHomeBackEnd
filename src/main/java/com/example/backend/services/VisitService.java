@@ -1,23 +1,28 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface VisitService {
 
-    void save(int customerId, int houseId);
+    void saveHouse(int customerId, int houseId);
+    void saveFurniture(int customerId, int furnitureId);
 
-    void updateFav(int customerId, int houseId);
+    boolean updateFav(int customerId, int houseId);
 
-    Page<House> likedHouse(int offset, int pageSet, int customerId);
+    Boolean updateFavF(int customerId, int furniture);
+
+    Page<HouseResponse> likedHouse(int offset, int pageSet, int customerId);
 
     Page<House> findSeenHouse(int offset, int pageSet, int customerId);
 
     void updatePriority(int customerId , int houseId);
+
+
 
     List<Integer> visitPerWeek(int theHouseId);
 

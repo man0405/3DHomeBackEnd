@@ -1,5 +1,6 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.HouseResponse;
 import com.example.backend.repository.HouseRepo;
 import com.example.backend.models.entity.House;
 import com.example.backend.repository.InformationRepo;
@@ -70,6 +71,10 @@ public class HouseServiceImpl implements HouseService {
 		return houseRepo.findAll(Sort.by(Sort.Direction.ASC, field));
 	}
 
+
+	public Page<HouseResponse> findHousesWithPaginationAndSort(int offset, int pageSet, String field, Long customerId) {
+		return houseRepo.findHousesWithPaginationAndSort(customerId.intValue(), PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
+	}
 	@Override
 	public Page<House> searchHouse(String name, int offset, int pageSet) {
 		return houseRepo.searchHouseByName(name, PageRequest.of(offset - 1, pageSet));
@@ -77,5 +82,6 @@ public class HouseServiceImpl implements HouseService {
 
 	public Page<House> findHousesWithPaginationAndSort(int offset, int pageSet, String field){
 		return houseRepo.findAll(PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
+
 	}
 }

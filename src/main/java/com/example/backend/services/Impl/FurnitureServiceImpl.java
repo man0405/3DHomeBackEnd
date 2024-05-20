@@ -1,5 +1,6 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.FurnitureResponse;
 import com.example.backend.models.entity.Furniture;
 import com.example.backend.repository.FurnitureRepo;
 import com.example.backend.repository.InformationRepo;
@@ -75,7 +76,7 @@ public class FurnitureServiceImpl implements FurnitureService {
 		return furnitureRepo.findAll(Sort.by(Sort.Direction.ASC, field));
 	}
 
-	public Page<Furniture> findFurnituresWithPaginationAndSort(int offset, int pageSet, String field){
-		return furnitureRepo.findAll(PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
+	public Page<FurnitureResponse> findFurnituresWithPaginationAndSort(int offset, int pageSet, String field, int customerId){
+		return furnitureRepo.findFurnitureWithPaginationAndSort(customerId, PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
 	}
 }
