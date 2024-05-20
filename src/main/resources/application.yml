@@ -9,21 +9,6 @@ logging:
 
 
 spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 550028112480-i72gv2lu7o2bjq3tkfs5f46jf9gil959.apps.googleusercontent.com
-            client-secret: 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
-            scope: profile, email
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-        provider:
-          google:
-            authorization-uri: https://accounts.google.com/o/oauth2/auth
-            token-uri: https://accounts.google.com/o/oauth2/token
-            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
-            user-name-attribute: sub
   datasource:
     username: postgres
     password: ${PASSWORD}
