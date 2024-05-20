@@ -59,7 +59,6 @@ public class RegistrationService {
 
     @Transactional
     public String verifyToken(String token){
-        System.out.println("did check");
         Verification verification = verificationService.getToken(token).orElseThrow(()-> new IllegalStateException("token not found"));
         if(verification.getConfirmedAt() != null){
             throw new IllegalStateException("Email already confirmed");
@@ -69,6 +68,7 @@ public class RegistrationService {
         if(expiredAt.isBefore(LocalDateTime.now())){
             throw new IllegalStateException("Token expired");
         }
+
         verificationService.setConfirmedAt(token);
         userService.enableUser(verification.getUser().getEmail());
         return "Confirmed";

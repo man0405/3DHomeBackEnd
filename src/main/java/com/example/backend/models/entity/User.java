@@ -42,9 +42,6 @@ public class User implements UserDetails {
     private Boolean enabled = false;
 //    private Boolean locked = false;
 
-    private String provider;
-    private String providerId;
-
 
 
     @Override

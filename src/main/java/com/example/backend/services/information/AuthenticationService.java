@@ -55,6 +55,7 @@ public class AuthenticationService {
 //        var jwt = jwtService.generateToken(user, customer);
 //        return JwtAuthenticationResponse.builder().token(jwt).build();
 //    }
+//
 
     public JwtAuthenticationResponse signin(SignInRequest request) {
 
@@ -62,6 +63,7 @@ public class AuthenticationService {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+
         } catch (NullPointerException ex){
             throw  new CustomMessageException("The account isn't active. Please check your mail and active account" , String.valueOf(HttpStatus.NOT_ACCEPTABLE));
         }

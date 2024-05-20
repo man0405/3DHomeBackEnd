@@ -64,11 +64,11 @@ public class AuthenticationController {
     }
 
 
-//    @GetMapping("/logout")
-//    public CheckResponse logout(HttpServletResponse response){
-//        response.setHeader(HttpHeaders.SET_COOKIE,cookies("", 0).toString());
-//        return new CheckResponse("true");
-//    }
+    @GetMapping("/logout")
+    public CheckResponse logout(HttpServletResponse response){
+        response.setHeader(HttpHeaders.SET_COOKIE,cookies("", 0).toString());
+        return new CheckResponse("true");
+    }
 
 
 
