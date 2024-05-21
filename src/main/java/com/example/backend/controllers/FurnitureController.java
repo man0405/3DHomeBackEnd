@@ -1,9 +1,6 @@
 package com.example.backend.controllers;
 
-import com.example.backend.dto.APIResponse;
-import com.example.backend.dto.CheckResponse;
-import com.example.backend.dto.CustomPage;
-import com.example.backend.dto.FurnitureResponse;
+import com.example.backend.dto.*;
 import com.example.backend.models.entity.Furniture;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.FurnitureService;
@@ -62,11 +59,22 @@ public class FurnitureController {
     }
 
 
-    @GetMapping("pagination/{offset}/{pageSize}/search={name}")
-    public APIResponse<Page<Furniture>> searchingFunction(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
-        System.out.println("Search name " + name);
-        Page<Furniture> furnitures = furnitureService.searchFurniture(name, offset, pageSize);
+    @GetMapping("pagination/{offset}/{pageSize}")
+    public APIResponse<Page<FurnitureResponse>> searchingFunction( @RequestHeader("Authorization") String cookie,@RequestParam(required = false) String search,@RequestParam(required = false) String price,@RequestParam(required = false) String warranty, @RequestParam(required = false) String material, @PathVariable int offset, @PathVariable int pageSize){
+        Long customerId = ExtractIdFromToken(cookie);
+        System.out.println("search: " + search);
+        System.out.println("price: " + price);
+        System.out.println("warranty: " + warranty);
+        System.out.println("material: " + material);
+
+        Page<FurnitureResponse> furnitures = furnitureService.searchFurniture(customerId.intValue(),search != null ? search.trim() : "",price,warranty,material, offset, pageSize);
         return new APIResponse<>(furnitures.getSize(), furnitures);
+    }
+
+    @GetMapping("filter")
+    public FurnitureFilter filters(){
+
+        return furnitureService.getFilter();
     }
 
 

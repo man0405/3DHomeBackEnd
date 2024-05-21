@@ -1,5 +1,6 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.FurnitureFilter;
 import com.example.backend.dto.FurnitureResponse;
 import com.example.backend.models.entity.Furniture;
 import com.example.backend.repository.FurnitureRepo;
@@ -12,8 +13,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FurnitureServiceImpl implements FurnitureService {
@@ -61,15 +65,24 @@ public class FurnitureServiceImpl implements FurnitureService {
 	}
 
 	@Override
-	public Page<Furniture> searchFurniture(String name, int offset, int pageSet) {
-		return furnitureRepo.searchFurnitureByName(name, PageRequest.of(offset - 1, pageSet));
+	public Page<FurnitureResponse> searchFurniture(int customerId,String name, String price, String warranty, String material, int offset, int pageSet) {
+		System.out.println("Service search " + name);
+		int[] price_range = {0,0};
+		if (price!= null){
+			price_range = Arrays.stream(price.trim().split("-")).mapToInt(Integer::parseInt).toArray();
+		}
+		return furnitureRepo.searchFurnitureByFilter(customerId,name, price, price_range[0], price_range[1], warranty, material, PageRequest.of(offset - 1, pageSet));
 	}
 
-
-//	@Override
-//	public Page<Furniture> findOwnerFurnitures(int id, int offset, int pageSet, String field) {
-//		return furnitureRepo.findFurnituresByOwner_Id(id, PageRequest.of(offset,pageSet));
-//	}
+	@Override
+	public FurnitureFilter getFilter() {
+		List<String> warranty = furnitureRepo.warrantyRange();
+		List<String> material = furnitureRepo.materialRange();
+		List<String> priceRange = furnitureRepo.priceRange().stream().map(e -> e[0].toString())
+				.sorted(Comparator.comparingLong(price -> Long.parseLong(price.split("-")[0])))
+						.collect(Collectors.toList());
+		return new FurnitureFilter(priceRange, material, warranty);
+	}
 
 
 	public List<Furniture> findFurnituresWithSorting(String field){
