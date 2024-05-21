@@ -1,8 +1,6 @@
 package com.example.backend.controllers;
 
-import com.example.backend.dto.APIResponse;
-import com.example.backend.dto.CustomPage;
-import com.example.backend.dto.HouseResponse;
+import com.example.backend.dto.*;
 import com.example.backend.models.entity.House;
 import com.example.backend.services.HouseService;
 import com.example.backend.services.ImageService;
@@ -13,9 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.SQLOutput;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static com.example.backend.util.ExtractId.ExtractIdFromToken;
+import static java.lang.Integer.parseInt;
 
 @RestController
 @RequestMapping("/house")
@@ -51,11 +53,29 @@ public class HouseController {
         return new APIResponse<>(housesWithPaginationAndSort.getSize(), housesWithPaginationAndSort);
     }
 
-    @GetMapping("pagination/{offset}/{pageSize}/search={name}")
-    public APIResponse<Page<House>> searchingFunction(@PathVariable String name, @PathVariable int offset, @PathVariable int pageSize){
-        System.out.println("Search name " + name);
-        Page<House> houses = houseService.searchHouse(name, offset, pageSize);
+    @GetMapping("pagination/{offset}/{pageSize}")
+    public APIResponse<Page<HouseResponse>> searchingFunction(@RequestParam(required = false) String search,@RequestParam(required = false) String landSize,@RequestParam(required = false) Integer bedroom,@RequestParam(required = false) String price, @PathVariable int offset, @PathVariable int pageSize,@RequestHeader("Authorization") String cookie){
+        System.out.println("search: " + search);
+        System.out.println("landSize: " + landSize);
+        System.out.println("bedroom: " + bedroom);
+        System.out.println("price: " + price);
+        int[] land_size = {0, 0};
+        int[] price_range = {0,0};
+        if (landSize != null){
+            land_size = Arrays.stream(landSize.trim().split("-")).mapToInt(Integer::parseInt).toArray();
+        }
+        if (price!= null){
+            price_range = Arrays.stream(price.trim().split("-")).mapToInt(Integer::parseInt).toArray();
+        }
+        Long customerId = ExtractIdFromToken(cookie);
+        Page<HouseResponse> houses = houseService.searchHouse(customerId,search != null ? search : "",landSize,land_size[0],land_size[1],bedroom != null ? bedroom : 0,price,price_range[0],price_range[1], offset, pageSize);
         return new APIResponse<>(houses.getSize(), houses);
+    }
+
+    @GetMapping("filter")
+    public FilterResponse filters(){
+
+        return houseService.getFilter();
     }
 
     @GetMapping("/id/{id}")

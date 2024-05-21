@@ -1,5 +1,6 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.FilterResponse;
 import com.example.backend.dto.HouseResponse;
 import com.example.backend.repository.HouseRepo;
 import com.example.backend.models.entity.House;
@@ -12,8 +13,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class HouseServiceImpl implements HouseService {
@@ -76,8 +79,22 @@ public class HouseServiceImpl implements HouseService {
 		return houseRepo.findHousesWithPaginationAndSort(customerId.intValue(), PageRequest.of(offset, pageSet).withSort(Sort.by(field)));
 	}
 	@Override
-	public Page<House> searchHouse(String name, int offset, int pageSet) {
-		return houseRepo.searchHouseByName(name, PageRequest.of(offset - 1, pageSet));
+	public Page<HouseResponse> searchHouse(Long id, String name, String landSize, int minLandSize, int maxLandSize, int bedRoom, String price, int minPrice, int maxPrice , int offset, int pageSet) {
+		return houseRepo.searchHouseByFilter(id,name,landSize,minLandSize,maxLandSize,bedRoom,price,minPrice,maxPrice, PageRequest.of(offset - 1, pageSet));
+	}
+
+	@Override
+	public FilterResponse getFilter() {
+		List<String> rangeSize = houseRepo.landSizeRange().stream()
+				.map(obj -> (String) obj[0])
+				.sorted(Comparator.comparingLong(filter -> Long.parseLong(filter.split("-")[0]))
+				).collect(Collectors.toList());
+		List<String> rangePrice =houseRepo.priceRange().stream()
+				.map(obj -> (String) obj[0])
+				.sorted(Comparator.comparingLong(filter -> Long.parseLong(filter.split("-")[0])))
+				.collect(Collectors.toList());
+		List<Long> rangeBedroom = houseRepo.bedroomRange();
+		return new FilterResponse(rangeSize,rangePrice,rangeBedroom);
 	}
 
 	public Page<House> findHousesWithPaginationAndSort(int offset, int pageSet, String field){
