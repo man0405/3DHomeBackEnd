@@ -1,7 +1,6 @@
 package com.example.backend.services.Impl;
 
-import com.example.backend.dto.APIResponse;
-import com.example.backend.dto.CheckResponse;
+import com.example.backend.dto.FurnitureResponse;
 import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Visit;
@@ -76,6 +75,13 @@ public class VisitServiceImpl implements VisitService {
     public Page<HouseResponse> likedHouse(int offset, int pageSet, int customerId) {
         return visitRepository.findLikedHouse(customerId, PageRequest.of(offset, pageSet));
     }
+
+    @Override
+    public Page<FurnitureResponse> likedFurniture(int offset, int pageSet, int customerId) {
+        return visitRepository.findLikedFurniture(customerId, PageRequest.of(offset, pageSet));
+    }
+
+
 
 
     @Override

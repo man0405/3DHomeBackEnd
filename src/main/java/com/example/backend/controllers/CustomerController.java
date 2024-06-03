@@ -62,6 +62,14 @@ public class CustomerController {
         return new APIResponse<>(housesPage.getSize(), housesPage);
     }
 
+    @GetMapping("favFurniture/{offset}")
+    public APIResponse<Page<FurnitureResponse>> getLikedFurniture(@RequestHeader("Authorization") String cookie, @PathVariable int offset){
+        Page<FurnitureResponse> furniturePage = visitService.likedFurniture(offset,5, Math.toIntExact((ExtractIdFromToken(cookie))));
+        return new APIResponse<>(furniturePage.getSize(), furniturePage);
+    }
+
+    
+
 
 
     @PutMapping(value = "profile")

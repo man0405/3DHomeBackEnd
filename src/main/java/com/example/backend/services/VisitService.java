@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.FurnitureResponse;
 import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ public interface VisitService {
     Boolean updateFavF(int customerId, int furniture);
 
     Page<HouseResponse> likedHouse(int offset, int pageSet, int customerId);
+    Page<FurnitureResponse> likedFurniture(int offset, int pageSet, int customerId);
 
     Page<House> findSeenHouse(int offset, int pageSet, int customerId);
 

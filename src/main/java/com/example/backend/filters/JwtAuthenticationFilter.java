@@ -52,7 +52,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         }
-//        System.out.println("cookie" + request.getCookies());
         if(StringUtils.isEmpty(jwt)){
             if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
                 filterChain.doFilter(request, response);
@@ -61,7 +60,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             jwt = authHeader.substring(7);
         }
         System.out.println("jwt :" + jwt);
-
         userEmail = jwtService.extractUserName(jwt);
         log.debug("useEmail - {}" , userEmail);
         if (StringUtils.isNotEmpty(userEmail) && SecurityContextHolder.getContext().getAuthentication() == null) {
