@@ -116,11 +116,17 @@ public class CustomerController {
 //        Long theCustomerId = ExtractIdFromToken(customerId);
 //        return  invoiceService.succeed(carts, theCustomerId );
 //    }
-//    @GetMapping(value = "getCart")
-//    public List<Cart> getCart(@RequestHeader("Authorization") String customerId){
-//        Long theCustomerId = ExtractIdFromToken(customerId);
-//        return cartService.findByCustomerId(theCustomerId);
-//    }
+    @GetMapping(value = "getCart")
+    public CartResponse getCart(@RequestHeader("Authorization") String customerId){
+        Long theCustomerId = ExtractIdFromToken(customerId);
+        return cartService.getCart(Math.toIntExact(theCustomerId));
+    }
+
+    @PutMapping(value = "cart/{furniture}/{quantity}")
+    public void addToCard(@RequestHeader("Authorization") String customerId, @PathVariable int furniture, @PathVariable int quantity){
+        Long theCustomerId = ExtractIdFromToken(customerId);
+        cartService.addItem(Math.toIntExact(theCustomerId), furniture, quantity);
+    }
 
 
     @GetMapping(value = "getInvoice/{id}")

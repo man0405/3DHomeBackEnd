@@ -1,6 +1,7 @@
 package com.example.backend.models.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,14 +18,17 @@ public class Item {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
-    private Furniture furnitureId;
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    @OneToOne
-    private Customer customerId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "furniture_id")
+    private Furniture furniture;
 
     private int quantity;
 

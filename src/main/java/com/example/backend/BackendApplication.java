@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class BackendApplication {
@@ -24,7 +25,7 @@ public class BackendApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(VisitService visitService){
+	public CommandLineRunner commandLineRunner(CartService cartService, ItemRepo itemRepo){
 		return runner ->{
 //			addOwner(theOwnerService);
 //			addHouse(theOwnerService, theHouseRepo);
@@ -38,18 +39,17 @@ public class BackendApplication {
 //			addToCart(visitService);
 
 
-//			addToCart(visitService);
-
+//			addToCart(cartService, itemRepo);
         };
 	}
 
-//	private void addToCart(VisitService invoiceService) {
-//		int[] customerList = {8, 13, 12, 10, 4, 9, 3, 11, 7, 5};
-//		int[] houseList = {34,72,73,75,74,32,38,33 ,81 ,22};
-//		for(int i = 0; i < 9; i++){
-//			invoiceService.save(3, houseList[i]);
-//		}
-//	}
+	private void addToCart(CartService cartService, ItemRepo itemRepo) {
+//		Optional<Item> item = itemRepo.findByCustomerIdAndFurnitureId(Long.valueOf(8), Long.valueOf(102));
+//		System.out.println(item.get());
+		System.out.println("helo1");
+		cartService.addItem(8, 152, 3);
+		System.out.println("helo");
+	}
 
 	private void findOwnerAndHouses(OwnerService theOwnerService) {
 		int theId = 1;

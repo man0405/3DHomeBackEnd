@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,17 +25,22 @@ public class Cart {
     private Long id;
 
 
-    @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "customer_id")
+    @OneToOne
     private Customer customer;
 
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH}
 //            orphanRemoval = true
     )
     @JsonIgnore
     private List<Item> items;
+
+
+    public void addItem(Item theItem){
+        if(items == null)
+            items = new ArrayList<>();
+        items.add(theItem);
+    }
 }
