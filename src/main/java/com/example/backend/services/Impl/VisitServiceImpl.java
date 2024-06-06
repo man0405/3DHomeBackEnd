@@ -2,6 +2,7 @@ package com.example.backend.services.Impl;
 
 import com.example.backend.dto.APIResponse;
 import com.example.backend.dto.CheckResponse;
+import com.example.backend.dto.FurnitureResponse;
 import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Visit;
@@ -130,5 +131,10 @@ public class VisitServiceImpl implements VisitService {
     private boolean checkFurnitureExisting(int customerId, int houseId){
         Integer id = visitRepository.findFurnitureExisting(customerId, houseId);
         return id != null;
+    }
+
+    @Override
+    public Page<FurnitureResponse> likedFurniture(int offset, int pageSet, int customerId) {
+        return visitRepository.findLikedFurniture(customerId, PageRequest.of(offset, pageSet));
     }
 }

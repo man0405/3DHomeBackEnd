@@ -34,7 +34,6 @@ public class Cart {
 
     private int quantity;
 
-    private boolean paid;
 
 
 }

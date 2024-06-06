@@ -62,6 +62,12 @@ public class CustomerController {
         return new APIResponse<>(housesPage.getSize(), housesPage);
     }
 
+    @GetMapping("favFurniture/{offset}")
+    public APIResponse<Page<FurnitureResponse>> getLikedFurniture(@RequestHeader("Authorization") String cookie, @PathVariable int offset){
+        Page<FurnitureResponse> furniturePage = visitService.likedFurniture(offset,5, Math.toIntExact((ExtractIdFromToken(cookie))));
+        return new APIResponse<>(furniturePage.getSize(), furniturePage);
+    }
+
 
 
     @PutMapping(value = "profile")
@@ -91,6 +97,7 @@ public class CustomerController {
     @PutMapping(value = "addToCart")
     public CheckResponse addToCart(@RequestHeader("Authorization") String customerId, @RequestParam("furnitureId") int furnitureId, @RequestParam("quantity") int quantity){
         Long theCustomerId = ExtractIdFromToken(customerId);
+        System.out.println("addToCart " + customerId +  " " + furnitureId + " " + quantity);
         cartService.save( theCustomerId.intValue(), furnitureId, quantity);
         return CheckResponse.builder().result("TRUE").build();
     }
@@ -104,9 +111,9 @@ public class CustomerController {
 
 
     @PutMapping(value = "succeed")
-    public Invoice succeedToOrder(@RequestParam("cart")Integer[] carts, @RequestHeader("Authorization") String customerId){
+    public Invoice succeedToOrder(@RequestHeader("Authorization") String customerId){
         Long theCustomerId = ExtractIdFromToken(customerId);
-        return  invoiceService.succeed(carts, theCustomerId );
+        return  invoiceService.succeed( theCustomerId );
     }
     @GetMapping(value = "getCart")
     public List<Cart> getCart(@RequestHeader("Authorization") String customerId){

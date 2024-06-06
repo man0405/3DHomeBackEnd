@@ -23,25 +23,25 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner commandLineRunner(VisitService visitService){
-		return runner ->{
-//			addOwner(theOwnerService);
-//			addHouse(theOwnerService, theHouseRepo);
-//			findOwnerById(theOwnerService)
-//			findOwnerAndHouses(theOwnerService);
-//			System.out.println(theHouseRepo.findBy_Id(1));
-//			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
-//			System.out.println(theOwnerService.findVisitCustomerInfo(51));
-
-
-//			addToCart(visitService);
-
-
-//			addToCart(visitService);
-
-        };
-	}
+//	@Bean
+//	public CommandLineRunner commandLineRunner(VisitService visitService){
+//		return runner ->{
+////			addOwner(theOwnerService);
+////			addHouse(theOwnerService, theHouseRepo);
+////			findOwnerById(theOwnerService)
+////			findOwnerAndHouses(theOwnerService);
+////			System.out.println(theHouseRepo.findBy_Id(1));
+////			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
+////			System.out.println(theOwnerService.findVisitCustomerInfo(51));
+//
+//
+////			addToCart(visitService);
+//
+//
+////			addToCart(visitService);
+//
+//        };
+//	}
 
 //	private void addToCart(VisitService invoiceService) {
 //		int[] customerList = {8, 13, 12, 10, 4, 9, 3, 11, 7, 5};

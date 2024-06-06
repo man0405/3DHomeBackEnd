@@ -1,5 +1,6 @@
 package com.example.backend.repository;
 
+import com.example.backend.dto.FurnitureResponse;
 import com.example.backend.dto.HouseResponse;
 import com.example.backend.models.entity.House;
 import com.example.backend.models.entity.Visit;
@@ -72,6 +73,9 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     @Query(value = "select new com.example.backend.dto.HouseResponse(v.house, v.favorite) from Visit v where v.favorite = TRUE and v.customer.id = ?1  order by v.dayVisited, v.timeVisited desc")
     Page<HouseResponse> findLikedHouse(int customerId, Pageable pageable);
+
+    @Query(value = "select new com.example.backend.dto.FurnitureResponse(v.furniture, v.favorite) from Visit v where v.favorite = TRUE and v.customer.id = ?1  order by v.dayVisited, v.timeVisited desc")
+    Page<FurnitureResponse> findLikedFurniture(int customerId, Pageable pageable);
 
     @Query(value = "select COUNT(v) from Visit v where v.house.Id = ?1 and MONTH (v.dayVisited) = ?2")
     Integer visitPerWeek(int HouseId, int month);

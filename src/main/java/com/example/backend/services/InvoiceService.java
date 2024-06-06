@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InvoiceService {
 
-    Invoice succeed(Integer[] cartId, Long customerId);
+    Invoice succeed( Long customerId);
 
     Invoice getInvoice(Long invoiceId);
 

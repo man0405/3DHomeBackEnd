@@ -26,13 +26,14 @@ public class Invoice {
     private Long id;
 
     @OneToMany(
-//            mappedBy = "invoice",
+            mappedBy = "invoice",
             fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
-//            ,orphanRemoval = true
+//            orphanRemoval = true
     )
-//    @JsonIgnore
-    private List<Cart> cartList;
+    @JsonIgnore
+    private List<InvoiceDetail> invoiceDetail;
+
 
     private Long customer_id;
 
@@ -42,11 +43,6 @@ public class Invoice {
 
     private Double price;
 
-    public void addCart(Cart theCart){
-        if(cartList == null)
-            cartList = new ArrayList<>();
-        cartList.add(theCart);
-    }
 
 
 
