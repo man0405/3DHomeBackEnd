@@ -3,21 +3,19 @@ package com.example.backend.models.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-
-@NoArgsConstructor
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
-@Table(name = "cart")
-public class Cart {
+@Table(name = "order_")
+public class Order  {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -31,10 +29,12 @@ public class Cart {
 
 
     @OneToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
-//            orphanRemoval = true
     )
     @JsonIgnore
     private List<Item> items;
+
+    private String status;
+
 }

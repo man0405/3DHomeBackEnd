@@ -24,36 +24,33 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 
 
-    @Transactional
-    @Override
-    public Invoice succeed(Integer[] cartId, Long customerId) {
-        Invoice theInvoice = new Invoice();
-        for(Integer i: cartId){
-            Cart theCart = cartRepository.findById(i.longValue()).get();
-            theCart.setPaid(true);
-            cartRepository.save(theCart);
-        }
-        System.out.println("hello");
-        double sum = 0;
-        for(Integer c : cartId){
-            Optional<Cart> theCart = cartRepository.findById(Long.valueOf(c));
-            sum += (theCart.get().getQuantity() * theCart.get().getFurniture().getPrice());
-            theInvoice.addCart(theCart.get());
-            cartRepository.deleteById(Long.valueOf(c));
-        }
-        theInvoice.setPrice(sum);
-        theInvoice.setCustomer_id(customerId);
-        theInvoice.setDayVisited(LocalDate.now());
-//        theInvoice.setTimeVisited(LocalTime.now());
-         return invoiceRepo.save(theInvoice);
-    }
+//    @Transactional
+//    @Override
+//    public Invoice succeed(Integer[] cartId, Long customerId) {
+//        Invoice theInvoice = new Invoice();
+//        for(Integer i: cartId){
+//            Cart theCart = cartRepository.findById(i.longValue()).get();
+//            cartRepository.save(theCart);
+//        }
+//        System.out.println("hello");
+//        double sum = 0;
+//        for(Integer c : cartId){
+//            Optional<Cart> theCart = cartRepository.findById(Long.valueOf(c));
+//            sum += (theCart.get().getQuantity() * theCart.get().getFurniture().getPrice());
+//            theInvoice.addCart(theCart.get());
+//            cartRepository.deleteById(Long.valueOf(c));
+//        }
+//        theInvoice.setPrice(sum);
+//        theInvoice.setCustomer_id(customerId);
+//        theInvoice.setDayVisited(LocalDate.now());
+////        theInvoice.setTimeVisited(LocalTime.now());
+//         return invoiceRepo.save(theInvoice);
+//    }
 
     public Invoice getInvoice(Long invoiceId){
         return invoiceRepo.findById(invoiceId).get();
     }
 
-    public List<Invoice> getAllInvoice(Long customerId){
-        return invoiceRepo.findByCustomer_id(customerId);
-    }
+
 
 }

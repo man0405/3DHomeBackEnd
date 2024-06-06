@@ -19,35 +19,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "invoice")
 public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(
-//            mappedBy = "invoice",
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
-//            ,orphanRemoval = true
-    )
-//    @JsonIgnore
-    private List<Cart> cartList;
-
-    private Long customer_id;
+    @OneToOne
+    @JoinColumn(name = "orderId")
+    private Order orderId;
 
     private LocalDate dayVisited;
 //
 //    private LocalTime timeVisited;
 
     private Double price;
-
-    public void addCart(Cart theCart){
-        if(cartList == null)
-            cartList = new ArrayList<>();
-        cartList.add(theCart);
-    }
-
-
 
 }

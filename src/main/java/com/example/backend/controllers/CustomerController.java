@@ -96,31 +96,31 @@ public class CustomerController {
     }
 
 
-    @PutMapping(value = "addToCart")
-    public CheckResponse addToCart(@RequestHeader("Authorization") String customerId, @RequestParam("furnitureId") int furnitureId, @RequestParam("quantity") int quantity){
-        Long theCustomerId = ExtractIdFromToken(customerId);
-        cartService.save( theCustomerId.intValue(), furnitureId, quantity);
-        return CheckResponse.builder().result("TRUE").build();
-    }
+//    @PutMapping(value = "addToCart")
+//    public CheckResponse addToCart(@RequestHeader("Authorization") String customerId, @RequestParam("furnitureId") int furnitureId, @RequestParam("quantity") int quantity){
+//        Long theCustomerId = ExtractIdFromToken(customerId);
+//        cartService.save( theCustomerId.intValue(), furnitureId, quantity);
+//        return CheckResponse.builder().result("TRUE").build();
+//    }
 
-    @DeleteMapping(value = "removeFromCart")
-    public CheckResponse removeFromCart(@RequestHeader("Authorization") String customerId, @RequestParam("furnitureId") int furnitureId){
-        Long theCustomerId = ExtractIdFromToken(customerId);
-        cartService.delete( theCustomerId.intValue(), furnitureId);
-        return CheckResponse.builder().result("TRUE").build();
-    }
+//    @DeleteMapping(value = "removeFromCart")
+//    public CheckResponse removeFromCart(@RequestHeader("Authorization") String customerId, @RequestParam("furnitureId") int furnitureId){
+//        Long theCustomerId = ExtractIdFromToken(customerId);
+//        cartService.delete( theCustomerId.intValue(), furnitureId);
+//        return CheckResponse.builder().result("TRUE").build();
+//    }
 
 
-    @PutMapping(value = "succeed")
-    public Invoice succeedToOrder(@RequestParam("cart")Integer[] carts, @RequestHeader("Authorization") String customerId){
-        Long theCustomerId = ExtractIdFromToken(customerId);
-        return  invoiceService.succeed(carts, theCustomerId );
-    }
-    @GetMapping(value = "getCart")
-    public List<Cart> getCart(@RequestHeader("Authorization") String customerId){
-        Long theCustomerId = ExtractIdFromToken(customerId);
-        return cartService.findByCustomerId(theCustomerId);
-    }
+//    @PutMapping(value = "succeed")
+//    public Invoice succeedToOrder(@RequestParam("cart")Integer[] carts, @RequestHeader("Authorization") String customerId){
+//        Long theCustomerId = ExtractIdFromToken(customerId);
+//        return  invoiceService.succeed(carts, theCustomerId );
+//    }
+//    @GetMapping(value = "getCart")
+//    public List<Cart> getCart(@RequestHeader("Authorization") String customerId){
+//        Long theCustomerId = ExtractIdFromToken(customerId);
+//        return cartService.findByCustomerId(theCustomerId);
+//    }
 
 
     @GetMapping(value = "getInvoice/{id}")
@@ -128,11 +128,11 @@ public class CustomerController {
         return invoiceService.getInvoice(id);
     }
 
-    @GetMapping(value = "getAllInvoice")
-    public List<Invoice> getAllInvoice(@RequestHeader("Authorization") String customerId){
-        Long theCustomerId = ExtractIdFromToken(customerId);
-        return invoiceService.getAllInvoice(theCustomerId);
-    }
+//    @GetMapping(value = "getAllInvoice")
+//    public List<Invoice> getAllInvoice(@RequestHeader("Authorization") String customerId){
+//        Long theCustomerId = ExtractIdFromToken(customerId);
+//        return invoiceService.getAllInvoice(theCustomerId);
+//    }
 
 
 

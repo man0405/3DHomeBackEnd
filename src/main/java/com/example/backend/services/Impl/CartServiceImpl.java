@@ -22,33 +22,30 @@ public class CartServiceImpl implements CartService {
     private CustomerService customerService;
     private FurnitureRepo furnitureRepo;
 
-    @Transactional
-    @Override
-    public void save(int customerId, int furnitureId, int quantity) {
-        Optional<Cart> cart = cartRepository.findCartByCustomerIdAndFurnitureId(customerId, furnitureId);
-        Cart theCart;
-        if(cart.isPresent()){
-            theCart = cart.get();
-            theCart.setQuantity(quantity);
-        }else {
-            var theCustomer = customerService.findById((long) customerId);
-            var theFurniture = furnitureRepo.findById(Long.valueOf(furnitureId));
-            if(quantity > 1) theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(quantity).build();
-            else theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(1).paid(false).build();
-        }
-        cartRepository.save(theCart);
-    }
-
-    @Override
-    public List<Cart> findByCustomerId(Long id) {
-        return cartRepository.findByCustomer_IdAAndPaid(id);
-    }
+//    @Transactional
+//    @Override
+//    public void save(int customerId, int furnitureId, int quantity) {
+//        Optional<Cart> cart = cartRepository.findCartByCustomerIdAndFurnitureId(customerId, furnitureId);
+//        Cart theCart;
+//        if(cart.isPresent()){
+//            theCart = cart.get();
+//            theCart.setQuantity(quantity);
+//        }else {
+//            var theCustomer = customerService.findById((long) customerId);
+//            var theFurniture = furnitureRepo.findById(Long.valueOf(furnitureId));
+//            if(quantity > 1) theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(quantity).build();
+//            else theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(1).build();
+//        }
+//        cartRepository.save(theCart);
+//    }
 
 
-    @Transactional
-    @Override
-    public void delete(int customerId, int furnitureId) {
-        Optional<Cart> cart = cartRepository.findCartByCustomerIdAndFurnitureId(customerId, furnitureId);
-        cartRepository.deleteById(cart.get().getId());
-    }
+
+
+//    @Transactional
+//    @Override
+//    public void delete(int customerId, int furnitureId) {
+//        Optional<Cart> cart = cartRepository.findCartByCustomerIdAndFurnitureId(customerId, furnitureId);
+//        cartRepository.deleteById(cart.get().getId());
+//    }
 }

@@ -29,6 +29,7 @@ public class House {
 
     @Column (name = "price")
     private double price;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "information_id")
     private Information information;

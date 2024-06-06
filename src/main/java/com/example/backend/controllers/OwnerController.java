@@ -30,6 +30,7 @@ public class OwnerController {
         this.visitService = visitService;
     }
 
+
     // expose "/owners" and return a list of owners
     @GetMapping("/owners")
     public List<Owner> findAll() {
