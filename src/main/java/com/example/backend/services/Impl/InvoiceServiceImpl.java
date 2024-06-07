@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -53,8 +54,14 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceRepo.findById(invoiceId).get();
     }
 
-    public List<Invoice> getAllInvoice(Long customerId){
-        return invoiceRepo.findByCustomer_id(customerId);
+    public List<InvoiceItemResponse> getAllInvoice(Long customerId){
+        return invoiceRepo.findByCustomer_id(customerId).stream()
+                .map(item -> new InvoiceItemResponse(
+                        Math.toIntExact(item.getId()),
+                        item.getPrice(),
+                        item.getInvoiceDetail().isEmpty() ? null : item.getInvoiceDetail().get(0))
+                )
+                .collect(Collectors.toList());
     }
 
 }

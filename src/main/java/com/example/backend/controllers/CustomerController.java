@@ -126,7 +126,7 @@ public class CustomerController {
     }
 
     @GetMapping(value = "getAllInvoice")
-    public List<Invoice> getAllInvoice(@RequestHeader("Authorization") String customerId){
+    public List<InvoiceItemResponse> getAllInvoice(@RequestHeader("Authorization") String customerId){
         Long theCustomerId = ExtractIdFromToken(customerId);
         return invoiceService.getAllInvoice(theCustomerId);
     }

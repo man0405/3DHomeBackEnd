@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.InvoiceItemResponse;
 import com.example.backend.models.entity.Cart;
 import com.example.backend.models.entity.Invoice;
 import com.example.backend.models.entity.InvoiceDetail;
@@ -12,7 +13,7 @@ public interface InvoiceService {
 
     Invoice getInvoice(Long invoiceId);
 
-    List<Invoice> getAllInvoice(Long customerId);
+    List<InvoiceItemResponse>  getAllInvoice(Long customerId);
 
 
 }
