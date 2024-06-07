@@ -32,21 +32,30 @@ public class CartServiceImpl implements CartService {
 
     public void save(int customerId, int furnitureId, int quantity) {
         log.info("Cart is 0.1 " );
+        log.info("Furniture " + furnitureId + " is " + quantity);
         Optional<Cart> cart = cartRepository.findCart(customerId, furnitureId);
         log.info("Cart is 0.5 " + cart.isPresent());
         Cart theCart;
 
         if(cart.isPresent()){
-            log.info("Cart is 0 " + cart.get() );
+            log.info("Cart is 0 ");
             theCart = cart.get();
-            System.out.println("theCart " + theCart);
+            System.out.println("theCart " + theCart.getId());
             theCart.setQuantity(quantity);
         }else {
             log.info("Cart is 1" );
             var theCustomer = customerService.findById((long) customerId);
             var theFurniture = furnitureRepo.findById(Long.valueOf(furnitureId));
-            if(quantity > 1) theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(quantity).build();
-            else theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(1).build();
+            if(quantity > 1){
+                log.info("quantity > 1 -" + quantity);
+                theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(quantity).build();
+                log.info("quantity > 1 +" + quantity);
+            }
+            else{
+                log.info("quantity -" + quantity);
+                theCart =  Cart.builder().customer(theCustomer).furniture(theFurniture.get()).quantity(1).build();
+                log.info("quantity +" + quantity);
+            }
         }
         cartRepository.save(theCart);
     }

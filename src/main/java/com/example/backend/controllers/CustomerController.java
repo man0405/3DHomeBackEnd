@@ -1,10 +1,7 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.*;
-import com.example.backend.models.entity.Cart;
-import com.example.backend.models.entity.Customer;
-import com.example.backend.models.entity.House;
-import com.example.backend.models.entity.Invoice;
+import com.example.backend.models.entity.*;
 import com.example.backend.services.CartService;
 import com.example.backend.services.CustomerService;
 import com.example.backend.services.InvoiceService;
@@ -64,7 +61,7 @@ public class CustomerController {
 
     @GetMapping("favFurniture/{offset}")
     public APIResponse<Page<FurnitureResponse>> getLikedFurniture(@RequestHeader("Authorization") String cookie, @PathVariable int offset){
-        Page<FurnitureResponse> furniturePage = visitService.likedFurniture(offset,5, Math.toIntExact((ExtractIdFromToken(cookie))));
+        Page<FurnitureResponse> furniturePage = visitService.likedFurniture(offset,10, Math.toIntExact((ExtractIdFromToken(cookie))));
         return new APIResponse<>(furniturePage.getSize(), furniturePage);
     }
 
@@ -97,7 +94,7 @@ public class CustomerController {
     @PutMapping(value = "addToCart")
     public CheckResponse addToCart(@RequestHeader("Authorization") String customerId, @RequestParam("furnitureId") int furnitureId, @RequestParam("quantity") int quantity){
         Long theCustomerId = ExtractIdFromToken(customerId);
-        System.out.println("addToCart " + customerId +  " " + furnitureId + " " + quantity);
+        System.out.println("addToCart " + theCustomerId +  " " + furnitureId + " " + quantity);
         cartService.save( theCustomerId.intValue(), furnitureId, quantity);
         return CheckResponse.builder().result("TRUE").build();
     }
@@ -105,6 +102,7 @@ public class CustomerController {
     @DeleteMapping(value = "removeFromCart")
     public CheckResponse removeFromCart(@RequestHeader("Authorization") String customerId, @RequestParam("furnitureId") int furnitureId){
         Long theCustomerId = ExtractIdFromToken(customerId);
+        System.out.println("removeFromCart " + theCustomerId +  " " + furnitureId);
         cartService.delete( theCustomerId.intValue(), furnitureId);
         return CheckResponse.builder().result("TRUE").build();
     }

@@ -33,7 +33,7 @@ public class Furniture {
 
     private int warranty;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "furniture_id")
     private List<FileData> images;
 

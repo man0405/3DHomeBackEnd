@@ -3,6 +3,7 @@ package com.example.backend;
 import com.example.backend.models.entity.*;
 import com.example.backend.repository.*;
 import com.example.backend.services.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
+@Slf4j
 @SpringBootApplication
 public class BackendApplication {
 
@@ -23,33 +25,31 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-//	@Bean
-//	public CommandLineRunner commandLineRunner(VisitService visitService){
-//		return runner ->{
-////			addOwner(theOwnerService);
-////			addHouse(theOwnerService, theHouseRepo);
-////			findOwnerById(theOwnerService)
-////			findOwnerAndHouses(theOwnerService);
-////			System.out.println(theHouseRepo.findBy_Id(1));
-////			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
-////			System.out.println(theOwnerService.findVisitCustomerInfo(51));
-//
-//
-////			addToCart(visitService);
-//
-//
-////			addToCart(visitService);
-//
-//        };
-//	}
+	@Bean
+	public CommandLineRunner commandLineRunner(CartRepository cartRepository){
+		return runner ->{
+//			addOwner(theOwnerService);
+//			addHouse(theOwnerService, theHouseRepo);
+//			findOwnerById(theOwnerService)
+//			findOwnerAndHouses(theOwnerService);
+//			System.out.println(theHouseRepo.findBy_Id(1));
+//			System.out.println(theVisitService.visitPerWeek(2).toString() + " visits this week");
+//			System.out.println(theOwnerService.findVisitCustomerInfo(51));
 
-//	private void addToCart(VisitService invoiceService) {
-//		int[] customerList = {8, 13, 12, 10, 4, 9, 3, 11, 7, 5};
-//		int[] houseList = {34,72,73,75,74,32,38,33 ,81 ,22};
-//		for(int i = 0; i < 9; i++){
-//			invoiceService.save(3, houseList[i]);
-//		}
-//	}
+
+//			addToCart(visitService);
+
+
+			addToCart(cartRepository);
+
+        };
+	}
+
+	private void addToCart(CartRepository cartRepository) {
+		Optional<Cart> cart = cartRepository.findCart(1402, 1402);
+		log.info("Cart is 0.5 " + cart.isPresent());
+	}
+
 
 	private void findOwnerAndHouses(OwnerService theOwnerService) {
 		int theId = 1;

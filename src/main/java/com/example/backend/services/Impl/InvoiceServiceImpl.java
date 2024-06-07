@@ -1,5 +1,6 @@
 package com.example.backend.services.Impl;
 
+import com.example.backend.dto.InvoiceItemResponse;
 import com.example.backend.models.entity.Cart;
 import com.example.backend.models.entity.Invoice;
 import com.example.backend.models.entity.InvoiceDetail;
@@ -36,16 +37,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice theInvoice = new Invoice();
         List<InvoiceDetail> listCart = new ArrayList<>();
         double sum = 0;
-//        for(Integer c : cartId){
-//            Optional<Cart> theCart = cartRepository.findById(Long.valueOf(c));
-//            if (theCart.isPresent()){
-//                listCart.add(InvoiceDetail.builder().quantity(theCart.get().getQuantity()).productId(theCart.get().getFurniture().getId().intValue()).build());
-//            }
-//            sum += (theCart.get().getQuantity() * theCart.get().getFurniture().getPrice());
-//            cartRepository.deleteById(Long.valueOf(c));
-//        }
         for (Cart cart : carts) {
-            listCart.add(InvoiceDetail.builder().quantity(cart.getQuantity()).furniture(cart.getFurniture()).build());
+            listCart.add(InvoiceDetail.builder().quantity(cart.getQuantity()).furniture(cart.getFurniture()).invoice(theInvoice).build());
             sum += cart.getQuantity()*cart.getFurniture().getPrice();
             cartRepository.deleteById(cart.getId());
         }
@@ -53,8 +46,6 @@ public class InvoiceServiceImpl implements InvoiceService {
         theInvoice.setCustomer_id(customerId);
         theInvoice.setDayVisited(LocalDate.now());
         theInvoice.setInvoiceDetail(listCart);
-
-
          return invoiceRepo.save(theInvoice);
     }
 

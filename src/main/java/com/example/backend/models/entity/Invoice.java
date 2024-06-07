@@ -31,7 +31,6 @@ public class Invoice {
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
 //            orphanRemoval = true
     )
-    @JsonIgnore
     private List<InvoiceDetail> invoiceDetail;
 
 

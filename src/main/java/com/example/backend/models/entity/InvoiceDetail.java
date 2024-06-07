@@ -21,14 +21,15 @@ public class InvoiceDetail {
     private int id;
 
     @ManyToOne(
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
     @JoinColumn(name = "invoice")
-    @JsonBackReference
+    @JsonIgnore
     private Invoice invoice;
 
-    @OneToOne
-    @JsonIgnore
+    @ManyToOne(
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER
+    )
     @JoinColumn(name = "furniture")
     private Furniture furniture;
 
