@@ -1,6 +1,7 @@
 package com.example.backend.models.entity;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,6 +33,9 @@ public class Furniture {
     private String description;
 
     private int warranty;
+    private int quantity;
+
+
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "furniture_id")

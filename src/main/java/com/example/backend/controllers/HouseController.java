@@ -54,7 +54,13 @@ public class HouseController {
     }
 
     @GetMapping("pagination/{offset}/{pageSize}")
-    public APIResponse<Page<HouseResponse>> searchingFunction(@RequestParam(required = false) String search,@RequestParam(required = false) String landSize,@RequestParam(required = false) Integer bedroom,@RequestParam(required = false) String price, @PathVariable int offset, @PathVariable int pageSize,@RequestHeader("Authorization") String cookie){
+    public APIResponse<Page<HouseResponse>> searchingFunction(@RequestParam(required = false) String search,
+                                                              @RequestParam(required = false) String landSize,
+                                                              @RequestParam(required = false) Integer bedroom,
+                                                              @RequestParam(required = false) String price,
+                                                              @PathVariable int offset,
+                                                              @PathVariable int pageSize,
+                                                              @RequestHeader("Authorization") String cookie){
         System.out.println("search: " + search);
         System.out.println("landSize: " + landSize);
         System.out.println("bedroom: " + bedroom);
@@ -68,7 +74,7 @@ public class HouseController {
             price_range = Arrays.stream(price.trim().split("-")).mapToInt(Integer::parseInt).toArray();
         }
         Long customerId = ExtractIdFromToken(cookie);
-        Page<HouseResponse> houses = houseService.searchHouse(customerId,search != null ? search : "",landSize,land_size[0],land_size[1],bedroom != null ? bedroom : 0,price,price_range[0],price_range[1], offset, pageSize);
+        Page<HouseResponse> houses = houseService.searchHouse(customerId,search != null ? search.trim() : "",landSize,land_size[0],land_size[1],bedroom != null ? bedroom : 0,price,price_range[0],price_range[1], offset, pageSize);
         return new APIResponse<>(houses.getSize(), houses);
     }
 

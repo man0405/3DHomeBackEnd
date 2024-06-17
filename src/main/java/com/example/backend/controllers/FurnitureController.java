@@ -60,7 +60,9 @@ public class FurnitureController {
 
 
     @GetMapping("pagination/{offset}/{pageSize}")
-    public APIResponse<Page<FurnitureResponse>> searchingFunction( @RequestHeader("Authorization") String cookie,@RequestParam(required = false) String search,@RequestParam(required = false) String price,@RequestParam(required = false) String warranty, @RequestParam(required = false) String material, @PathVariable int offset, @PathVariable int pageSize){
+    public APIResponse<Page<FurnitureResponse>> searchingFunction( @RequestHeader("Authorization") String cookie,@RequestParam(required = false) String search,
+                                                                   @RequestParam(required = false) String price,@RequestParam(required = false) String warranty,
+                                                                   @RequestParam(required = false) String material, @PathVariable int offset, @PathVariable int pageSize){
         Long customerId = ExtractIdFromToken(cookie);
         System.out.println("search: " + search);
         System.out.println("price: " + price);

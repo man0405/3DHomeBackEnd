@@ -20,6 +20,7 @@ public class RestResponseEntityExceptionHandler  extends ResponseEntityException
                         ex.getMessage(), ex.getCode(), null
                 )
     );
+
 //        ResponseErrorTemplate errorResponse = new ResponseErrorTemplate(ex.getMessage(), ex.getCode(), null);
 //        return new ResponseEntity<>(errorResponse, HttpStatus.valueOf(Integer.parseInt(ex.getCode())));
     }
